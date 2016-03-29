@@ -9,41 +9,29 @@
   <body>
 
     <div class="auth-header-stretch group">
-      <header class="auth-header-bar">
-
-        <h1 class="auth-header-logo">CLOUDCAST</h1>
-
-        <ul class="auth-header-tabs">
-          <li class="create-account-selected"><a href="#">Create Account</a></li>
-          <li class="sign-in-tab">
-            <a href="#">Sign In</a>
-          </li>
-        </ul>
-
-      </header>
+      <%= render "auth_header" %>
     </div>
-
 
     <div class="auth-main">
       <form class="auth-form" action="<%= users_url %>" method="post">
         <%= auth_token %>
 
         <label>
-          What's your email address? <br>
+          What do you want your username to be? <br>
           <input class="email-input" type="text" name="user[username]" value="">
         </label>
         <br>
 
-        <label class="password-input-wrapper">
+        <label class="halved-password-input-wrapper">
           Choose a password
           <br>
-          <input class="password-input" type="text" name="user[password]" value="">
+          <input class="halved-password-input" type="password" name="user[password]" value="">
         </label>
 
-        <label class="password-input-wrapper">
-          Re-type password (!)
+        <label class="halved-password-input-wrapper">
+          Re-type password
           <br>
-          <input class="password-input" type="text" name="" value="">
+          <input class="halved-password-input" type="password" name="" value="">
         </label>
         <br>
 
@@ -51,7 +39,6 @@
           <input type="checkbox" name="" value="unchecked">
           I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
         </label>
-        <br>
 
         <input class="submit-button" type="submit" value="Create account">
       </form>

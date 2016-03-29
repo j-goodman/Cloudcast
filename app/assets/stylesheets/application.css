@@ -74,7 +74,7 @@ ul {
 .auth-header-logo {
   float: left;
   padding: 10px;
-  letter-spacing: 4px;
+  letter-spacing: 5px;
 }
 
 .auth-header-tabs {
@@ -119,7 +119,7 @@ ul {
   width: 430px;
 }
 
-.password-input-wrapper {
+.halved-password-input-wrapper {
   margin: 20px 0 20px 0;
   width: 225px;
   float: left;
