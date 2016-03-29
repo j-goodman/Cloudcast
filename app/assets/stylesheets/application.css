@@ -13,3 +13,138 @@
  *= require_tree .
  *= require_self
  */
+
+ /* ~ RESET ~ */
+
+html, body, header, nav, h1, a, ul, li,
+strong, main, section, img, div, h2, p,
+form, fieldset, label, input, textarea,
+button, article, footer, small {
+  margin: 0;
+  border: 0;
+  outline: 0;
+  padding: 0;
+
+  font: inherit;
+  color: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  vertical-align: inherit;
+
+  box-sizing: inherit;
+  background: transparent;
+}
+
+/* ~ CLEARFIX ~ */
+
+.group {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+/* ~ USERS ~ */
+
+body {
+  font-family: sans-serif;
+  font-family: Tahoma;
+  font-size: 12px;
+}
+
+ul {
+  list-style: none;
+}
+
+.auth-header-stretch {
+  background: #2a2a2a;
+  padding: 0 10px;
+  position: relative;
+  height: 65px;
+}
+
+.auth-header-bar {
+  color: #fff;
+  font-size: 18px;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.auth-header-logo {
+  float: left;
+  padding: 10px;
+  letter-spacing: 4px;
+}
+
+.auth-header-tabs {
+  display: block;
+  float: right;
+  color: #eee;
+  padding: 0 20px 0 0;
+}
+
+.create-account-tab,
+.sign-in-tab,
+.create-account-selected,
+.sign-in-selected {
+  display: block;
+  float: left;
+  padding: 10px 15px 20px 15px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.sign-in-selected,
+.create-account-selected {
+  background: #fff;
+  color: #000;
+}
+
+.auth-main {
+  width: 450px;
+  padding: 40px 10px 10px 10px;
+  min-height: 450px;
+  margin: 0 auto;
+}
+
+.auth-form * input {
+  border: 1px solid #ccc;
+  padding: 4px;
+  border-radius: 5px;
+  margin: 4px 0;
+}
+
+.email-input {
+  width: 430px;
+}
+
+.password-input-wrapper {
+  margin: 20px 0 20px 0;
+  width: 225px;
+  float: left;
+}
+
+.terms-agreement-wrapper > a {
+  color: #3388DD;
+}
+
+.terms-agreement-wrapper > a:hover {
+  color: #000;
+}
+
+.password-input {
+  width: 205px;
+}
+
+.submit-button {
+  background: #ff5500;
+  color: #fff;
+  padding: 5px 10px;
+  float: right;
+  border-radius: 4px;
+}
+
+.submit-button:hover {
+  cursor: pointer;
+}
