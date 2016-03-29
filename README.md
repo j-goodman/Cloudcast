@@ -58,7 +58,7 @@ the API.
 - [ ] setup `APIUtil` to interact with the API
 - [ ] test out API interaction in the console.
 
-### Phase 3: Flux Architecture and Router (1.5 days)
+### Phase 3: Flux Architecture and Router (1 day)
 
 **Objective:** Tracks can be created, read, edited and destroyed with the
 user interface.
@@ -69,30 +69,34 @@ user interface.
   - [ ] `TracksIndex`
   - [ ] `TrackIndexItem`
   - [ ] `TrackForm`
-- [ ] save Tracks to the DB when the form loses focus or is left idle
-  after editing.
 
-### Phase 4: Start Styling (0.5 days)
+### Phase 4: Likes and Comments (1 day)
+- [ ] create `Like` and `Comment` models (identical except that Comments
+  include body text as one of their elements)
+- build out API, Flux loop, and components for:
+  - [ ] like and Comment CRUD
+  - [ ] removing Likes or Comments
+  - [ ] editing Comments
+- Use CSS to style new elements
 
-**Objective:** Existing pages (including singup/signin) will look good.
-
-- [ ] create a basic style guide
-- [ ] position elements on the page
-- [ ] add basic colors & styles
-
-### Phase 5: Playlists (1 day)
+### Phase 4: Playlists and Follows (1 day)
 
 **Objective:** Tracks belong to Playlists, and can be viewed by playlist.
 
 - [ ] create `Playlist` model
 - build out API, Flux loop, and components for:
   - [ ] Playlist CRUD
-  - [ ] adding tracks requires a playlist
   - [ ] moving tracks to a different playlist
   - [ ] viewing tracks by playlist
 - Use CSS to style new views
 
-Phase 3 adds organization to the Tracks. Tracks belong to a Playlist,
+- [ ] create `Following` model
+- build out API, Flux loop, and components for:
+  - [ ] Following CRUD
+  - [ ] adding and removing followings.
+- Use CSS to style new views
+
+Phase 3 adds organization to the Tracks and broadens User interaction with follows. Tracks belong to a Playlist,
 which has its own `Index` view.
 
 ### Phase 6: Tags (1.5 days)

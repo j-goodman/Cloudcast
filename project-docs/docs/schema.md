@@ -22,7 +22,7 @@ column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
 user_id     | integer   | not null, foreign key (references users), indexed
-track_id    | integer   | not null, foreign key (references notes), indexed
+track_id    | integer   | not null, foreign key (references track), indexed
 seconds     | integer   | not null
 body        | text      | not null
 
@@ -36,16 +36,15 @@ name        | string    | not null
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
-name        | string    | not null
-track_id    | integer   | not null, foreign key (references notes), indexed
+track_id    | integer   | not null, foreign key (references track), indexed
 tag_id      | integer   | not null, foreign key (references tags), indexed
 
 ## followings
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
-followed_id | integer   | not null, foreign key (references notes), indexed
-follower_id | integer   | not null, foreign key (references notes), indexed
+followed_id | integer   | not null, foreign key (references user), indexed
+follower_id | integer   | not null, foreign key (references user), indexed
 
 ## playlists
 column name | data type | details
@@ -53,15 +52,14 @@ column name | data type | details
 id          | integer   | not null, primary key
 name        | string    | not null
 description | text      |
-user_id     | integer   | not null, foreign key (references notes), indexed
+user_id     | integer   | not null, foreign key (references user), indexed
 
 ## playlist_memberships
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
-track_id    | integer   | not null, foreign key (references notes), indexed
-playlist_id | integer   | not null, foreign key (references notes), indexed
-name        | string    | not null
+track_id    | integer   | not null, foreign key (references track), indexed
+playlist_id | integer   | not null, foreign key (references playlist), indexed
 
 ## users
 column name     | data type | details
