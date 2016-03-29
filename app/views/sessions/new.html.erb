@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Authorize access to your account on Cloudcast</title>
+  </head>
+
+  <body>
+
+    <div class="auth-header-stretch group">
+      <%= render "auth_header" %>
+    </div>
+
+    <div class="auth-main">
+      <form class="auth-form" action="<%= users_url %>" method="post">
+        <%= auth_token %>
+
+        <label>
+          Your username <br>
+          <input class="email-input" type="text" name="user[username]" value="">
+        </label>
+        <br>
+
+        <label class="password-input-wrapper">
+          Your password
+          <br>
+          <input class="password-input" type="password" name="user[password]" value="">
+        </label>
+        <br>
+
+        <label class="terms-agreement-wrapper">
+          <input type="checkbox" name="" value="unchecked">
+          I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
+        </label>
+
+        <input class="submit-button" type="submit" value="Sign in">
+      </form>
+    </div>
+  </body>
+
+</html>

@@ -84,6 +84,15 @@ ul {
   padding: 0 20px 0 0;
 }
 
+.auth-header-logo-image {
+  height: 38px;
+  width: 38px;
+  margin: 2px 0 0 0;
+  float: left;
+  background: #ff5500;
+  background: asset_url(cloudcast_white.png);
+}
+
 .create-account-tab,
 .sign-in-tab,
 .create-account-selected,
@@ -125,16 +134,26 @@ ul {
   float: left;
 }
 
+.halved-password-input {
+  width: 205px;
+}
+
+.password-input-wrapper {
+  margin: 20px 0 20px 0;
+  width: 450px;
+  float: left;
+}
+
+.password-input {
+  width: 430px;
+}
+
 .terms-agreement-wrapper > a {
   color: #3388DD;
 }
 
 .terms-agreement-wrapper > a:hover {
   color: #000;
-}
-
-.password-input {
-  width: 205px;
 }
 
 .submit-button {
