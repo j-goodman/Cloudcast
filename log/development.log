@@ -11037,3 +11037,411 @@ Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde45
 
 
 Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:35:09 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:44:17 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.5ms)
+  Rendered users/new.html.erb within layouts/application (16.4ms)
+Completed 200 OK in 354ms (Views: 348.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-5bfa8de9b058855669cd0202daf36fcfd08444e22337c46b7f89cb1b64814744.css?body=1" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/assets/cloudcast_white-32f4ab2994baaffef1d2ae6ed30d51ac4e483e4bb48b78b048a508410f006f18.png" for ::1 at 2016-03-29 17:44:18 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:45:13 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.0ms)
+  Rendered users/new.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 22ms (Views: 21.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/assets/application.self-d99849ac4b53a05cfefd5785fca77211030c47951b1b1fdcbd45b3137432d5e9.css?body=1" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/assets/cloudcast_white-50833faaf3c6e73fde256a8e0c6041b1756566bf57973260e9d8ab5a64615115.png" for ::1 at 2016-03-29 17:45:13 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:48:10 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.4ms)
+  Rendered users/new.html.erb within layouts/application (15.9ms)
+Completed 200 OK in 462ms (Views: 456.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-4ec425072222da62e057d109f3a2d69c073b23b25ddb74ccb2be2eb0a63899f6.css?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/application.self-4ec425072222da62e057d109f3a2d69c073b23b25ddb74ccb2be2eb0a63899f6.css?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:48:10 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:48:58 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.1ms)
+  Rendered users/new.html.erb within layouts/application (11.5ms)
+Completed 200 OK in 161ms (Views: 159.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:48:58 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:48:58 -0400
+
+
+Started GET "/assets/application.self-4ec425072222da62e057d109f3a2d69c073b23b25ddb74ccb2be2eb0a63899f6.css?body=1" for ::1 at 2016-03-29 17:48:58 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:48:58 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:48:58 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:48:58 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:48:58 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:48:58 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:49:11 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.1ms)
+  Rendered users/new.html.erb within layouts/application (1.5ms)
+Completed 200 OK in 149ms (Views: 148.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/assets/application.self-a99902dcfd4e3acae0fc4e6d4a80d937fbe2fb266555833fc6a6e814440e0756.css?body=1" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:49:11 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:49:20 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.1ms)
+  Rendered users/new.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 243ms (Views: 242.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-04431faa421a22207186fe5d03fc5003806a0ab1438e53d694111964f740ecdb.css?body=1" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:49:20 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:49:24 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.1ms)
+  Rendered users/new.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 59ms (Views: 58.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:24 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:49:25 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:25 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:25 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:49:25 -0400
+
+
+Started GET "/assets/application.self-bdb9fab4fde47fae0141a6af4b44c897577f10465f67ae8e4bac8ead0d54eb96.css?body=1" for ::1 at 2016-03-29 17:49:25 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:25 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:49:25 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:49:25 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:49:35 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.0ms)
+  Rendered users/new.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 57ms (Views: 56.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-e00373cd74249c29bcbfa509b239e1ffc97deda3f230812bef073c233738b603.css?body=1" for ::1 at 2016-03-29 17:49:35 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:35 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:49:35 -0400
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:36 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:49:36 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:36 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:36 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:49:36 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:49:36 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:49:43 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.0ms)
+  Rendered users/new.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 56ms (Views: 55.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-5ffdf57872165e0a800045a4ac16cf74f7dd20d31fe17d3a1d48025c5cb5f765.css?body=1" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:49:43 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:49:51 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.0ms)
+  Rendered users/new.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 55ms (Views: 54.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/assets/application.self-c4be79bcb93f8ff11b63010c9f5352a757e0dcbcf4d6d4d138b8dc3c818ba127.css?body=1" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:49:51 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:50:07 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.0ms)
+  Rendered users/new.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 57ms (Views: 56.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-55c7ba10d2259cadf92d412579f21f1a3995f3ea6b6063261c9f63daedb0c5f0.css?body=1" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:50:07 -0400
+
+
+Started GET "/users/new" for ::1 at 2016-03-29 17:50:13 -0400
+Processing by UsersController#new as HTML
+  Rendered users/_auth_header.html.erb (0.0ms)
+  Rendered users/new.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 190ms (Views: 189.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:50:13 -0400
+
+
+Started GET "/assets/sessions.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:50:13 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-29 17:50:13 -0400
+
+
+Started GET "/assets/users.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-29 17:50:13 -0400
+
+
+Started GET "/assets/application.self-b088757bf2c533cade9f80730d4e4aa6792a626260d7bbf8420e3572aab9d395.css?body=1" for ::1 at 2016-03-29 17:50:13 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-29 17:50:13 -0400
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-29 17:50:13 -0400
+
+
+Started GET "/assets/application.self-377610cd7c1509e934744c810e3b4cf672dfbcacac3274e7d039827e2ae0fcc7.js?body=1" for ::1 at 2016-03-29 17:50:13 -0400
+
+
+Started GET "/assets/cloudcast_white-c8907b7346db974acb178031f4038a5e6830ff46f601a4f1940be92430234b14.png" for ::1 at 2016-03-29 17:50:13 -0400
