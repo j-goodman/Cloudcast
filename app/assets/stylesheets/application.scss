@@ -89,8 +89,9 @@ ul {
   width: 38px;
   margin: 2px 0 0 0;
   float: left;
-  background: #ff5500;
-  background: asset_url(cloudcast_white.png);
+  /*background: #ff5500;*/
+  background: asset-url('cloudcast_white.png');
+  background-size: contain;
 }
 
 .create-account-tab,
