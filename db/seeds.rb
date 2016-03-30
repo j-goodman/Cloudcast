@@ -6,17 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(
+johnson = User.create(
   username: 'Robert Johnson',
   password: 'surfbort'
 )
 
-User.create(
+marty = User.create(
   username: 'Marty McFly',
   password: 'surfbort'
 )
 
-User.create(
+apu = User.create(
   username: 'Apu de Beaumarchais',
   password: 'surfbort'
 )
@@ -24,7 +24,7 @@ User.create(
 Track.create(
   title: 'Crossroad Blues',
   file_url: 'django.wav',
-  user_id: 4,
+  user: johnson,
   description: 'Standing at the crossroads, I tried to flag a ride.',
   image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
@@ -32,7 +32,7 @@ Track.create(
 Track.create(
   title: 'Dead Shrimp Blues',
   file_url: 'django.wav',
-  user_id: 4,
+  user: johnson,
   description: 'All my shrimp was dead and gone.',
   image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
@@ -40,7 +40,7 @@ Track.create(
 Track.create(
   title: 'Johnny B. Goode',
   file_url: 'django.wav',
-  user_id: 5,
+  user: marty,
   description: "This one's an oldie. Or at least it's an oldie where I come from.",
   image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
@@ -48,7 +48,7 @@ Track.create(
 Track.create(
   title: 'Baby on Board',
   file_url: 'django.wav',
-  user_id: 6,
+  user: apu,
   description: "Thank you, come again.",
   image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
