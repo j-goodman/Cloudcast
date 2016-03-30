@@ -26508,7 +26508,7 @@
 	  render: function () {
 	    return React.createElement(
 	      'li',
-	      null,
+	      { className: 'track-index-item group' },
 	      React.createElement(
 	        'div',
 	        { className: 'track-header' },
@@ -26517,7 +26517,7 @@
 	          'h2',
 	          { className: 'track-header-text' },
 	          this.props.track.user.username,
-	          ' posted a track.'
+	          ' posted a track'
 	        )
 	      ),
 	      React.createElement(
@@ -26526,21 +26526,21 @@
 	        React.createElement('div', { className: 'track-image' }),
 	        React.createElement(
 	          'div',
-	          { className: 'track-body-main' },
+	          { className: 'track-body-main group' },
 	          React.createElement(
 	            'div',
-	            { className: 'playicon' },
-	            '▶'
-	          ),
-	          React.createElement(
-	            'span',
-	            { className: 'track-username' },
-	            this.props.track.user.username
-	          ),
-	          React.createElement(
-	            'span',
-	            { className: 'track-title' },
-	            this.props.track.title
+	            { className: 'track-subheader' },
+	            React.createElement('div', { className: 'playicon' }),
+	            React.createElement(
+	              'span',
+	              { className: 'track-username' },
+	              this.props.track.user.username
+	            ),
+	            React.createElement(
+	              'span',
+	              { className: 'track-title' },
+	              this.props.track.title
+	            )
 	          )
 	        ),
 	        React.createElement(
@@ -26554,8 +26554,11 @@
 	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'track-buttons' },
-	          '♥ ↻ ▢ ▼'
+	          { className: 'track-buttons group' },
+	          React.createElement('div', { className: 'track-button track-like' }),
+	          React.createElement('div', { className: 'track-button track-repost' }),
+	          React.createElement('div', { className: 'track-button track-playlistadd' }),
+	          React.createElement('div', { className: 'track-button track-share' })
 	        )
 	      )
 	    );

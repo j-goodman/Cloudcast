@@ -43,7 +43,7 @@ button, article, footer, small {
   display: block;
 }
 
-/* ~ USERS ~ */
+/* ~ USER AUTHENTICATION ~ */
 
 body {
   font-family: sans-serif;
@@ -168,4 +168,126 @@ ul {
 
 .submit-button:hover {
   cursor: pointer;
+}
+
+/* ~ TRACK INDEX ITEM ~ */
+
+.track-index-item {
+  width: 620px;
+  height: 240px;
+  background: #fff;
+}
+
+.track-header {
+  height: 56px;
+  width: 620px;
+}
+
+.track-poster-image {
+  width: 32px;
+  height: 32px;
+  display: block;
+  margin: auto 0;
+  background: #ff5500;
+  border-radius: 50%;
+  margin: 12px 0 0 0;
+  float: left;
+}
+
+.track-header-text {
+  font-size: 12px;
+  margin: 19px 0 0 9px;
+  float: left;
+}
+
+.track-body {
+  height: 184px;
+  padding: 12px;
+  position: relative;
+}
+
+.track-image {
+  background: #ff5500;
+  width: 160px;
+  height: 160px;
+}
+
+.track-body-main {
+  height: 184px;
+  width: 424px;
+  right: 620px;
+  position: absolute;
+  top: 0;
+  left: 184px;
+  padding: 6px;
+}
+
+.track-subheader {
+  height: 40px;
+  width: 424px;
+  position: relative;
+  margin: 6px 0 0 0;
+}
+
+.playicon {
+  width: 40px;
+  height: 40px;
+  background: asset-url('play_icon.png');
+  background-size: contain;
+}
+
+.track-username {
+  color: #c0c0c0;
+  position: absolute;
+  top: 0;
+  left: 44px;
+}
+
+.track-title {
+  color: #000;
+  position: absolute;
+  font-size: 14px;
+  top: 18px;
+  left: 44px;
+}
+
+.waveform {
+  background: #ff5500;
+  height: 70px;
+  width: 424px;
+  position: absolute;
+  right: 0;
+  bottom: 80px;
+}
+
+.track-time {
+  background: #000;
+  width: 28px;
+  height: 16px;
+  position: absolute;
+  bottom: 0;
+  right: 6px;
+  color: #888;
+  font-size: 11px;
+  text-align: center;
+}
+
+.track-buttons {
+  width: 130px;
+  height: 32px;
+  position: absolute;
+  top: 140px;
+  font-size: 20px;
+  text-align: center;
+  left: 196px;
+}
+
+.track-button {
+  float: left;
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 3px;
+  border: 1px solid #777;
+  border-radius: 3px;
 }
