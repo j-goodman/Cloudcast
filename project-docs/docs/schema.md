@@ -5,7 +5,7 @@ column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
 title       | string    | not null
-body        | text      | not null
+description | text      | not null
 file_url    | string    | not null
 image_url   | string    |
 user_id     | integer   | not null, foreign key (references users), indexed

@@ -1,0 +1,19 @@
+{
+  "name": "Cloudcast",
+  "version": "1.0.0",
+  "description": "[Heroku link][heroku]",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^0.14.8",
+    "webpack": "^1.12.14"
+  }
+}

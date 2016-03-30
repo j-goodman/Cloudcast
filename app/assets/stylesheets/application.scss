@@ -75,6 +75,9 @@ ul {
   float: left;
   padding: 10px;
   letter-spacing: 5px;
+  position: absolute;
+  left: 30px;
+  margin: 3px 0 0 0;
 }
 
 .auth-header-tabs {
@@ -88,7 +91,7 @@ ul {
   height: 38px;
   width: 38px;
   float: left;
-  background: asset-url('cloudcast_white.png');
+  background: asset-url('cloudcast_slim_white.png');
   background-size: contain;
 }
 

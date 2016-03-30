@@ -9,7 +9,7 @@
   <body>
 
     <div class="auth-header-stretch group">
-      <%= render "auth_header" %>
+      <%= render "auth_header", status: :user %>
     </div>
 
     <div class="auth-main">
@@ -34,7 +34,7 @@
           <input class="halved-password-input" type="password" name="" value="">
         </label>
         <br>
-
+        
         <label class="terms-agreement-wrapper">
           <input type="checkbox" name="" value="unchecked">
           I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
