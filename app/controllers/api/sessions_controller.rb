@@ -9,15 +9,15 @@ class Api::SessionsController < ApplicationController
 
   def create
     user = User.find_by_credentials(
-      params[:username],
-      params[:password]
+      params[:user][:username],
+      params[:user][:password]
     )
     if user
       sign_in(user)
       render json: user
     else
       flash.now[:errors] = ["Invalid username or password"]
-      render :new
+      render json: {}
     end
   end
 

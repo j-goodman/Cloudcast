@@ -49,7 +49,8 @@
 	var ReactRouter = __webpack_require__(159);
 	
 	var Run = __webpack_require__(216);
-	var LoginForm = __webpack_require__(241);
+	var LoginForm = __webpack_require__(242);
+	var NewUserForm = __webpack_require__(243);
 	
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
@@ -60,7 +61,8 @@
 	  Router,
 	  { history: hashHistory },
 	  React.createElement(Route, { path: '/', component: Run }),
-	  React.createElement(Route, { path: '/signin', component: LoginForm })
+	  React.createElement(Route, { path: '/signin', component: LoginForm }),
+	  React.createElement(Route, { path: '/newuser', component: NewUserForm })
 	);
 	
 	document.addEventListener('DOMContentLoaded', function () {
@@ -24769,8 +24771,9 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var TrackStore = __webpack_require__(224);
-	var TrackIndexItem = __webpack_require__(240);
+	var TrackStore = __webpack_require__(225);
+	var TrackIndexItem = __webpack_require__(241);
+	var Link = __webpack_require__(159).Link;
 	
 	var TrackIndex = React.createClass({
 	  displayName: 'TrackIndex',
@@ -24827,8 +24830,8 @@
 	            'div',
 	            { className: 'link-tab user-or-signin-tab' },
 	            React.createElement(
-	              'a',
-	              { className: 'link-tab header-sign-in-tab', href: 'session/new' },
+	              Link,
+	              { to: '/signin', className: 'link-tab header-sign-in-tab', href: 'session/new' },
 	              'Sign In'
 	            )
 	          )
@@ -24868,7 +24871,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var TrackActions = __webpack_require__(219);
-	var SessionActions = __webpack_require__(263);
+	var SessionActions = __webpack_require__(224);
 	var AppDispatcher = __webpack_require__(220);
 	
 	var ApiUtil = {
@@ -24893,13 +24896,27 @@
 	    });
 	  },
 	
+	  createUser: function (credentials, callback) {
+	    $.ajax({
+	      type: 'POST',
+	      url: '/api/user',
+	      dataType: 'json',
+	      data: { user: credentials },
+	      success: function (currentUser) {
+	        SessionActions.currentUserReceived(currentUser);
+	        callback && callback();
+	      }
+	    });
+	  },
+	
 	  login: function (credentials, callback) {
 	    $.ajax({
 	      type: 'POST',
 	      url: '/api/session',
 	      dataType: 'json',
-	      data: credentials,
+	      data: { user: credentials },
 	      success: function (currentUser) {
+	        debugger;
 	        SessionActions.currentUserReceived(currentUser);
 	        callback && callback();
 	      }
@@ -25266,7 +25283,30 @@
 /* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(225).Store;
+	var AppDispatcher = __webpack_require__(220);
+	
+	var SessionActions = {
+	  currentUserReceived: function (currentUser) {
+	    AppDispatcher.dispatch({
+	      actionType: 'CURRENT_USER_RECEIVED',
+	      currentUser: currentUser
+	    });
+	  },
+	
+	  logout: function () {
+	    AppDispatcher.dispatch({
+	      actionType: 'LOGOUT'
+	    });
+	  }
+	};
+	
+	module.exports = SessionActions;
+
+/***/ },
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(226).Store;
 	var Dispatcher = __webpack_require__(220);
 	
 	var TrackStore = new Store(Dispatcher);
@@ -25309,7 +25349,7 @@
 	module.exports = TrackStore;
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25321,15 +25361,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(226);
-	module.exports.MapStore = __webpack_require__(229);
-	module.exports.Mixin = __webpack_require__(239);
-	module.exports.ReduceStore = __webpack_require__(230);
-	module.exports.Store = __webpack_require__(231);
+	module.exports.Container = __webpack_require__(227);
+	module.exports.MapStore = __webpack_require__(230);
+	module.exports.Mixin = __webpack_require__(240);
+	module.exports.ReduceStore = __webpack_require__(231);
+	module.exports.Store = __webpack_require__(232);
 
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25351,10 +25391,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(227);
+	var FluxStoreGroup = __webpack_require__(228);
 	
 	var invariant = __webpack_require__(223);
-	var shallowEqual = __webpack_require__(228);
+	var shallowEqual = __webpack_require__(229);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -25512,7 +25552,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25593,7 +25633,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports) {
 
 	/**
@@ -25648,7 +25688,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25669,8 +25709,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(230);
-	var Immutable = __webpack_require__(238);
+	var FluxReduceStore = __webpack_require__(231);
+	var Immutable = __webpack_require__(239);
 	
 	var invariant = __webpack_require__(223);
 	
@@ -25798,7 +25838,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25819,9 +25859,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(231);
+	var FluxStore = __webpack_require__(232);
 	
-	var abstractMethod = __webpack_require__(237);
+	var abstractMethod = __webpack_require__(238);
 	var invariant = __webpack_require__(223);
 	
 	var FluxReduceStore = (function (_FluxStore) {
@@ -25905,7 +25945,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25924,7 +25964,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(232);
+	var _require = __webpack_require__(233);
 	
 	var EventEmitter = _require.EventEmitter;
 	
@@ -26088,7 +26128,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26101,14 +26141,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(233)
+	  EventEmitter: __webpack_require__(234)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26127,8 +26167,8 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(234);
-	var EventSubscriptionVendor = __webpack_require__(236);
+	var EmitterSubscription = __webpack_require__(235);
+	var EventSubscriptionVendor = __webpack_require__(237);
 	
 	var emptyFunction = __webpack_require__(15);
 	var invariant = __webpack_require__(13);
@@ -26305,7 +26345,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26326,7 +26366,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(235);
+	var EventSubscription = __webpack_require__(236);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -26358,7 +26398,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports) {
 
 	/**
@@ -26412,7 +26452,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26521,7 +26561,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26548,7 +26588,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31535,7 +31575,7 @@
 	}));
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -31552,7 +31592,7 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(227);
+	var FluxStoreGroup = __webpack_require__(228);
 	
 	var invariant = __webpack_require__(223);
 	
@@ -31658,7 +31698,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31729,11 +31769,12 @@
 	module.exports = IndexItem;
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
+	var Link = __webpack_require__(159).Link;
 	
 	var LoginForm = React.createClass({
 	  displayName: 'LoginForm',
@@ -31769,8 +31810,8 @@
 	            'ul',
 	            { className: 'auth-header-tabs' },
 	            React.createElement(
-	              'li',
-	              { className: 'create-account-tab' },
+	              Link,
+	              { to: '/newuser', className: 'create-account-tab' },
 	              'Create Account'
 	            ),
 	            React.createElement(
@@ -31855,48 +31896,155 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(220);
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var Link = __webpack_require__(159).Link;
 	
-	var SessionActions = {
-	  currentUserReceived: function (currentUser) {
-	    AppDispatcher.dispatch({
-	      actionType: 'CURRENT_USER_RECEIVED',
-	      currentUser: currentUser
+	var NewUserForm = React.createClass({
+	  displayName: 'NewUserForm',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return {
+	      username: '',
+	      password: ''
+	    };
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'main',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'auth-header-stretch group' },
+	        React.createElement(
+	          'header',
+	          { className: 'auth-header-bar' },
+	          React.createElement('div', { className: 'auth-header-logo-image' }),
+	          React.createElement(
+	            'h1',
+	            { className: 'auth-header-logo' },
+	            'CLOUDCAST'
+	          ),
+	          React.createElement(
+	            'ul',
+	            { className: 'auth-header-tabs' },
+	            React.createElement(
+	              'li',
+	              { className: 'create-account-selected' },
+	              React.createElement(
+	                'a',
+	                { href: '#' },
+	                'Create Account'
+	              )
+	            ),
+	            React.createElement(
+	              Link,
+	              { to: '/signin', className: 'sign-in-tab' },
+	              'Sign In'
+	            )
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'auth-main' },
+	        React.createElement(
+	          'form',
+	          {
+	            className: 'auth-form',
+	            method: 'post',
+	            onSubmit: this.handleSubmit
+	          },
+	          React.createElement(
+	            'label',
+	            null,
+	            'What do you want your username to be? ',
+	            React.createElement('br', null),
+	            React.createElement('input', {
+	              onChange: this.updateName,
+	              className: 'email-input',
+	              type: 'text',
+	              value: this.state.username
+	            })
+	          ),
+	          React.createElement('br', null),
+	          React.createElement(
+	            'label',
+	            { className: 'halved-password-input-wrapper' },
+	            'Choose a password',
+	            React.createElement('br', null),
+	            React.createElement('input', {
+	              onChange: this.updatePassword,
+	              className: 'halved-password-input',
+	              type: 'password',
+	              value: this.state.password
+	            })
+	          ),
+	          React.createElement(
+	            'label',
+	            { className: 'halved-password-input-wrapper' },
+	            'Re-type password',
+	            React.createElement('br', null),
+	            React.createElement('input', {
+	              onChange: this.updatePassword,
+	              className: 'halved-password-input',
+	              type: 'password',
+	              value: this.state.password
+	            })
+	          ),
+	          React.createElement('br', null),
+	          React.createElement(
+	            'label',
+	            { className: 'terms-agreement-wrapper' },
+	            React.createElement('input', { type: 'checkbox', name: '', value: 'unchecked' }),
+	            'I agree to the ',
+	            React.createElement(
+	              'a',
+	              { href: '#' },
+	              'Terms of Use'
+	            ),
+	            ' and ',
+	            React.createElement(
+	              'a',
+	              { href: '#' },
+	              'Privacy Policy'
+	            )
+	          ),
+	          React.createElement('input', { className: 'submit-button', type: 'submit', value: 'Create account' })
+	        )
+	      )
+	    );
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    var router = this.context.router;
+	
+	    ApiUtil.createUser(this.state, function () {
+	      router.push('/#');
 	    });
 	  },
 	
-	  logout: function () {
-	    AppDispatcher.dispatch({
-	      actionType: 'LOGOUT'
-	    });
-	  }
-	};
+	  updateName: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
 	
-	module.exports = SessionActions;
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  }
+	
+	});
+	
+	module.exports = NewUserForm;
 
 /***/ }
 /******/ ]);

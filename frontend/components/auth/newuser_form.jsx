@@ -2,7 +2,7 @@ var React = require('react');
 var ApiUtil = require('../../util/api_util.js');
 var Link = require('react-router').Link;
 
-var LoginForm = React.createClass({
+var NewUserForm = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -24,10 +24,10 @@ var LoginForm = React.createClass({
             <h1 className="auth-header-logo">CLOUDCAST</h1>
 
             <ul className="auth-header-tabs">
-              <Link to={'/newuser'} className="create-account-tab">Create Account</Link>
-              <li className="sign-in-selected">
-                <a href="#">Sign In</a>
+              <li className="create-account-selected">
+                <a href="#">Create Account</a>
               </li>
+              <Link to={'/signin'} className="sign-in-tab">Sign In</Link>
             </ul>
 
           </header>
@@ -41,7 +41,7 @@ var LoginForm = React.createClass({
           >
 
             <label>
-              Your username <br />
+              What do you want your username to be? <br />
               <input
                 onChange={this.updateName}
                 className="email-input"
@@ -51,12 +51,23 @@ var LoginForm = React.createClass({
             </label>
             <br />
 
-            <label className="password-input-wrapper">
-              Your password
+            <label className="halved-password-input-wrapper">
+              Choose a password
               <br />
               <input
                 onChange={this.updatePassword}
-                className="password-input"
+                className="halved-password-input"
+                type="password"
+                value={this.state.password}
+              />
+            </label>
+
+            <label className="halved-password-input-wrapper">
+              Re-type password
+              <br />
+              <input
+                onChange={this.updatePassword}
+                className="halved-password-input"
                 type="password"
                 value={this.state.password}
               />
@@ -64,10 +75,11 @@ var LoginForm = React.createClass({
             <br />
 
             <label className="terms-agreement-wrapper">
-              Welcome to Cloudcast, the internet's only podcast sharing site.
+              <input type="checkbox" name="" value="unchecked" />
+              I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
             </label>
 
-            <input className="submit-button" type="submit" value="Sign in" />
+            <input className="submit-button" type="submit" value="Create account" />
           </form>
         </div>
       </main>
@@ -79,7 +91,7 @@ var LoginForm = React.createClass({
 
     var router = this.context.router;
 
-    ApiUtil.login(this.state, function() {
+    ApiUtil.createUser(this.state, function() {
       router.push('/#');
     });
   },
@@ -94,4 +106,4 @@ var LoginForm = React.createClass({
 
 });
 
-module.exports = LoginForm;
+module.exports = NewUserForm;

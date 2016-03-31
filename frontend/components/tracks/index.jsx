@@ -2,6 +2,7 @@ var React = require('react');
 var ApiUtil = require('../../util/api_util.js');
 var TrackStore = require('../../stores/track.js');
 var TrackIndexItem = require('./index_item.jsx');
+var Link = require('react-router').Link;
 
 var TrackIndex = React.createClass({
   getInitialState: function () {
@@ -34,7 +35,7 @@ var TrackIndex = React.createClass({
             </div>
             <a href='#' className='link-tab upload-tab'>Upload</a>
             <div className='link-tab user-or-signin-tab'>
-              <a className='link-tab header-sign-in-tab' href='session/new'>Sign In</a>
+              <Link to={'/signin'} className='link-tab header-sign-in-tab' href='session/new'>Sign In</Link>
             </div>
           </ul>
         </div>

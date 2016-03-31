@@ -24,13 +24,27 @@ var ApiUtil = {
     });
   },
 
+  createUser: function (credentials, callback) {
+    $.ajax({
+      type: 'POST',
+      url: '/api/user',
+      dataType: 'json',
+      data: {user: credentials},
+      success: function(currentUser) {
+        SessionActions.currentUserReceived(currentUser);
+        callback && callback();
+      }
+    });
+  },
+
   login: function (credentials, callback) {
     $.ajax({
       type: 'POST',
       url: '/api/session',
       dataType: 'json',
-      data: credentials,
+      data: {user: credentials},
       success: function(currentUser) {
+        debugger
         SessionActions.currentUserReceived(currentUser);
         callback && callback();
       }
