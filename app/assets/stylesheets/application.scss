@@ -170,14 +170,127 @@ ul {
   cursor: pointer;
 }
 
+/* ~ TRACK INDEX NAVBAR ~ */
+
+.index-navbar-stretch {
+  height: 46px;
+  margin: 0 auto;
+  background: #333;
+  display: block;
+}
+
+.index-navbar {
+  height: 46px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #333;
+  display: block;
+}
+
+.index-logo-image {
+  width: 48px;
+  height: 34px;
+  background: linear-gradient( 0deg, #f30, #f70);
+  padding: 6px;
+  content: asset-url('cloudcast_slim_white.png');
+  float: left;
+}
+
+.link-tab {
+  color: #bbb;
+  font-size: 14px;
+  text-align: center;
+}
+
+.link-tab:hover {
+  color: #eee;
+}
+
+.search-bar-tab {
+  width: 326px;
+  height: 22px;
+  padding: 16px 6px 6px 12px;
+  display: block;
+  float: left;
+  position: relative;
+}
+
+.search-bar {
+  background: #ddd;
+  height: 20px;
+  padding: 4px 4px 4px 8px;
+  margin: 0 0 12px 0;
+  width: 92%;
+  border-radius: 4px;
+  position: absolute;
+  top: 9px;
+  font-size: 14px;
+  color: #999;
+}
+
+.home-tab, .collection-tab {
+  width: 104px;
+  height: 24px;
+  padding: 14px 6px 6px 6px;
+  display: block;
+  border-right: 1px solid #000;
+  float: left;
+}
+
+.upload-tab, .header-sign-in-tab {
+  width: 70px;
+  height: 24px;
+  padding: 14px 6px 6px 6px;
+  display: block;
+  float: right;
+}
+
+/* ~ TRACK INDEX MAIN ~ */
+
+.index-main {
+  background: #eee;
+  height: 1000px;
+}
+
+.index-page {
+  width: 1000px;
+  height: 100%;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+  background: #fff;
+}
+
+.index-page-main {
+  width: 660px;
+  float: left;
+}
+
+.stream-header {
+  font-size: 18px;
+  color: #aaa;
+  padding: 16px 16px 4px 16px;
+  letter-spacing: 2px;
+}
+
+.index-sidebar {
+  width: 340px;
+  height: 100%;
+  float: left;
+  background: #fff;
+  position: absolute;
+  border-left: 1px solid #ddd;
+  right: 0;
+  top: 0;
+}
+
 /* ~ TRACK INDEX ITEM ~ */
 
 .track-index-item {
   width: 620px;
   height: 240px;
+  margin: 0 auto;
   background: #fff;
-  border-bottom: 1px solid #ccc;
-  border-right: 1px solid #ccc;
 }
 
 .track-header {
@@ -190,7 +303,8 @@ ul {
   height: 32px;
   display: block;
   margin: auto 0;
-  background: #ff5500;
+  background: asset-url('medigoron.png');
+  background-size: contain;
   border-radius: 50%;
   margin: 12px 0 0 0;
   float: left;
@@ -256,7 +370,7 @@ ul {
 }
 
 .waveform {
-  background: #ff5500;
+  background: #ddd;
   height: 70px;
   width: 424px;
   position: absolute;

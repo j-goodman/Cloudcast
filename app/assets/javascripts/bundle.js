@@ -19717,12 +19717,68 @@
 
 	  render: function () {
 	    return React.createElement(
-	      'ul',
-	      null,
-	      this.state.tracks.map(function (track) {
-	        return React.createElement(TrackIndexItem, { key: track.id,
-	          track: track });
-	      })
+	      'div',
+	      { className: 'index-main' },
+	      React.createElement(
+	        'div',
+	        { className: 'index-navbar-stretch' },
+	        React.createElement(
+	          'ul',
+	          { className: 'index-navbar group' },
+	          React.createElement('a', { href: '#', className: 'link-tab index-logo-image' }),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'link-tab home-tab' },
+	            'Home'
+	          ),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'link-tab collection-tab' },
+	            'Collection'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'search-bar-tab' },
+	            React.createElement('input', { className: 'search-bar', value: 'Search', type: 'text' })
+	          ),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'link-tab upload-tab' },
+	            'Upload'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'link-tab user-or-signin-tab' },
+	            React.createElement(
+	              'a',
+	              { className: 'link-tab header-sign-in-tab', href: '#' },
+	              'Sign In'
+	            )
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'index-page group' },
+	        React.createElement(
+	          'div',
+	          { className: 'index-page-main' },
+	          React.createElement(
+	            'h2',
+	            { className: 'stream-header' },
+	            'Hear the latest from your stream:'
+	          ),
+	          React.createElement(
+	            'ul',
+	            { className: 'track-list' },
+	            this.state.tracks.map(function (track) {
+	              return React.createElement(TrackIndexItem, { key: track.id,
+	                track: track });
+	            })
+	          )
+	        ),
+	        React.createElement('div', { className: 'index-sidebar' })
+	      )
 	    );
 	  }
 

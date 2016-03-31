@@ -23,12 +23,35 @@ var TrackIndex = React.createClass({
 
   render: function () {
     return(
-      <ul>
-        {this.state.tracks.map(function (track) {
-          return <TrackIndexItem key={track.id}
-          track={track} />;
-        })}
-      </ul>
+      <div className='index-main'>
+        <div className='index-navbar-stretch'>
+          <ul className='index-navbar group'>
+            <a href='#' className='link-tab index-logo-image'></a>
+            <a href='#' className='link-tab home-tab'>Home</a>
+            <a href='#' className='link-tab collection-tab'>Collection</a>
+            <div className='search-bar-tab'>
+              <input className='search-bar' value='Search' type='text'></input>
+            </div>
+            <a href='#' className='link-tab upload-tab'>Upload</a>
+            <div className='link-tab user-or-signin-tab'>
+              <a className='link-tab header-sign-in-tab' href='#'>Sign In</a>
+            </div>
+          </ul>
+        </div>
+        <div className='index-page group'>
+          <div className='index-page-main'>
+            <h2 className='stream-header'>Hear the latest from your stream:</h2>
+            <ul className='track-list'>
+              {this.state.tracks.map(function (track) {
+                return <TrackIndexItem key={track.id}
+                track={track} />;
+              })}
+            </ul>
+          </div>
+          <div className='index-sidebar'>
+          </div>
+        </div>
+      </div>
     );
   }
 
