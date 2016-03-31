@@ -19751,7 +19751,7 @@
 	            { className: 'link-tab user-or-signin-tab' },
 	            React.createElement(
 	              'a',
-	              { className: 'link-tab header-sign-in-tab', href: '#' },
+	              { className: 'link-tab header-sign-in-tab', href: 'session/new' },
 	              'Sign In'
 	            )
 	          )

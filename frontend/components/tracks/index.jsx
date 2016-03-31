@@ -34,7 +34,7 @@ var TrackIndex = React.createClass({
             </div>
             <a href='#' className='link-tab upload-tab'>Upload</a>
             <div className='link-tab user-or-signin-tab'>
-              <a className='link-tab header-sign-in-tab' href='#'>Sign In</a>
+              <a className='link-tab header-sign-in-tab' href='session/new'>Sign In</a>
             </div>
           </ul>
         </div>
