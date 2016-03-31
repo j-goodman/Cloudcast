@@ -116,7 +116,6 @@ which has its own `Index` view.
 **objective:** Enable complex styling of tracks.
 
 - [ ] Use Rails helpers to sanitize HTML before rendering.
-- [ ] Style the new Quill elements.
 
 ### Phase 8: Styling Cleanup and Seeding (1 day)
 

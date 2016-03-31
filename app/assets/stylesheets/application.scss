@@ -45,6 +45,27 @@ button, article, footer, small {
 
 /* ~ USER AUTHENTICATION ~ */
 
+.login-dimmer {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: .8;
+}
+
+.login-box {
+  width: 400px;
+  height: 400px;
+  background: rebeccapurple;
+  margin: 0 auto;
+  position: absolute;
+  top: 100px;
+  left: 350px;
+  opacity: 1;
+}
+
 body {
   font-family: sans-serif;
   font-family: Tahoma;
@@ -188,9 +209,9 @@ ul {
 }
 
 .index-logo-image {
-  width: 48px;
+  width: 42px;
   height: 34px;
-  background: linear-gradient( 0deg, #f30, #f70);
+  background: linear-gradient( 350deg, #f30, #f70);
   padding: 6px;
   content: asset-url('cloudcast_slim_white.png');
   float: left;

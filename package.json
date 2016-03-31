@@ -6,11 +6,9 @@
   "directories": {
     "test": "test"
   },
-
   "scripts": {
-   "postinstall": "./node_modules/.bin/webpack"
+    "postinstall": "./node_modules/.bin/webpack"
   },
-
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -21,6 +19,8 @@
     "flux": "^2.1.1",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
+    "react-modal": "^0.6.1",
+    "react-router": "^2.0.1",
     "webpack": "^1.12.14"
   }
 }

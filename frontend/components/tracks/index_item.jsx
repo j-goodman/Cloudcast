@@ -16,7 +16,7 @@ var IndexItem = React.createClass({
           <div className='track-body-main group'>
             <div className='track-subheader'>
               <div className='playicon'></div>
-              <span className='track-username'>{this.props.track.user.username}</span>
+              <span className='track-username'>{this.props.track.description}</span>
               <span className='track-title'>{this.props.track.title}</span>
             </div>
           </div>

@@ -8,7 +8,6 @@ var _tracks = {};
 var resetTracks = function (tracks) {
   _tracks = {};
   tracks.forEach(function (track) {
-    console.log(track.id);
     _tracks[track.id] = track;
   });
 };
