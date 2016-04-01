@@ -51,6 +51,7 @@
 	var Run = __webpack_require__(216);
 	var LoginForm = __webpack_require__(242);
 	var NewUserForm = __webpack_require__(243);
+	var TrackForm = __webpack_require__(246);
 	
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
@@ -60,7 +61,11 @@
 	var router = React.createElement(
 	  Router,
 	  { history: hashHistory },
-	  React.createElement(Route, { path: '/', component: Run }),
+	  React.createElement(
+	    Route,
+	    { path: '/', component: Run },
+	    React.createElement(Route, { path: 'newtrack', component: TrackForm })
+	  ),
 	  React.createElement(Route, { path: '/signin', component: LoginForm }),
 	  React.createElement(Route, { path: '/newuser', component: NewUserForm })
 	);
@@ -24757,7 +24762,8 @@
 	      React.createElement(
 	        'div',
 	        { className: 'content-main' },
-	        React.createElement(TrackIndex, null)
+	        React.createElement(TrackIndex, null),
+	        this.props.children
 	      )
 	    );
 	  }
@@ -24774,6 +24780,7 @@
 	var TrackStore = __webpack_require__(225);
 	var SessionStore = __webpack_require__(244);
 	var TrackIndexItem = __webpack_require__(241);
+	var IndexSidebar = __webpack_require__(245);
 	
 	var Link = __webpack_require__(159).Link;
 	
@@ -24790,8 +24797,8 @@
 	
 	  componentDidMount: function () {
 	    this.trackListener = TrackStore.addListener(this._onChange);
-	    this.sessionListener = SessionStore.addListener(this._onChange);
 	    ApiUtil.fetchAllTracks();
+	    this.sessionListener = SessionStore.addListener(this._onChange);
 	    ApiUtil.fetchCurrentUser();
 	  },
 	
@@ -24802,7 +24809,6 @@
 	
 	  render: function () {
 	
-	    ApiUtil.fetchCurrentUser();
 	    var user = {};
 	
 	    var loggedIn = SessionStore.isLoggedIn();
@@ -24825,7 +24831,7 @@
 	        { className: 'link-tab user-or-signin-tab' },
 	        React.createElement(
 	          Link,
-	          { to: '/signin', className: 'link-tab header-sign-in-tab', href: 'session/new' },
+	          { to: '/signin', className: 'link-tab header-sign-in-tab' },
 	          'Sign In'
 	        )
 	      );
@@ -24875,8 +24881,8 @@
 	            React.createElement('input', { className: 'search-bar', defaultValue: 'Search', type: 'text' })
 	          ),
 	          React.createElement(
-	            'a',
-	            { href: '#', className: 'link-tab upload-tab' },
+	            Link,
+	            { to: '/newtrack', className: 'link-tab upload-tab' },
 	            'Upload'
 	          ),
 	          headerUserTab
@@ -24900,7 +24906,11 @@
 	            })
 	          )
 	        ),
-	        React.createElement('div', { className: 'index-sidebar' })
+	        React.createElement(
+	          'div',
+	          { className: 'index-sidebar' },
+	          React.createElement(IndexSidebar, null)
+	        )
 	      )
 	    );
 	  }
@@ -24942,7 +24952,7 @@
 	  createUser: function (credentials, callback) {
 	    $.ajax({
 	      type: 'POST',
-	      url: '/api/user',
+	      url: '/api/users',
 	      dataType: 'json',
 	      data: { user: credentials },
 	      success: function (currentUser) {
@@ -24959,9 +24969,12 @@
 	      dataType: 'json',
 	      data: { user: credentials },
 	      success: function (currentUser) {
-	        SessionActions.currentUserReceived(currentUser);
+	        if (currentUser.username) {
+	          SessionActions.currentUserReceived(currentUser);
+	        }
 	        callback && callback();
-	      }
+	      },
+	      error: function () {}
 	    });
 	  },
 	
@@ -24972,11 +24985,12 @@
 	      dataType: 'json',
 	      success: function () {
 	        SessionActions.logout();
-	      }
+	      },
+	      error: function () {}
 	    });
 	  },
 	
-	  fetchCurrentUser: function (completion) {
+	  fetchCurrentUser: function () {
 	    $.ajax({
 	      type: 'GET',
 	      url: '/api/session',
@@ -24984,9 +24998,7 @@
 	      success: function (currentUser) {
 	        SessionActions.currentUserReceived(currentUser);
 	      },
-	      complete: function () {
-	        completion && completion();
-	      }
+	      error: function () {}
 	    });
 	  }
 	};
@@ -32082,7 +32094,7 @@
 	
 	    var router = this.context.router;
 	
-	    ApiUtil.createUser(this.state, function () {
+	    ApiUtil.createTrack(this.state, function () {
 	      router.push('/#');
 	    });
 	  },
@@ -32108,7 +32120,7 @@
 	
 	var SessionStore = new Store(AppDispatcher);
 	
-	var _currentUser;
+	var _currentUser = null;
 	var _currentUserHasBeenFetched = false;
 	
 	SessionStore.currentUser = function () {
@@ -32138,6 +32150,159 @@
 	};
 	
 	module.exports = SessionStore;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var IndexItem = React.createClass({
+	  displayName: 'IndexItem',
+	
+	  render: function () {
+	    return React.createElement('div', { className: 'followed-pane' });
+	  }
+	});
+	
+	module.exports = IndexItem;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var Link = __webpack_require__(159).Link;
+	
+	var TrackForm = React.createClass({
+	  displayName: 'TrackForm',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return {
+	      title: '',
+	      tags: '',
+	      description: ''
+	    };
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'modal-wrapper' },
+	      React.createElement('div', { className: 'track-form-dimmer' }),
+	      React.createElement(
+	        'main',
+	        { className: 'track-form-main group' },
+	        React.createElement(
+	          'h2',
+	          { className: 'track-form-header' },
+	          'Upload to Cloudcast'
+	        ),
+	        React.createElement('input', { className: 'track-submit-button', type: 'submit', value: 'Choose a file to upload' }),
+	        React.createElement(
+	          'form',
+	          { className: 'track-info-main',
+	            onSubmit: this.handleSubmit },
+	          React.createElement(
+	            'div',
+	            { className: 'image-upload' },
+	            React.createElement('input', { className: 'image-upload-button', type: 'submit', value: 'Upload an image' })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'track-info-box' },
+	            React.createElement(
+	              'label',
+	              null,
+	              'Title * ',
+	              React.createElement('br', null),
+	              React.createElement('input', {
+	                className: 'track-title-input',
+	                onChange: this.updateTitle,
+	                type: 'text',
+	                placeholder: 'Name your track',
+	                defaultValue: this.state.title
+	              })
+	            ),
+	            ' ',
+	            React.createElement('br', null),
+	            React.createElement(
+	              'label',
+	              null,
+	              'Tags ',
+	              React.createElement('br', null),
+	              React.createElement('input', {
+	                className: 'track-tags-input',
+	                onChange: this.updateTags,
+	                type: 'text',
+	                placeholder: 'Add tags to help people find your podcast',
+	                defaultValue: this.state.tags
+	              })
+	            ),
+	            React.createElement(
+	              'label',
+	              null,
+	              'Description ',
+	              React.createElement('br', null),
+	              React.createElement('textarea', {
+	                className: 'track-description-input',
+	                onChange: this.updateDescription,
+	                type: 'text',
+	                placeholder: 'Describe your podcast',
+	                defaultValue: this.state.description
+	              })
+	            ),
+	            React.createElement('br', null)
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'track-form-footer' },
+	            React.createElement(
+	              'span',
+	              { className: 'footer-text' },
+	              ' * Required field '
+	            ),
+	            React.createElement(
+	              'span',
+	              { className: 'track-form-buttons' },
+	              React.createElement(
+	                Link,
+	                { to: '/', className: 'track-cancel-button' },
+	                'Cancel'
+	              ),
+	              React.createElement('input', { className: 'track-save-button', type: 'submit', value: 'Save' })
+	            )
+	          )
+	        )
+	      )
+	    );
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    var router = this.context.router;
+	
+	    ApiUtil.createTrack(this.state, function () {
+	      router.push('/#');
+	    });
+	  },
+	
+	  updateName: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  }
+	});
+	
+	module.exports = TrackForm;
 
 /***/ }
 /******/ ]);

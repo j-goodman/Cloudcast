@@ -91,7 +91,7 @@ var NewUserForm = React.createClass({
 
     var router = this.context.router;
 
-    ApiUtil.createUser(this.state, function() {
+    ApiUtil.createTrack(this.state, function() {
       router.push('/#');
     });
   },

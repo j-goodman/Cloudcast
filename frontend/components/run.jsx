@@ -9,6 +9,7 @@ Run = React.createClass({
         <div id='cloudcast'>
           <div className='content-main'>
             <TrackIndex />
+            {this.props.children}
           </div>
         </div>
       );

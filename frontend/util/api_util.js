@@ -27,7 +27,7 @@ var ApiUtil = {
   createUser: function (credentials, callback) {
     $.ajax({
       type: 'POST',
-      url: '/api/user',
+      url: '/api/users',
       dataType: 'json',
       data: {user: credentials},
       success: function(currentUser) {
@@ -44,8 +44,12 @@ var ApiUtil = {
       dataType: 'json',
       data: {user: credentials},
       success: function(currentUser) {
-        SessionActions.currentUserReceived(currentUser);
+        if (currentUser.username) {
+          SessionActions.currentUserReceived(currentUser);
+        }
         callback && callback();
+      },
+      error: function() {
       }
     });
   },
@@ -57,11 +61,13 @@ var ApiUtil = {
       dataType: 'json',
       success: function() {
         SessionActions.logout();
+      },
+      error: function() {
       }
     });
   },
 
-  fetchCurrentUser: function(completion) {
+  fetchCurrentUser: function() {
     $.ajax({
       type: 'GET',
       url: '/api/session',
@@ -69,8 +75,7 @@ var ApiUtil = {
       success: function(currentUser) {
         SessionActions.currentUserReceived(currentUser);
       },
-      complete: function() {
-        completion && completion();
+      error: function() {
       }
     });
   }

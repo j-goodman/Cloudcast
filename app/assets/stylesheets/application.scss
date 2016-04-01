@@ -306,6 +306,7 @@ ul {
 .index-sidebar {
   width: 340px;
   height: 100%;
+  padding: 12px;
   float: left;
   background: #fff;
   position: absolute;
@@ -400,7 +401,7 @@ ul {
 }
 
 .waveform {
-  background: #ddd;
+  background: #eee;
   height: 70px;
   width: 424px;
   position: absolute;
@@ -458,4 +459,157 @@ ul {
 .track-share {
   background: asset-url('share.png');
   background-size: contain;
+}
+
+.followed-pane {
+  height: 400px;
+  width: 340px;
+}
+
+/* ~ NEW TRACK FORM ~ */
+
+.content-main {
+  position: relative;
+}
+
+.track-form-dimmer {
+  height: 120%;
+  width: 100%;
+  background: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: .7;
+  z-index: 999;
+}
+
+.track-form-main {
+  width: 700px;
+  position: absolute;
+  top: 90px;
+  left: 218px;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1000;
+  background: #fff;
+}
+
+.track-form-header {
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+.track-submit-button {
+  background: #ff5500;
+  color: #eee;
+  padding: 5px 10px;
+  display: block;
+  margin: 30px auto;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.track-submit-button:hover {
+  color: #fff;
+}
+
+.track-info-main {
+  width: 650px;
+  display: block;
+  margin: 20px auto;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-top: 5px solid #ff5500;
+  border-bottom: 5px solid #1D79C9;
+  padding: 20px;
+  min-height: 320px;
+}
+
+.image-upload {
+  width: 300px;
+  height: 300px;
+  background: asset-url('agents_of_fortune.jpg');
+  background-size: contain;
+  position: relative;
+  float: left;
+}
+
+.image-upload-button {
+  background: #eee;
+  color: #222;
+  padding: 5px 10px;
+  display: block;
+  border-radius: 4px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 30px;
+  left: 94px;
+}
+
+.image-upload-button:hover {
+  color: #888;
+}
+
+.track-info-box {
+  float: right;
+  padding: 10px;
+  width: 310px;
+}
+
+.track-form-footer {
+  position: absolute;
+  bottom: 56px;
+  width: 100%;
+}
+
+.track-title-input, .track-tags-input, .track-description-input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 300px;
+  margin: 10px 0;
+  padding: 4px 10px;
+  color: #333;
+}
+
+.track-description-input {
+  height: 128px;
+  padding: 10px 10px;
+}
+
+.track-title-input:focus, .track-tags-input:focus, .track-description-input:focus {
+  border: 1px solid #bbb;
+}
+
+.track-form-buttons {
+  float: right;
+  margin: 0 90px 0 0;
+}
+
+.track-cancel-button, .track-save-button {
+  color: #777;
+  padding: 5px 10px;
+  display: block;
+  border-radius: 4px;
+  cursor: pointer;
+  float: left;
+}
+
+.track-save-button {
+  background: #ff5500;
+  color: #eee;
+}
+
+.footer-text {
+  color: #888;
+  position: absolute;
+  bottom: 4px;
+}
+
+.track-save-button:hover {
+  color: #fff;
+}
+
+.track-cancel-button:hover {
+  color: #222;
 }

@@ -3,6 +3,7 @@ var ApiUtil = require('../../util/api_util.js');
 var TrackStore = require('../../stores/track.js');
 var SessionStore = require('../../stores/session.js');
 var TrackIndexItem = require('./index_item.jsx');
+var IndexSidebar = require('./index_sidebar.jsx');
 
 var Link = require('react-router').Link;
 
@@ -17,8 +18,8 @@ var TrackIndex = React.createClass({
 
   componentDidMount: function () {
     this.trackListener = TrackStore.addListener(this._onChange);
-    this.sessionListener = SessionStore.addListener(this._onChange);
     ApiUtil.fetchAllTracks();
+    this.sessionListener = SessionStore.addListener(this._onChange);
     ApiUtil.fetchCurrentUser();
   },
 
@@ -29,7 +30,6 @@ var TrackIndex = React.createClass({
 
   render: function () {
 
-    ApiUtil.fetchCurrentUser();
     var user = {};
 
     var loggedIn = SessionStore.isLoggedIn();
@@ -47,7 +47,7 @@ var TrackIndex = React.createClass({
     } else {
       headerUserTab = (
         <div className='link-tab user-or-signin-tab'>
-          <Link to={'/signin'} className='link-tab header-sign-in-tab' href='session/new'>Sign In</Link>
+          <Link to={'/signin'} className='link-tab header-sign-in-tab'>Sign In</Link>
         </div>
       );
     }
@@ -74,7 +74,7 @@ var TrackIndex = React.createClass({
             <div className='search-bar-tab'>
               <input className='search-bar' defaultValue='Search' type='text'></input>
             </div>
-            <a href='#' className='link-tab upload-tab'>Upload</a>
+            <Link to={'/newtrack'} className='link-tab upload-tab'>Upload</Link>
             {headerUserTab}
           </ul>
         </div>
@@ -91,6 +91,7 @@ var TrackIndex = React.createClass({
             </ul>
           </div>
           <div className='index-sidebar'>
+            <IndexSidebar />
           </div>
         </div>
       </div>
