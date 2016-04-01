@@ -24772,7 +24772,9 @@
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
 	var TrackStore = __webpack_require__(225);
+	var SessionStore = __webpack_require__(244);
 	var TrackIndexItem = __webpack_require__(241);
+	
 	var Link = __webpack_require__(159).Link;
 	
 	var TrackIndex = React.createClass({
@@ -24788,14 +24790,65 @@
 	
 	  componentDidMount: function () {
 	    this.trackListener = TrackStore.addListener(this._onChange);
+	    this.sessionListener = SessionStore.addListener(this._onChange);
 	    ApiUtil.fetchAllTracks();
+	    ApiUtil.fetchCurrentUser();
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.trackListener.remove();
+	    this.sessionListener.remove();
 	  },
 	
 	  render: function () {
+	
+	    ApiUtil.fetchCurrentUser();
+	    var user = {};
+	
+	    var loggedIn = SessionStore.isLoggedIn();
+	
+	    if (loggedIn) {
+	      user = SessionStore.currentUser();
+	    }
+	
+	    var headerUserTab;
+	
+	    if (loggedIn) {
+	      headerUserTab = React.createElement(
+	        'button',
+	        { onClick: ApiUtil.logout, className: 'link-tab user-dropdown-tab', href: 'session/new' },
+	        'Sign Out'
+	      );
+	    } else {
+	      headerUserTab = React.createElement(
+	        'div',
+	        { className: 'link-tab user-or-signin-tab' },
+	        React.createElement(
+	          Link,
+	          { to: '/signin', className: 'link-tab header-sign-in-tab', href: 'session/new' },
+	          'Sign In'
+	        )
+	      );
+	    }
+	
+	    var welcomeMessage;
+	
+	    if (loggedIn) {
+	      welcomeMessage = React.createElement(
+	        'h2',
+	        { className: 'stream-header' },
+	        'Welcome, ',
+	        user.username,
+	        '. Hear the latest from your stream:'
+	      );
+	    } else {
+	      welcomeMessage = React.createElement(
+	        'h2',
+	        { className: 'stream-header' },
+	        'Make an account to start collecting and sharing podcasts'
+	      );
+	    }
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'index-main' },
@@ -24819,22 +24872,14 @@
 	          React.createElement(
 	            'div',
 	            { className: 'search-bar-tab' },
-	            React.createElement('input', { className: 'search-bar', value: 'Search', type: 'text' })
+	            React.createElement('input', { className: 'search-bar', defaultValue: 'Search', type: 'text' })
 	          ),
 	          React.createElement(
 	            'a',
 	            { href: '#', className: 'link-tab upload-tab' },
 	            'Upload'
 	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'link-tab user-or-signin-tab' },
-	            React.createElement(
-	              Link,
-	              { to: '/signin', className: 'link-tab header-sign-in-tab', href: 'session/new' },
-	              'Sign In'
-	            )
-	          )
+	          headerUserTab
 	        )
 	      ),
 	      React.createElement(
@@ -24843,11 +24888,9 @@
 	        React.createElement(
 	          'div',
 	          { className: 'index-page-main' },
-	          React.createElement(
-	            'h2',
-	            { className: 'stream-header' },
-	            'Hear the latest from your stream:'
-	          ),
+	          React.createElement('br', null),
+	          welcomeMessage,
+	          React.createElement('br', null),
 	          React.createElement(
 	            'ul',
 	            { className: 'track-list' },
@@ -24916,9 +24959,19 @@
 	      dataType: 'json',
 	      data: { user: credentials },
 	      success: function (currentUser) {
-	        debugger;
 	        SessionActions.currentUserReceived(currentUser);
 	        callback && callback();
+	      }
+	    });
+	  },
+	
+	  logout: function () {
+	    $.ajax({
+	      type: 'DELETE',
+	      url: '/api/session',
+	      dataType: 'json',
+	      success: function () {
+	        SessionActions.logout();
 	      }
 	    });
 	  },
@@ -32045,6 +32098,46 @@
 	});
 	
 	module.exports = NewUserForm;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(226).Store;
+	var AppDispatcher = __webpack_require__(220);
+	
+	var SessionStore = new Store(AppDispatcher);
+	
+	var _currentUser;
+	var _currentUserHasBeenFetched = false;
+	
+	SessionStore.currentUser = function () {
+	  return _currentUser;
+	};
+	
+	SessionStore.isLoggedIn = function () {
+	  return !!_currentUser;
+	};
+	
+	SessionStore.currentUserHasBeenFetched = function () {
+	  return _currentUserHasBeenFetched;
+	};
+	
+	SessionStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case 'CURRENT_USER_RECEIVED':
+	      _currentUser = payload.currentUser;
+	      _currentUserHasBeenFetched = true;
+	      SessionStore.__emitChange();
+	      break;
+	    case 'LOGOUT':
+	      _currentUser = null;
+	      SessionStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = SessionStore;
 
 /***/ }
 /******/ ]);

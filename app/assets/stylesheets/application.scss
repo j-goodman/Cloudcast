@@ -67,8 +67,7 @@ button, article, footer, small {
 }
 
 body {
-  font-family: sans-serif;
-  font-family: Tahoma;
+  font-family: 'Asap', sans-serif;
   font-size: 12px;
 }
 
@@ -258,13 +257,23 @@ ul {
   float: left;
 }
 
-.upload-tab, .header-sign-in-tab {
+.upload-tab, .header-sign-in-tab, .user-dropdown-tab {
   width: 70px;
   height: 24px;
   padding: 14px 6px 6px 6px;
   display: block;
   float: right;
 }
+
+.user-dropdown-tab {
+  padding: 10px 6px 6px 6px;
+}
+
+.user-dropdown-tab:hover {
+  cursor: pointer;
+}
+
+
 
 /* ~ TRACK INDEX MAIN ~ */
 
@@ -412,7 +421,7 @@ ul {
 }
 
 .track-buttons {
-  width: 130px;
+  width: 144px;
   height: 32px;
   position: absolute;
   top: 140px;
@@ -423,10 +432,30 @@ ul {
 
 .track-button {
   float: left;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 22px;
   display: block;
   margin: 3px;
-  border: 1px solid #777;
+  border: 1px solid #ddd;
   border-radius: 3px;
+}
+
+.track-like {
+  background: asset-url('like.png');
+  background-size: contain;
+}
+
+.track-repost {
+  background: asset-url('repost.png');
+  background-size: contain;
+}
+
+.track-playlistadd {
+  background: asset-url('playlist.png');
+  background-size: contain;
+}
+
+.track-share {
+  background: asset-url('share.png');
+  background-size: contain;
 }

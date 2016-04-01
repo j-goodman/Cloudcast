@@ -79,7 +79,7 @@ user interface.
   - [ ] editing Comments
 - Use CSS to style new elements
 
-### Phase 4: Playlists and Follows (1 day)
+### Phase 5: Playlists and Follows (1 day)
 
 **Objective:** Tracks belong to Playlists, and can be viewed by playlist.
 

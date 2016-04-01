@@ -44,9 +44,19 @@ var ApiUtil = {
       dataType: 'json',
       data: {user: credentials},
       success: function(currentUser) {
-        debugger
         SessionActions.currentUserReceived(currentUser);
         callback && callback();
+      }
+    });
+  },
+
+  logout: function () {
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/session',
+      dataType: 'json',
+      success: function() {
+        SessionActions.logout();
       }
     });
   },
