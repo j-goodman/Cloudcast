@@ -19,8 +19,17 @@ var resetTrack = function (track) {
 TrackStore.all = function () {
   var tracks = [];
   for (var id in _tracks) {
-    // console.log(_tracks[id]);
     tracks.push(_tracks[id]);
+  }
+  return tracks;
+};
+
+TrackStore.getByUser = function (userId) {
+	var tracks = [];
+  for (var id in _tracks) {
+		if (_tracks[id].user.id === userId) {
+    	tracks.push(_tracks[id]);
+		}
   }
   return tracks;
 };

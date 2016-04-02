@@ -49,9 +49,10 @@
 	var ReactRouter = __webpack_require__(159);
 	
 	var Run = __webpack_require__(216);
-	var LoginForm = __webpack_require__(242);
-	var NewUserForm = __webpack_require__(243);
+	var LoginForm = __webpack_require__(244);
+	var NewUserForm = __webpack_require__(245);
 	var TrackForm = __webpack_require__(246);
+	var UserDetail = __webpack_require__(247);
 	
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
@@ -64,10 +65,11 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: Run },
-	    React.createElement(Route, { path: 'newtrack', component: TrackForm })
-	  ),
-	  React.createElement(Route, { path: '/signin', component: LoginForm }),
-	  React.createElement(Route, { path: '/newuser', component: NewUserForm })
+	    React.createElement(Route, { path: 'newtrack', component: TrackForm }),
+	    React.createElement(Route, { path: '/signin', component: LoginForm }),
+	    React.createElement(Route, { path: '/newuser', component: NewUserForm }),
+	    React.createElement(Route, { path: '/user/:id', component: UserDetail })
+	  )
 	);
 	
 	document.addEventListener('DOMContentLoaded', function () {
@@ -24778,9 +24780,9 @@
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
 	var TrackStore = __webpack_require__(225);
-	var SessionStore = __webpack_require__(244);
-	var TrackIndexItem = __webpack_require__(241);
-	var IndexSidebar = __webpack_require__(245);
+	var SessionStore = __webpack_require__(241);
+	var TrackIndexItem = __webpack_require__(242);
+	var IndexSidebar = __webpack_require__(243);
 	
 	var Link = __webpack_require__(159).Link;
 	
@@ -24878,7 +24880,9 @@
 	          React.createElement(
 	            'div',
 	            { className: 'search-bar-tab' },
-	            React.createElement('input', { className: 'search-bar', defaultValue: 'Search', type: 'text' })
+	            React.createElement('input', { className: 'search-bar',
+	              placeholder: 'Search',
+	              type: 'text' })
 	          ),
 	          React.createElement(
 	            Link,
@@ -24925,6 +24929,7 @@
 
 	var TrackActions = __webpack_require__(219);
 	var SessionActions = __webpack_require__(224);
+	var UserActions = __webpack_require__(250);
 	var AppDispatcher = __webpack_require__(220);
 	
 	var ApiUtil = {
@@ -24933,6 +24938,15 @@
 	      url: 'api/tracks',
 	      success: function (tracks) {
 	        TrackActions.receiveAllTracks(tracks);
+	      }
+	    });
+	  },
+	
+	  fetchUser: function (id) {
+	    $.ajax({
+	      url: 'api/users/' + id,
+	      success: function (user) {
+	        UserActions.receiveUser(user);
 	      }
 	    });
 	  },
@@ -25021,7 +25035,7 @@
 	
 	  receiveSingleTrack: function (track) {
 	    Dispatcher.dispatch({
-	      actionType: "POKEMON_RECEIVE",
+	      actionType: "TRACK_RECEIVE",
 	      track: track
 	    });
 	  }
@@ -25392,8 +25406,17 @@
 	TrackStore.all = function () {
 	  var tracks = [];
 	  for (var id in _tracks) {
-	    // console.log(_tracks[id]);
 	    tracks.push(_tracks[id]);
+	  }
+	  return tracks;
+	};
+	
+	TrackStore.getByUser = function (userId) {
+	  var tracks = [];
+	  for (var id in _tracks) {
+	    if (_tracks[id].user.id === userId) {
+	      tracks.push(_tracks[id]);
+	    }
 	  }
 	  return tracks;
 	};
@@ -31766,6 +31789,46 @@
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var Store = __webpack_require__(226).Store;
+	var AppDispatcher = __webpack_require__(220);
+	
+	var SessionStore = new Store(AppDispatcher);
+	
+	var _currentUser = null;
+	var _currentUserHasBeenFetched = false;
+	
+	SessionStore.currentUser = function () {
+	  return _currentUser;
+	};
+	
+	SessionStore.isLoggedIn = function () {
+	  return !!_currentUser;
+	};
+	
+	SessionStore.currentUserHasBeenFetched = function () {
+	  return _currentUserHasBeenFetched;
+	};
+	
+	SessionStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case 'CURRENT_USER_RECEIVED':
+	      _currentUser = payload.currentUser;
+	      _currentUserHasBeenFetched = true;
+	      SessionStore.__emitChange();
+	      break;
+	    case 'LOGOUT':
+	      _currentUser = null;
+	      SessionStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = SessionStore;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var React = __webpack_require__(1);
 	
 	var IndexItem = React.createClass({
@@ -31778,12 +31841,16 @@
 	      React.createElement(
 	        'div',
 	        { className: 'track-header' },
-	        React.createElement('div', { className: 'track-poster-image' }),
+	        React.createElement('a', { href: '#/user/' + this.props.track.user.id, className: 'track-poster-image' }),
 	        React.createElement(
 	          'h2',
 	          { className: 'track-header-text' },
-	          this.props.track.user.username,
-	          ' posted a track'
+	          React.createElement(
+	            'a',
+	            { href: '#/user/' + this.props.track.user.id },
+	            this.props.track.user.username,
+	            ' posted a track'
+	          )
 	        )
 	      ),
 	      React.createElement(
@@ -31834,325 +31901,7 @@
 	module.exports = IndexItem;
 
 /***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(218);
-	var Link = __webpack_require__(159).Link;
-	
-	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return {
-	      username: '',
-	      password: ''
-	    };
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'main',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'auth-header-stretch group' },
-	        React.createElement(
-	          'header',
-	          { className: 'auth-header-bar' },
-	          React.createElement('div', { className: 'auth-header-logo-image' }),
-	          React.createElement(
-	            'h1',
-	            { className: 'auth-header-logo' },
-	            'CLOUDCAST'
-	          ),
-	          React.createElement(
-	            'ul',
-	            { className: 'auth-header-tabs' },
-	            React.createElement(
-	              Link,
-	              { to: '/newuser', className: 'create-account-tab' },
-	              'Create Account'
-	            ),
-	            React.createElement(
-	              'li',
-	              { className: 'sign-in-selected' },
-	              React.createElement(
-	                'a',
-	                { href: '#' },
-	                'Sign In'
-	              )
-	            )
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'auth-main' },
-	        React.createElement(
-	          'form',
-	          {
-	            className: 'auth-form',
-	            method: 'post',
-	            onSubmit: this.handleSubmit
-	          },
-	          React.createElement(
-	            'label',
-	            null,
-	            'Your username ',
-	            React.createElement('br', null),
-	            React.createElement('input', {
-	              onChange: this.updateName,
-	              className: 'email-input',
-	              type: 'text',
-	              value: this.state.username
-	            })
-	          ),
-	          React.createElement('br', null),
-	          React.createElement(
-	            'label',
-	            { className: 'password-input-wrapper' },
-	            'Your password',
-	            React.createElement('br', null),
-	            React.createElement('input', {
-	              onChange: this.updatePassword,
-	              className: 'password-input',
-	              type: 'password',
-	              value: this.state.password
-	            })
-	          ),
-	          React.createElement('br', null),
-	          React.createElement(
-	            'label',
-	            { className: 'terms-agreement-wrapper' },
-	            'Welcome to Cloudcast, the internet\'s only podcast sharing site.'
-	          ),
-	          React.createElement('input', { className: 'submit-button', type: 'submit', value: 'Sign in' })
-	        )
-	      )
-	    );
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	
-	    var router = this.context.router;
-	
-	    ApiUtil.login(this.state, function () {
-	      router.push('/#');
-	    });
-	  },
-	
-	  updateName: function (e) {
-	    this.setState({ username: e.currentTarget.value });
-	  },
-	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
-	  }
-	
-	});
-	
-	module.exports = LoginForm;
-
-/***/ },
 /* 243 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(218);
-	var Link = __webpack_require__(159).Link;
-	
-	var NewUserForm = React.createClass({
-	  displayName: 'NewUserForm',
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return {
-	      username: '',
-	      password: ''
-	    };
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'main',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'auth-header-stretch group' },
-	        React.createElement(
-	          'header',
-	          { className: 'auth-header-bar' },
-	          React.createElement('div', { className: 'auth-header-logo-image' }),
-	          React.createElement(
-	            'h1',
-	            { className: 'auth-header-logo' },
-	            'CLOUDCAST'
-	          ),
-	          React.createElement(
-	            'ul',
-	            { className: 'auth-header-tabs' },
-	            React.createElement(
-	              'li',
-	              { className: 'create-account-selected' },
-	              React.createElement(
-	                'a',
-	                { href: '#' },
-	                'Create Account'
-	              )
-	            ),
-	            React.createElement(
-	              Link,
-	              { to: '/signin', className: 'sign-in-tab' },
-	              'Sign In'
-	            )
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'auth-main' },
-	        React.createElement(
-	          'form',
-	          {
-	            className: 'auth-form',
-	            method: 'post',
-	            onSubmit: this.handleSubmit
-	          },
-	          React.createElement(
-	            'label',
-	            null,
-	            'What do you want your username to be? ',
-	            React.createElement('br', null),
-	            React.createElement('input', {
-	              onChange: this.updateName,
-	              className: 'email-input',
-	              type: 'text',
-	              value: this.state.username
-	            })
-	          ),
-	          React.createElement('br', null),
-	          React.createElement(
-	            'label',
-	            { className: 'halved-password-input-wrapper' },
-	            'Choose a password',
-	            React.createElement('br', null),
-	            React.createElement('input', {
-	              onChange: this.updatePassword,
-	              className: 'halved-password-input',
-	              type: 'password',
-	              value: this.state.password
-	            })
-	          ),
-	          React.createElement(
-	            'label',
-	            { className: 'halved-password-input-wrapper' },
-	            'Re-type password',
-	            React.createElement('br', null),
-	            React.createElement('input', {
-	              onChange: this.updatePassword,
-	              className: 'halved-password-input',
-	              type: 'password',
-	              value: this.state.password
-	            })
-	          ),
-	          React.createElement('br', null),
-	          React.createElement(
-	            'label',
-	            { className: 'terms-agreement-wrapper' },
-	            React.createElement('input', { type: 'checkbox', name: '', value: 'unchecked' }),
-	            'I agree to the ',
-	            React.createElement(
-	              'a',
-	              { href: '#' },
-	              'Terms of Use'
-	            ),
-	            ' and ',
-	            React.createElement(
-	              'a',
-	              { href: '#' },
-	              'Privacy Policy'
-	            )
-	          ),
-	          React.createElement('input', { className: 'submit-button', type: 'submit', value: 'Create account' })
-	        )
-	      )
-	    );
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	
-	    var router = this.context.router;
-	
-	    ApiUtil.createTrack(this.state, function () {
-	      router.push('/#');
-	    });
-	  },
-	
-	  updateName: function (e) {
-	    this.setState({ username: e.currentTarget.value });
-	  },
-	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
-	  }
-	
-	});
-	
-	module.exports = NewUserForm;
-
-/***/ },
-/* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(226).Store;
-	var AppDispatcher = __webpack_require__(220);
-	
-	var SessionStore = new Store(AppDispatcher);
-	
-	var _currentUser = null;
-	var _currentUserHasBeenFetched = false;
-	
-	SessionStore.currentUser = function () {
-	  return _currentUser;
-	};
-	
-	SessionStore.isLoggedIn = function () {
-	  return !!_currentUser;
-	};
-	
-	SessionStore.currentUserHasBeenFetched = function () {
-	  return _currentUserHasBeenFetched;
-	};
-	
-	SessionStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case 'CURRENT_USER_RECEIVED':
-	      _currentUser = payload.currentUser;
-	      _currentUserHasBeenFetched = true;
-	      SessionStore.__emitChange();
-	      break;
-	    case 'LOGOUT':
-	      _currentUser = null;
-	      SessionStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = SessionStore;
-
-/***/ },
-/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32168,11 +31917,300 @@
 	module.exports = IndexItem;
 
 /***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var Link = __webpack_require__(159).Link;
+	
+	var LoginForm = React.createClass({
+			displayName: 'LoginForm',
+	
+			contextTypes: {
+					router: React.PropTypes.object.isRequired
+			},
+	
+			getInitialState: function () {
+					return {
+							username: '',
+							password: ''
+					};
+			},
+	
+			render: function () {
+					return React.createElement(
+							'div',
+							{ className: 'modal-wrapper' },
+							React.createElement('div', { className: 'modal-dimmer' }),
+							React.createElement(
+									'main',
+									{ className: 'auth-form-main group' },
+									React.createElement(
+											'div',
+											{ className: 'auth-header-stretch group' },
+											React.createElement(
+													'header',
+													{ className: 'auth-header-bar' },
+													React.createElement('div', { className: 'auth-header-logo-image' }),
+													React.createElement(
+															'h1',
+															{ className: 'auth-header-logo' },
+															'CLOUDCAST'
+													),
+													React.createElement(
+															'ul',
+															{ className: 'auth-header-tabs' },
+															React.createElement(
+																	Link,
+																	{ to: '/newuser', className: 'create-account-tab' },
+																	'Create Account'
+															),
+															React.createElement(
+																	'li',
+																	{ className: 'sign-in-selected' },
+																	React.createElement(
+																			'a',
+																			{ href: '#' },
+																			'Sign In'
+																	)
+															)
+													)
+											)
+									),
+									React.createElement(
+											'div',
+											{ className: 'auth-main' },
+											React.createElement(
+													'form',
+													{
+															className: 'auth-form',
+															method: 'post',
+															onSubmit: this.handleSubmit
+													},
+													React.createElement(
+															'label',
+															null,
+															'Your username ',
+															React.createElement('br', null),
+															React.createElement('input', {
+																	onChange: this.updateName,
+																	className: 'email-input',
+																	type: 'text',
+																	value: this.state.username
+															})
+													),
+													React.createElement('br', null),
+													React.createElement(
+															'label',
+															{ className: 'password-input-wrapper' },
+															'Your password',
+															React.createElement('br', null),
+															React.createElement('input', {
+																	onChange: this.updatePassword,
+																	className: 'password-input',
+																	type: 'password',
+																	value: this.state.password
+															})
+													),
+													React.createElement('br', null),
+													React.createElement(
+															'label',
+															{ className: 'terms-agreement-wrapper' },
+															'Welcome to Cloudcast, the internet\'s only podcast sharing site.'
+													),
+													React.createElement('input', { className: 'submit-button', type: 'submit', value: 'Sign in' })
+											)
+									)
+							)
+					);
+			},
+	
+			handleSubmit: function (e) {
+					e.preventDefault();
+	
+					var router = this.context.router;
+	
+					ApiUtil.login(this.state, function () {
+							router.push('/#');
+					});
+			},
+	
+			updateName: function (e) {
+					this.setState({ username: e.currentTarget.value });
+			},
+	
+			updatePassword: function (e) {
+					this.setState({ password: e.currentTarget.value });
+			}
+	
+	});
+	
+	module.exports = LoginForm;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var Link = __webpack_require__(159).Link;
+	
+	var NewUserForm = React.createClass({
+			displayName: 'NewUserForm',
+	
+			contextTypes: {
+					router: React.PropTypes.object.isRequired
+			},
+	
+			getInitialState: function () {
+					return {
+							username: '',
+							password: ''
+					};
+			},
+	
+			render: function () {
+					return React.createElement(
+							'div',
+							{ className: 'modal-wrapper' },
+							React.createElement('div', { className: 'modal-dimmer' }),
+							React.createElement(
+									'main',
+									{ className: 'auth-form-main group' },
+									React.createElement(
+											'div',
+											{ className: 'auth-header-stretch group' },
+											React.createElement(
+													'header',
+													{ className: 'auth-header-bar' },
+													React.createElement('div', { className: 'auth-header-logo-image' }),
+													React.createElement(
+															'h1',
+															{ className: 'auth-header-logo' },
+															'CLOUDCAST'
+													),
+													React.createElement(
+															'ul',
+															{ className: 'auth-header-tabs' },
+															React.createElement(
+																	'li',
+																	{ className: 'create-account-selected' },
+																	React.createElement(
+																			'a',
+																			{ href: '#' },
+																			'Create Account'
+																	)
+															),
+															React.createElement(
+																	Link,
+																	{ to: '/signin', className: 'sign-in-tab' },
+																	'Sign In'
+															)
+													)
+											)
+									),
+									React.createElement(
+											'div',
+											{ className: 'auth-main' },
+											React.createElement(
+													'form',
+													{
+															className: 'auth-form',
+															method: 'post',
+															onSubmit: this.handleSubmit
+													},
+													React.createElement(
+															'label',
+															null,
+															'What do you want your username to be? ',
+															React.createElement('br', null),
+															React.createElement('input', {
+																	onChange: this.updateName,
+																	className: 'email-input',
+																	type: 'text',
+																	value: this.state.username
+															})
+													),
+													React.createElement('br', null),
+													React.createElement(
+															'label',
+															{ className: 'halved-password-input-wrapper' },
+															'Choose a password',
+															React.createElement('br', null),
+															React.createElement('input', {
+																	onChange: this.updatePassword,
+																	className: 'halved-password-input',
+																	type: 'password',
+																	value: this.state.password
+															})
+													),
+													React.createElement(
+															'label',
+															{ className: 'halved-password-input-wrapper' },
+															'Re-type password',
+															React.createElement('br', null),
+															React.createElement('input', {
+																	onChange: this.updatePassword,
+																	className: 'halved-password-input',
+																	type: 'password',
+																	value: this.state.password
+															})
+													),
+													React.createElement('br', null),
+													React.createElement(
+															'label',
+															{ className: 'terms-agreement-wrapper' },
+															React.createElement('input', { type: 'checkbox', name: '', value: 'unchecked' }),
+															'I agree to the ',
+															React.createElement(
+																	'a',
+																	{ href: '#' },
+																	'Terms of Use'
+															),
+															' and ',
+															React.createElement(
+																	'a',
+																	{ href: '#' },
+																	'Privacy Policy'
+															)
+													),
+													React.createElement('input', { className: 'submit-button', type: 'submit', value: 'Create account' })
+											)
+									)
+							)
+					);
+			},
+	
+			handleSubmit: function (e) {
+					e.preventDefault();
+	
+					var router = this.context.router;
+	
+					ApiUtil.createUser(this.state, function () {
+							router.push('/#');
+					});
+			},
+	
+			updateName: function (e) {
+					this.setState({ username: e.currentTarget.value });
+			},
+	
+			updatePassword: function (e) {
+					this.setState({ password: e.currentTarget.value });
+			}
+	
+	});
+	
+	module.exports = NewUserForm;
+
+/***/ },
 /* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
+	var SessionStore = __webpack_require__(241);
 	var Link = __webpack_require__(159).Link;
 	
 	var TrackForm = React.createClass({
@@ -32186,7 +32224,8 @@
 	    return {
 	      title: '',
 	      tags: '',
-	      description: ''
+	      description: '',
+	      user_id: SessionStore.currentUser().id
 	    };
 	  },
 	
@@ -32194,7 +32233,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'modal-wrapper' },
-	      React.createElement('div', { className: 'track-form-dimmer' }),
+	      React.createElement('div', { className: 'modal-dimmer' }),
 	      React.createElement(
 	        'main',
 	        { className: 'track-form-main group' },
@@ -32211,7 +32250,7 @@
 	          React.createElement(
 	            'div',
 	            { className: 'image-upload' },
-	            React.createElement('input', { className: 'image-upload-button', type: 'submit', value: 'Upload an image' })
+	            React.createElement('input', { className: 'image-upload-button', type: 'button', value: '📷     Upload an image' })
 	          ),
 	          React.createElement(
 	            'div',
@@ -32303,6 +32342,219 @@
 	});
 	
 	module.exports = TrackForm;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var SessionStore = __webpack_require__(241);
+	var UserStore = __webpack_require__(249);
+	var TrackIndexItem = __webpack_require__(242);
+	var UserDetailSidebar = __webpack_require__(252);
+	var UserDetailIndex = __webpack_require__(251);
+	
+	var Link = __webpack_require__(159).Link;
+	
+	var UserDetail = React.createClass({
+		displayName: 'UserDetail',
+	
+		getInitialState: function () {
+			return { user: null };
+		},
+	
+		componentDidMount: function () {
+			this.userListener = UserStore.addListener(this._onChange);
+			ApiUtil.fetchUser(this.props.params.id);
+		},
+	
+		componentWillUnmount: function () {
+			this.userListener.remove();
+		},
+	
+		_onChange: function () {
+			this.setState({ user: UserStore.getUser() });
+		},
+	
+		render: function () {
+			if (!this.state.user) {
+				return React.createElement('main', null);
+			} else {
+				return React.createElement(
+					'main',
+					{ className: 'user-detail-main' },
+					React.createElement(
+						'section',
+						{ className: 'user-header' },
+						React.createElement('div', { className: 'user-avatar' }),
+						React.createElement(
+							'div',
+							{ className: 'user-header-info' },
+							React.createElement(
+								'h1',
+								null,
+								this.state.user.username
+							)
+						)
+					),
+					React.createElement(
+						'div',
+						{ className: 'user-detail-tabs' },
+						React.createElement(
+							'a',
+							{ href: '#/user/' + this.state.user.id },
+							'All'
+						),
+						React.createElement(
+							'a',
+							{ href: '#/user/' + this.state.user.id },
+							'Tracks'
+						),
+						React.createElement(
+							'a',
+							{ href: '#/user/' + this.state.user.id },
+							'Playlists'
+						),
+						React.createElement(
+							'a',
+							{ href: '#/user/' + this.state.user.id },
+							'Reposts'
+						)
+					),
+					React.createElement(
+						'section',
+						{ className: 'user-detail-box' },
+						React.createElement(UserDetailIndex, { user: this.state.user }),
+						React.createElement(UserDetailSidebar, { user: this.state.user })
+					)
+				);
+			}
+		}
+	});
+	
+	module.exports = UserDetail;
+
+/***/ },
+/* 248 */,
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(226).Store;
+	var Dispatcher = __webpack_require__(220);
+	
+	var UserStore = new Store(Dispatcher);
+	
+	var _user = null;
+	
+	var resetUser = function (user) {
+	  _user = user;
+	};
+	
+	UserStore.getUser = function () {
+	  return _user;
+	};
+	
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case 'USER_RECEIVED':
+	      resetUser(payload.user);
+	      UserStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = UserStore;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(220);
+	
+	var UserActions = {
+		receiveAllUsers: function (users) {
+			Dispatcher.dispatch({
+				actionType: "USERS_RECEIVED",
+				users: users
+			});
+		},
+	
+		receiveUser: function (user) {
+			Dispatcher.dispatch({
+				actionType: "USER_RECEIVED",
+				user: user
+			});
+		}
+	};
+	
+	module.exports = UserActions;
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var TrackStore = __webpack_require__(225);
+	var ApiUtil = __webpack_require__(218);
+	var TrackIndexItem = __webpack_require__(242);
+	
+	var UserIndex = React.createClass({
+		displayName: 'UserIndex',
+	
+		getInitialState: function () {
+			return { tracks: TrackStore.getByUser(this.props.user.id) };
+		},
+	
+		_onChange: function () {
+			this.setState({ tracks: TrackStore.getByUser(this.props.user.id) });
+		},
+	
+		componentDidMount: function () {
+			this.trackListener = TrackStore.addListener(this._onChange);
+			ApiUtil.fetchAllTracks();
+		},
+	
+		componentWillUnmount: function () {
+			this.trackListener.remove();
+		},
+	
+		render: function () {
+			return React.createElement(
+				'main',
+				{ className: 'user-detail-index group' },
+				React.createElement(
+					'div',
+					{ className: 'index-page-main' },
+					React.createElement(
+						'ul',
+						{ className: 'track-list' },
+						this.state.tracks.map(function (track) {
+							return React.createElement(TrackIndexItem, { key: track.id,
+								track: track });
+						})
+					)
+				)
+			);
+		}
+	});
+	
+	module.exports = UserIndex;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var UserSidebar = React.createClass({
+		displayName: 'UserSidebar',
+	
+		render: function () {
+			return React.createElement('main', { className: 'user-detail-sidebar' });
+		}
+	});
+	module.exports = UserSidebar;
 
 /***/ }
 /******/ ]);

@@ -10,7 +10,7 @@ var TrackActions = {
 
   receiveSingleTrack: function (track) {
     Dispatcher.dispatch({
-      actionType: "POKEMON_RECEIVE",
+      actionType: "TRACK_RECEIVE",
       track: track
     });
   }

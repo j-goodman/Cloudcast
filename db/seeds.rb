@@ -27,7 +27,7 @@ dooku = User.create(
 )
 
 byrne = User.create(
-  username: 'David Byrne'
+  username: 'David Byrne',
   password: 'surfbort'
 )
 
@@ -52,7 +52,7 @@ title: 'Baby on Board',
 file_url: 'django.wav',
 user: apu,
 description: "Thank you, come again.",
-image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
+image_url: 'https://i.imgur.com/G5RZH.jpg'
 )
 
 Track.create(
@@ -68,13 +68,21 @@ Track.create(
   file_url: 'django.wav',
   user: byrne,
   description: 'You may find yourself living in a shotgun shack.',
-  image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
+  image_url: 'https://hackskeptic.files.wordpress.com/2016/02/talking.jpg'
+)
+
+Track.create(
+	title: "You've fought bravely, Master Windu",
+	file_url: 'django.wav',
+	user: dooku,
+	description: 'Worthy of recognition in the archives of the Jedi order.',
+	image_url: 'https://rborg42.files.wordpress.com/2013/05/gunshiparena4.png'
 )
 
 Track.create(
   title: 'Psycho Killer',
   file_url: 'django.wav',
   user: byrne,
-  description: "Quest que c'est.",
-  image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
+  description: "You're talking a lot but you're not saying anything.",
+  image_url: 'https://hackskeptic.files.wordpress.com/2016/02/talking.jpg'
 )

@@ -72,7 +72,9 @@ var TrackIndex = React.createClass({
             <a href='#' className='link-tab home-tab'>Home</a>
             <a href='#' className='link-tab collection-tab'>Collection</a>
             <div className='search-bar-tab'>
-              <input className='search-bar' defaultValue='Search' type='text'></input>
+              <input className='search-bar'
+							placeholder='Search'
+							type='text'></input>
             </div>
             <Link to={'/newtrack'} className='link-tab upload-tab'>Upload</Link>
             {headerUserTab}

@@ -1,5 +1,6 @@
 var React = require('react');
 var ApiUtil = require('../../util/api_util.js');
+var SessionStore = require('../../stores/session.js');
 var Link = require('react-router').Link;
 
 var TrackForm = React.createClass({
@@ -11,21 +12,22 @@ var TrackForm = React.createClass({
     return {
       title: '',
       tags: '',
-      description: ''
-    };
+      description: '',
+			user_id: SessionStore.currentUser().id
+  	};
   },
 
   render: function () {
     return(
       <div className='modal-wrapper'>
-        <div className='track-form-dimmer' />
+        <div className='modal-dimmer' />
         <main className='track-form-main group'>
           <h2 className='track-form-header'>Upload to Cloudcast</h2>
           <input className="track-submit-button" type="submit" value="Choose a file to upload" />
           <form className='track-info-main'
             onSubmit={this.handleSubmit}>
             <div className='image-upload'>
-              <input className="image-upload-button" type="submit" value="Upload an image" />
+              <input className="image-upload-button" type="button" value="📷     Upload an image" />
             </div>
 
             <div className='track-info-box'>

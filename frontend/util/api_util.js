@@ -1,5 +1,6 @@
 var TrackActions = require('../actions/track_actions.js');
 var SessionActions = require('../actions/session_actions.js');
+var UserActions = require('../actions/user_actions.js');
 var AppDispatcher = require('../dispatcher.js');
 
 var ApiUtil = {
@@ -8,6 +9,15 @@ var ApiUtil = {
       url: 'api/tracks',
       success: function (tracks) {
         TrackActions.receiveAllTracks(tracks);
+      }
+    });
+  },
+
+  fetchUser: function (id) {
+    $.ajax({
+      url: 'api/users/'+id,
+      success: function (user) {
+        UserActions.receiveUser(user);
       }
     });
   },

@@ -69,6 +69,7 @@ button, article, footer, small {
 body {
   font-family: 'Asap', sans-serif;
   font-size: 12px;
+	background: #eee;
 }
 
 ul {
@@ -76,7 +77,7 @@ ul {
 }
 
 .auth-header-stretch {
-  background: #2a2a2a;
+  background: #000;
   padding: 0 10px;
   position: relative;
   height: 65px;
@@ -284,7 +285,7 @@ ul {
 
 .index-page {
   width: 1000px;
-  height: 100%;
+	height: 360%;
   margin: 0 auto;
   display: block;
   position: relative;
@@ -472,14 +473,14 @@ ul {
   position: relative;
 }
 
-.track-form-dimmer {
-  height: 120%;
+.modal-dimmer {
+  height: 1000%;
   width: 100%;
   background: #000;
   position: absolute;
   top: 0;
   left: 0;
-  opacity: .7;
+  opacity: .8;
   z-index: 999;
 }
 
@@ -487,9 +488,22 @@ ul {
   width: 700px;
   position: absolute;
   top: 90px;
-  left: 218px;
+  left: 50%;
+	margin-left: -350px;
   padding: 20px;
   border-radius: 8px;
+  z-index: 1000;
+  background: #fff;
+}
+
+.auth-form-main {
+  width: 740px;
+  position: absolute;
+  top: 90px;
+  left: 50%;
+	margin-left: -370px;
+  padding: 0px;
+  border-radius: 16px;
   z-index: 1000;
   background: #fff;
 }
@@ -612,4 +626,75 @@ ul {
 
 .track-cancel-button:hover {
   color: #222;
+}
+
+/* ~ USER DETAIL ~ */
+
+.user-detail-main {
+	width: 1000px;
+	height: 360%;
+	position: absolute;
+	top: 46px;
+	left: 50%;
+	margin-left: -500px;
+	z-index: 1000;
+	background: #fff;
+}
+
+.user-header {
+	width: 1000px;
+	height: 262px;
+	background: asset-url('tie_fighters.jpg');
+	background-size: cover;
+	background-position: center;
+	letter-spacing: 1px;
+}
+
+.user-avatar {
+	width: 204px;
+	height: 204px;
+	background: rebeccapurple;
+	position: relative;
+	top: 30px;
+	left: 30px;
+	background: asset-url('medigoron.png');
+	background-size: cover;
+	background-position: center;
+	border-radius: 50%;
+}
+
+.user-header-info {
+	position: relative;
+	height: 50px;
+	width: 250px;
+	bottom: 172px;
+	color: white;
+	left: 260px;
+	background: #000;
+	font-size: 24px;
+	text-align: center;
+	line-height: 50px;
+	opacity: .85;
+}
+
+.user-detail-tabs {
+	width: 1000px;
+	height: 48px;
+	border-bottom: 1px solid #ddd;
+}
+
+.user-detail-tabs > a {
+	display: block;
+	float: left;
+	padding: 20px 0 0 26px;
+	font-size: 18px;
+	letter-spacing: 1px;
+}
+
+.user-detail-index {
+	width: 640px;
+	height: 1200px;
+	float: left;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
