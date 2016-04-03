@@ -13,6 +13,15 @@ var ApiUtil = {
     });
   },
 
+  fetchSingleTrack: function (id) {
+    $.ajax({
+      url: 'api/track'+id,
+      success: function (track) {
+        TrackActions.receiveSingleTrack(track);
+      }
+    });
+  },
+
   fetchUser: function (id) {
     $.ajax({
       url: 'api/users/'+id,

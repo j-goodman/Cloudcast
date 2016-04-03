@@ -49,10 +49,11 @@
 	var ReactRouter = __webpack_require__(159);
 	
 	var Run = __webpack_require__(216);
-	var LoginForm = __webpack_require__(244);
-	var NewUserForm = __webpack_require__(245);
-	var TrackForm = __webpack_require__(246);
-	var UserDetail = __webpack_require__(247);
+	var LoginForm = __webpack_require__(245);
+	var NewUserForm = __webpack_require__(246);
+	var TrackForm = __webpack_require__(247);
+	var UserDetail = __webpack_require__(248);
+	var TrackDetail = __webpack_require__(252);
 	
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
@@ -68,7 +69,8 @@
 	    React.createElement(Route, { path: 'newtrack', component: TrackForm }),
 	    React.createElement(Route, { path: '/signin', component: LoginForm }),
 	    React.createElement(Route, { path: '/newuser', component: NewUserForm }),
-	    React.createElement(Route, { path: '/user/:id', component: UserDetail })
+	    React.createElement(Route, { path: '/user/:id', component: UserDetail }),
+	    React.createElement(Route, { path: '/track/:id', component: TrackDetail })
 	  )
 	);
 	
@@ -24779,10 +24781,10 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var TrackStore = __webpack_require__(225);
-	var SessionStore = __webpack_require__(241);
-	var TrackIndexItem = __webpack_require__(242);
-	var IndexSidebar = __webpack_require__(243);
+	var TrackStore = __webpack_require__(226);
+	var SessionStore = __webpack_require__(242);
+	var TrackIndexItem = __webpack_require__(243);
+	var IndexSidebar = __webpack_require__(244);
 	
 	var Link = __webpack_require__(159).Link;
 	
@@ -24929,7 +24931,7 @@
 
 	var TrackActions = __webpack_require__(219);
 	var SessionActions = __webpack_require__(224);
-	var UserActions = __webpack_require__(250);
+	var UserActions = __webpack_require__(225);
 	var AppDispatcher = __webpack_require__(220);
 	
 	var ApiUtil = {
@@ -24938,6 +24940,15 @@
 	      url: 'api/tracks',
 	      success: function (tracks) {
 	        TrackActions.receiveAllTracks(tracks);
+	      }
+	    });
+	  },
+	
+	  fetchSingleTrack: function (id) {
+	    $.ajax({
+	      url: 'api/track' + id,
+	      success: function (track) {
+	        TrackActions.receiveSingleTrack(track);
 	      }
 	    });
 	  },
@@ -25385,7 +25396,31 @@
 /* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(226).Store;
+	var Dispatcher = __webpack_require__(220);
+	
+	var UserActions = {
+		receiveAllUsers: function (users) {
+			Dispatcher.dispatch({
+				actionType: "USERS_RECEIVED",
+				users: users
+			});
+		},
+	
+		receiveUser: function (user) {
+			Dispatcher.dispatch({
+				actionType: "USER_RECEIVED",
+				user: user
+			});
+		}
+	};
+	
+	module.exports = UserActions;
+
+/***/ },
+/* 226 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(227).Store;
 	var Dispatcher = __webpack_require__(220);
 	
 	var TrackStore = new Store(Dispatcher);
@@ -25400,7 +25435,11 @@
 	};
 	
 	var resetTrack = function (track) {
-	  _track[track.id] = track;
+	  _tracks[track.id] = track;
+	};
+	
+	TrackStore.getTrack = function () {
+	  return _tracks;
 	};
 	
 	TrackStore.all = function () {
@@ -25437,7 +25476,7 @@
 	module.exports = TrackStore;
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25449,15 +25488,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(227);
-	module.exports.MapStore = __webpack_require__(230);
-	module.exports.Mixin = __webpack_require__(240);
-	module.exports.ReduceStore = __webpack_require__(231);
-	module.exports.Store = __webpack_require__(232);
+	module.exports.Container = __webpack_require__(228);
+	module.exports.MapStore = __webpack_require__(231);
+	module.exports.Mixin = __webpack_require__(241);
+	module.exports.ReduceStore = __webpack_require__(232);
+	module.exports.Store = __webpack_require__(233);
 
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25479,10 +25518,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(228);
+	var FluxStoreGroup = __webpack_require__(229);
 	
 	var invariant = __webpack_require__(223);
-	var shallowEqual = __webpack_require__(229);
+	var shallowEqual = __webpack_require__(230);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -25640,7 +25679,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25721,7 +25760,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports) {
 
 	/**
@@ -25776,7 +25815,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25797,8 +25836,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(231);
-	var Immutable = __webpack_require__(239);
+	var FluxReduceStore = __webpack_require__(232);
+	var Immutable = __webpack_require__(240);
 	
 	var invariant = __webpack_require__(223);
 	
@@ -25926,7 +25965,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25947,9 +25986,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(232);
+	var FluxStore = __webpack_require__(233);
 	
-	var abstractMethod = __webpack_require__(238);
+	var abstractMethod = __webpack_require__(239);
 	var invariant = __webpack_require__(223);
 	
 	var FluxReduceStore = (function (_FluxStore) {
@@ -26033,7 +26072,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26052,7 +26091,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(233);
+	var _require = __webpack_require__(234);
 	
 	var EventEmitter = _require.EventEmitter;
 	
@@ -26216,7 +26255,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26229,14 +26268,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(234)
+	  EventEmitter: __webpack_require__(235)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26255,8 +26294,8 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(235);
-	var EventSubscriptionVendor = __webpack_require__(237);
+	var EmitterSubscription = __webpack_require__(236);
+	var EventSubscriptionVendor = __webpack_require__(238);
 	
 	var emptyFunction = __webpack_require__(15);
 	var invariant = __webpack_require__(13);
@@ -26433,7 +26472,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26454,7 +26493,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(236);
+	var EventSubscription = __webpack_require__(237);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -26486,7 +26525,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports) {
 
 	/**
@@ -26540,7 +26579,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26649,7 +26688,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26676,7 +26715,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31663,7 +31702,7 @@
 	}));
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -31680,7 +31719,7 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(228);
+	var FluxStoreGroup = __webpack_require__(229);
 	
 	var invariant = __webpack_require__(223);
 	
@@ -31786,10 +31825,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(226).Store;
+	var Store = __webpack_require__(227).Store;
 	var AppDispatcher = __webpack_require__(220);
 	
 	var SessionStore = new Store(AppDispatcher);
@@ -31826,7 +31865,7 @@
 	module.exports = SessionStore;
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31901,7 +31940,7 @@
 	module.exports = IndexItem;
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31917,7 +31956,7 @@
 	module.exports = IndexItem;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32049,7 +32088,7 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32205,12 +32244,12 @@
 	module.exports = NewUserForm;
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var SessionStore = __webpack_require__(241);
+	var SessionStore = __webpack_require__(242);
 	var Link = __webpack_require__(159).Link;
 	
 	var TrackForm = React.createClass({
@@ -32344,15 +32383,15 @@
 	module.exports = TrackForm;
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var SessionStore = __webpack_require__(241);
+	var SessionStore = __webpack_require__(242);
 	var UserStore = __webpack_require__(249);
-	var TrackIndexItem = __webpack_require__(242);
-	var UserDetailSidebar = __webpack_require__(252);
+	var TrackIndexItem = __webpack_require__(243);
+	var UserDetailSidebar = __webpack_require__(250);
 	var UserDetailIndex = __webpack_require__(251);
 	
 	var Link = __webpack_require__(159).Link;
@@ -32436,11 +32475,10 @@
 	module.exports = UserDetail;
 
 /***/ },
-/* 248 */,
 /* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(226).Store;
+	var Store = __webpack_require__(227).Store;
 	var Dispatcher = __webpack_require__(220);
 	
 	var UserStore = new Store(Dispatcher);
@@ -32470,34 +32508,25 @@
 /* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(220);
+	var React = __webpack_require__(1);
 	
-	var UserActions = {
-		receiveAllUsers: function (users) {
-			Dispatcher.dispatch({
-				actionType: "USERS_RECEIVED",
-				users: users
-			});
-		},
+	var UserSidebar = React.createClass({
+		displayName: 'UserSidebar',
 	
-		receiveUser: function (user) {
-			Dispatcher.dispatch({
-				actionType: "USER_RECEIVED",
-				user: user
-			});
+		render: function () {
+			return React.createElement('main', { className: 'user-detail-sidebar' });
 		}
-	};
-	
-	module.exports = UserActions;
+	});
+	module.exports = UserSidebar;
 
 /***/ },
 /* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var TrackStore = __webpack_require__(225);
+	var TrackStore = __webpack_require__(226);
 	var ApiUtil = __webpack_require__(218);
-	var TrackIndexItem = __webpack_require__(242);
+	var TrackIndexItem = __webpack_require__(243);
 	
 	var UserIndex = React.createClass({
 		displayName: 'UserIndex',
@@ -32546,15 +32575,72 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var SessionStore = __webpack_require__(242);
+	var TrackStore = __webpack_require__(226);
+	var TrackIndexItem = __webpack_require__(243);
 	
-	var UserSidebar = React.createClass({
-		displayName: 'UserSidebar',
+	var Link = __webpack_require__(159).Link;
+	
+	var TrackDetail = React.createClass({
+		displayName: 'TrackDetail',
+	
+		getInitialState: function () {
+			return { track: null };
+		},
+	
+		componentDidMount: function () {
+			this.trackListener = TrackStore.addListener(this._onChange);
+			ApiUtil.fetchSingleTrack(this.props.params.id);
+		},
+	
+		componentWillUnmount: function () {
+			this.trackListener.remove();
+		},
+	
+		_onChange: function () {
+			this.setState({ track: TrackStore.getTrack() });
+		},
 	
 		render: function () {
-			return React.createElement('main', { className: 'user-detail-sidebar' });
+			if (!this.state.track) {
+				return React.createElement('main', null);
+			} else {
+				return React.createElement(
+					'main',
+					{ className: 'user-detail-main' },
+					React.createElement(
+						'section',
+						{ className: 'user-header' },
+						React.createElement('div', { className: 'user-avatar' }),
+						React.createElement(
+							'div',
+							{ className: 'user-header-info' },
+							React.createElement(
+								'h2',
+								null,
+								this.state.track.user
+							),
+							React.createElement(
+								'h1',
+								null,
+								this.state.track.title
+							)
+						)
+					),
+					React.createElement('div', { className: 'track-detail-commentbar' }),
+					React.createElement(
+						'section',
+						{ className: 'user-detail-box' },
+						React.createElement(UserDetailIndex, { user: this.state.user }),
+						React.createElement(UserDetailSidebar, { user: this.state.user })
+					)
+				);
+			}
 		}
 	});
-	module.exports = UserSidebar;
+	
+	module.exports = TrackDetail;
 
 /***/ }
 /******/ ]);

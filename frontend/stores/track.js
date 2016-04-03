@@ -13,7 +13,11 @@ var resetTracks = function (tracks) {
 };
 
 var resetTrack = function (track) {
-  _track[track.id] = track;
+  _tracks[track.id] = track;
+};
+
+TrackStore.getTrack = function () {
+	return _tracks;
 };
 
 TrackStore.all = function () {
