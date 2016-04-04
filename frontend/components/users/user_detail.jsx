@@ -40,14 +40,13 @@ var UserDetail = React.createClass({
 					</section>
 
 					<div className='user-detail-tabs'>
-						<a href={'#/user/'+this.state.user.id}>All</a>
-						<a href={'#/user/'+this.state.user.id}>Tracks</a>
-						<a href={'#/user/'+this.state.user.id}>Playlists</a>
+						<a href={'#/user/'+this.state.user.id+'/tracks'}>Tracks</a>
+						<a href={'#/user/'+this.state.user.id+'/playlists'}>Playlists</a>
 						<a href={'#/user/'+this.state.user.id}>Reposts</a>
 					</div>
 
 					<section className='user-detail-box'>
-						<UserDetailIndex user={this.state.user}/>
+            {this.props.children}
 						<UserDetailSidebar user={this.state.user}/>
 					</section>
 				</main>

@@ -625,13 +625,19 @@ ul {
 
 .user-detail-main {
 	width: 1000px;
-	height: 360%;
 	position: absolute;
 	top: 46px;
 	left: 50%;
 	margin-left: -500px;
 	z-index: 1000;
 	background: #fff;
+}
+
+.user-detail-sidebar {
+  background: #fff;
+  width: 340px;
+  min-height: 520px;
+  float: right;
 }
 
 .user-header {
@@ -684,9 +690,20 @@ ul {
 }
 
 .user-detail-index {
-	width: 640px;
-	height: 1200px;
+	width: 659px;
+  min-height: 520px;
 	float: left;
 	border-right: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+}
+
+.new-playlist-button {
+  background: #ff5500;
+  color: #eee;
+  padding: 5px 10px;
+  display: block;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 80px;
+  margin: 16px auto;
 }

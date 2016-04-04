@@ -54,6 +54,8 @@
 	var TrackForm = __webpack_require__(247);
 	var TrackIndex = __webpack_require__(217);
 	var UserDetail = __webpack_require__(248);
+	var UserTrackIndex = __webpack_require__(251);
+	var UserPlaylistIndex = __webpack_require__(254);
 	var TrackDetail = __webpack_require__(252);
 	
 	var Router = ReactRouter.Router;
@@ -71,7 +73,12 @@
 	    React.createElement(Route, { path: 'newtrack', component: TrackForm }),
 	    React.createElement(Route, { path: 'signin', component: LoginForm }),
 	    React.createElement(Route, { path: 'newuser', component: NewUserForm }),
-	    React.createElement(Route, { path: 'user/:id', component: UserDetail }),
+	    React.createElement(
+	      Route,
+	      { path: 'user/:id', component: UserDetail },
+	      React.createElement(Route, { path: 'tracks', component: UserTrackIndex }),
+	      React.createElement(Route, { path: 'playlists', component: UserPlaylistIndex })
+	    ),
 	    React.createElement(Route, { path: 'track/:id', component: TrackDetail })
 	  )
 	);
@@ -24851,7 +24858,7 @@
 	          { className: 'track-list' },
 	          this.state.tracks.map(function (track) {
 	            return React.createElement(TrackIndexItem, { key: track.id,
-	              track: track });
+	              track: track, user: track.user });
 	          })
 	        )
 	      ),
@@ -24887,7 +24894,7 @@
 	
 	  fetchSingleTrack: function (id) {
 	    $.ajax({
-	      url: 'api/track' + id,
+	      url: 'api/track/' + id,
 	      success: function (track) {
 	        TrackActions.receiveSingleTrack(track);
 	      }
@@ -24910,7 +24917,7 @@
 	      data: { track: track },
 	      success: function (track) {
 	        TrackActions.recieveSingleTrack(track);
-	        callback && callback(track.id);
+	        callback && callback();
 	      }
 	    });
 	  },
@@ -24989,6 +24996,13 @@
 	    Dispatcher.dispatch({
 	      actionType: "TRACK_RECEIVE",
 	      track: track
+	    });
+	  },
+	
+	  receiveTracksByUser: function (tracks) {
+	    Dispatcher.dispatch({
+	      actionType: "USER_TRACKS_RECEIVED",
+	      tracks: tracks
 	    });
 	  }
 	};
@@ -25391,19 +25405,13 @@
 	  return tracks;
 	};
 	
-	TrackStore.getByUser = function (userId) {
-	  var tracks = [];
-	  for (var id in _tracks) {
-	    if (_tracks[id].user.id === userId) {
-	      tracks.push(_tracks[id]);
-	    }
-	  }
-	  return tracks;
-	};
-	
 	TrackStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
 	    case 'TRACKS_RECEIVED':
+	      resetTracks(payload.tracks);
+	      TrackStore.__emitChange();
+	      break;
+	    case 'USER_TRACKS_RECEIVED':
 	      resetTracks(payload.tracks);
 	      TrackStore.__emitChange();
 	      break;
@@ -31821,14 +31829,14 @@
 	      React.createElement(
 	        'div',
 	        { className: 'track-header' },
-	        React.createElement('a', { href: '#/user/' + this.props.track.user.id, className: 'track-poster-image' }),
+	        React.createElement('a', { href: '#/user/' + this.props.user.id + '/tracks', className: 'track-poster-image' }),
 	        React.createElement(
 	          'h2',
 	          { className: 'track-header-text' },
 	          React.createElement(
 	            'a',
-	            { href: '#/user/' + this.props.track.user.id },
-	            this.props.track.user.username,
+	            { href: '#/user/' + this.props.user.id + '/tracks' },
+	            this.props.user.username,
 	            ' posted a track'
 	          )
 	        )
@@ -32396,17 +32404,12 @@
 						{ className: 'user-detail-tabs' },
 						React.createElement(
 							'a',
-							{ href: '#/user/' + this.state.user.id },
-							'All'
-						),
-						React.createElement(
-							'a',
-							{ href: '#/user/' + this.state.user.id },
+							{ href: '#/user/' + this.state.user.id + '/tracks' },
 							'Tracks'
 						),
 						React.createElement(
 							'a',
-							{ href: '#/user/' + this.state.user.id },
+							{ href: '#/user/' + this.state.user.id + '/playlists' },
 							'Playlists'
 						),
 						React.createElement(
@@ -32418,7 +32421,7 @@
 					React.createElement(
 						'section',
 						{ className: 'user-detail-box' },
-						React.createElement(UserDetailIndex, { user: this.state.user }),
+						this.props.children,
 						React.createElement(UserDetailSidebar, { user: this.state.user })
 					)
 				);
@@ -32468,7 +32471,7 @@
 		displayName: 'UserSidebar',
 	
 		render: function () {
-			return React.createElement('main', { className: 'index-sidebar' });
+			return React.createElement('main', { className: 'user-detail-sidebar' });
 		}
 	});
 	module.exports = UserSidebar;
@@ -32479,47 +32482,57 @@
 
 	var React = __webpack_require__(1);
 	var TrackStore = __webpack_require__(226);
+	var UserStore = __webpack_require__(249);
 	var ApiUtil = __webpack_require__(218);
 	var TrackIndexItem = __webpack_require__(243);
 	
 	var UserIndex = React.createClass({
-		displayName: 'UserIndex',
+	  displayName: 'UserIndex',
 	
-		getInitialState: function () {
-			return { tracks: TrackStore.getByUser(this.props.user.id) };
-		},
+	  getInitialState: function () {
+	    return { tracks: null, user: null };
+	  },
 	
-		_onChange: function () {
-			this.setState({ tracks: TrackStore.getByUser(this.props.user.id) });
-		},
+	  _onChange: function () {
+	    this.setState({ user: UserStore.getUser() });
+	    this.setState({ tracks: this.state.user.tracks });
+	  },
 	
-		componentDidMount: function () {
-			this.trackListener = TrackStore.addListener(this._onChange);
-			ApiUtil.fetchAllTracks();
-		},
+	  componentDidMount: function () {
+	    this.trackListener = TrackStore.addListener(this._onChange);
+	    this.userListener = UserStore.addListener(this._onChange);
+	    ApiUtil.fetchUser(this.props.params.id);
+	  },
 	
-		componentWillUnmount: function () {
-			this.trackListener.remove();
-		},
+	  componentWillUnmount: function () {
+	    this.trackListener.remove();
+	    this.userListener.remove();
+	  },
 	
-		render: function () {
-			return React.createElement(
-				'main',
-				{ className: 'user-detail-index group' },
-				React.createElement(
-					'div',
-					{ className: 'index-page-main' },
-					React.createElement(
-						'ul',
-						{ className: 'track-list' },
-						this.state.tracks.map(function (track) {
-							return React.createElement(TrackIndexItem, { key: track.id,
-								track: track });
-						})
-					)
-				)
-			);
-		}
+	  render: function () {
+	    var user = this.state.user;
+	    var tracks = this.state.tracks;
+	    if (!user || !tracks) {
+	      return React.createElement('main', null);
+	    } else {
+	      return React.createElement(
+	        'main',
+	        { className: 'user-detail-index group' },
+	        React.createElement(
+	          'div',
+	          { className: 'index-page-main' },
+	          React.createElement(
+	            'ul',
+	            { className: 'track-list' },
+	            tracks.map(function (track) {
+	              return React.createElement(TrackIndexItem, { key: track.id,
+	                track: track, user: user });
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }
 	});
 	
 	module.exports = UserIndex;
@@ -32695,6 +32708,68 @@
 	});
 	
 	module.exports = Homebar;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var UserStore = __webpack_require__(249);
+	var SessionStore = __webpack_require__(242);
+	var ApiUtil = __webpack_require__(218);
+	
+	var UserIndex = React.createClass({
+	  displayName: 'UserIndex',
+	
+	  getInitialState: function () {
+	    return { tracks: null, user: null };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ user: UserStore.getUser() });
+	    this.setState({ tracks: this.state.user.tracks });
+	  },
+	
+	  componentDidMount: function () {
+	    this.userListener = UserStore.addListener(this._onChange);
+	    ApiUtil.fetchUser(this.props.params.id);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
+	  },
+	
+	  render: function () {
+	    var user = this.state.user;
+	    var tracks = this.state.tracks;
+	    if (!user || !tracks) {
+	      return React.createElement('main', null);
+	    } else {
+	      var button;
+	      if (SessionStore.currentUser().id === user.id) {
+	        button = React.createElement(
+	          'a',
+	          { href: '#', className: 'new-playlist-button' },
+	          'New Playlist'
+	        );
+	      } else {
+	        button = React.createElement('span', null);
+	      }
+	
+	      return React.createElement(
+	        'main',
+	        { className: 'user-detail-index group' },
+	        React.createElement(
+	          'div',
+	          { className: 'index-page-main' },
+	          button
+	        )
+	      );
+	    }
+	  }
+	});
+	
+	module.exports = UserIndex;
 
 /***/ }
 /******/ ]);

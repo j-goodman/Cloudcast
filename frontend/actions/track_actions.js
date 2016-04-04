@@ -13,6 +13,13 @@ var TrackActions = {
       actionType: "TRACK_RECEIVE",
       track: track
     });
+  },
+
+  receiveTracksByUser: function (tracks) {
+    Dispatcher.dispatch({
+      actionType: "USER_TRACKS_RECEIVED",
+      tracks: tracks
+    });
   }
 };
 

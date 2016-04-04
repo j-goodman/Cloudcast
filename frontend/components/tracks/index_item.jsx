@@ -5,9 +5,9 @@ var IndexItem = React.createClass({
     return(
       <li className='track-index-item group'>
         <div className='track-header'>
-          <a href={'#/user/'+this.props.track.user.id} className='track-poster-image'></a>
+          <a href={'#/user/'+this.props.user.id+'/tracks'} className='track-poster-image'></a>
           <h2 className='track-header-text'>
-            <a href={'#/user/'+this.props.track.user.id}>{this.props.track.user.username} posted a track</a>
+            <a href={'#/user/'+this.props.user.id+'/tracks'}>{this.props.user.username} posted a track</a>
           </h2>
         </div>
 

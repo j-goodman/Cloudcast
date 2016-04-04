@@ -55,7 +55,7 @@ var MainIndex = React.createClass({
           <ul className='track-list'>
             {this.state.tracks.map(function (track) {
               return <TrackIndexItem key={track.id}
-              track={track} />;
+              track={track} user={track.user}/>;
             })}
           </ul>
         </div>

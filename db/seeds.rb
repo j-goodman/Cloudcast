@@ -6,32 +6,37 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-johnson = User.create(
+User.destroy_all
+Track.destroy_all
+Series.destroy_all
+Membership.destroy_all
+
+johnson = User.create!(
   username: 'Robert Johnson',
   password: 'surfbort'
 )
 
-marty = User.create(
+marty = User.create!(
   username: 'Marty McFly',
   password: 'surfbort'
 )
 
-apu = User.create(
+apu = User.create!(
   username: 'Apu de Beaumarchais',
   password: 'surfbort'
 )
 
-dooku = User.create(
+dooku = User.create!(
   username: 'Count Dooku',
   password: 'surfbort'
 )
 
-byrne = User.create(
+byrne = User.create!(
   username: 'David Byrne',
   password: 'surfbort'
 )
 
-Track.create(
+Track.create!(
   title: 'Crossroad Blues',
   file_url: 'django.wav',
   user: johnson,
@@ -39,7 +44,7 @@ Track.create(
   image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
 
-Track.create(
+Track.create!(
 title: 'Johnny B. Goode',
 file_url: 'django.wav',
 user: marty,
@@ -47,7 +52,7 @@ description: "This one's an oldie. Or at least it's an oldie where I come from."
 image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
 
-Track.create(
+Track.create!(
 title: 'Baby on Board',
 file_url: 'django.wav',
 user: apu,
@@ -55,7 +60,7 @@ description: "Thank you, come again.",
 image_url: 'https://i.imgur.com/G5RZH.jpg'
 )
 
-Track.create(
+Track.create!(
   title: 'Dead Shrimp Blues',
   file_url: 'django.wav',
   user: johnson,
@@ -63,7 +68,7 @@ Track.create(
   image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
 
-Track.create(
+onceinalifetime = Track.create!(
   title: 'Once in a Lifetime',
   file_url: 'django.wav',
   user: byrne,
@@ -71,7 +76,7 @@ Track.create(
   image_url: 'https://hackskeptic.files.wordpress.com/2016/02/talking.jpg'
 )
 
-Track.create(
+Track.create!(
 	title: "You've fought bravely, Master Windu",
 	file_url: 'django.wav',
 	user: dooku,
@@ -79,10 +84,42 @@ Track.create(
 	image_url: 'https://rborg42.files.wordpress.com/2013/05/gunshiparena4.png'
 )
 
-Track.create(
+psychokiller = Track.create!(
   title: 'Psycho Killer',
   file_url: 'django.wav',
   user: byrne,
   description: "You're talking a lot but you're not saying anything.",
   image_url: 'https://hackskeptic.files.wordpress.com/2016/02/talking.jpg'
+)
+
+papalegba = Track.create!(
+  title: 'Papa Legba',
+  file_url: 'django.wav',
+  user: byrne,
+  description: "Rompiendo la monotonia del tiempo.",
+  image_url: 'https://hackskeptic.files.wordpress.com/2016/02/talking.jpg'
+)
+
+talkingheads = Series.create!(
+  title: 'Talking Heads',
+  user: byrne,
+  description: "Summer of Talking Heads!",
+)
+
+Membership.create!(
+  track: onceinalifetime,
+  series: talkingheads,
+  order: 0
+)
+
+Membership.create!(
+  track: psychokiller,
+  series: talkingheads,
+  order: 1
+)
+
+Membership.create!(
+  track: papalegba,
+  series: talkingheads,
+  order: 2
 )

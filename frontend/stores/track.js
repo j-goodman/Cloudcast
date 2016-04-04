@@ -28,19 +28,13 @@ TrackStore.all = function () {
   return tracks;
 };
 
-TrackStore.getByUser = function (userId) {
-	var tracks = [];
-  for (var id in _tracks) {
-		if (_tracks[id].user.id === userId) {
-    	tracks.push(_tracks[id]);
-		}
-  }
-  return tracks;
-};
-
 TrackStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case 'TRACKS_RECEIVED':
+      resetTracks(payload.tracks);
+      TrackStore.__emitChange();
+      break;
+    case 'USER_TRACKS_RECEIVED':
       resetTracks(payload.tracks);
       TrackStore.__emitChange();
       break;

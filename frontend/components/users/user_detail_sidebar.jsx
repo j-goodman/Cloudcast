@@ -3,7 +3,7 @@ var React = require('react');
 var UserSidebar = React.createClass({
 	render: function () {
 		return (
-			<main className='index-sidebar'></main>
+			<main className='user-detail-sidebar'></main>
 		);
 	}
 });

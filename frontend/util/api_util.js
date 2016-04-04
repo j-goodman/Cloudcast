@@ -15,7 +15,7 @@ var ApiUtil = {
 
   fetchSingleTrack: function (id) {
     $.ajax({
-      url: 'api/track'+id,
+      url: 'api/track/'+id,
       success: function (track) {
         TrackActions.receiveSingleTrack(track);
       }
@@ -38,7 +38,7 @@ var ApiUtil = {
       data: {track: track},
       success: function (track) {
         TrackActions.recieveSingleTrack(track);
-        callback && callback(track.id);
+        callback && callback();
       }
     });
   },
