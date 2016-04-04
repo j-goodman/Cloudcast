@@ -1,5 +1,7 @@
 var React = require('react');
 var ApiUtil = require('../../util/api_util.js');
+var TrackIndex = require('../tracks/index.jsx');
+
 var Link = require('react-router').Link;
 
 var LoginForm = React.createClass({
@@ -17,6 +19,7 @@ var LoginForm = React.createClass({
   render: function () {
     return (
 			<div className='modal-wrapper'>
+      <TrackIndex />
 				<div className='modal-dimmer'></div>
 				<main className='auth-form-main group'>
 	        <div className="auth-header-stretch group">

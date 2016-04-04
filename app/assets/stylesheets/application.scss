@@ -133,6 +133,8 @@ ul {
   color: #000;
 }
 
+/* ~ USER AUTH MODAL ~ */
+
 .auth-main {
   width: 450px;
   padding: 40px 10px 10px 10px;
@@ -274,18 +276,10 @@ ul {
   cursor: pointer;
 }
 
-
-
 /* ~ TRACK INDEX MAIN ~ */
 
-.index-main {
-  background: #eee;
-  height: 3000px;
-}
-
-.index-page {
+.index-wrapper {
   width: 1000px;
-	height: 100%;
   margin: 0 auto;
   display: block;
   position: relative;
@@ -293,7 +287,9 @@ ul {
 }
 
 .index-page-main {
-  width: 660px;
+  width: 659px;
+  background: #fff;
+  border-right: 1px solid #ddd;
   float: left;
 }
 
@@ -306,12 +302,9 @@ ul {
 
 .index-sidebar {
   width: 340px;
-  height: 100%;
-  padding: 12px;
   float: left;
   background: #fff;
   position: absolute;
-  border-left: 1px solid #ddd;
   right: 0;
   top: 0;
 }
@@ -474,10 +467,10 @@ ul {
 }
 
 .modal-dimmer {
-  height: 1000%;
+  height: 3000%;
   width: 100%;
   background: #000;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   opacity: .8;
@@ -486,7 +479,7 @@ ul {
 
 .track-form-main {
   width: 700px;
-  position: absolute;
+  position: fixed;
   top: 90px;
   left: 50%;
 	margin-left: -350px;
@@ -498,7 +491,7 @@ ul {
 
 .auth-form-main {
   width: 740px;
-  position: absolute;
+  position: fixed;
   top: 90px;
   left: 50%;
 	margin-left: -370px;

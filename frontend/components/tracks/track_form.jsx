@@ -1,6 +1,8 @@
 var React = require('react');
 var ApiUtil = require('../../util/api_util.js');
 var SessionStore = require('../../stores/session.js');
+var TrackIndex = require('./index.jsx');
+
 var Link = require('react-router').Link;
 
 var TrackForm = React.createClass({
@@ -11,15 +13,16 @@ var TrackForm = React.createClass({
   getInitialState: function () {
     return {
       title: '',
-      tags: '',
+      file_url: 'django.wav',
+      image_url: '',
       description: '',
-			user_id: SessionStore.currentUser().id
   	};
   },
 
   render: function () {
     return(
-      <div className='modal-wrapper'>
+        <div className='modal-wrapper'>
+        <TrackIndex />
         <div className='modal-dimmer' />
         <main className='track-form-main group'>
           <h2 className='track-form-header'>Upload to Cloudcast</h2>
@@ -87,12 +90,16 @@ var TrackForm = React.createClass({
     });
   },
 
-  updateName: function(e) {
-    this.setState({ username: e.currentTarget.value });
+  updateTitle: function(e) {
+    this.setState({ title: e.currentTarget.value });
   },
 
-  updatePassword: function(e) {
-    this.setState({ password: e.currentTarget.value });
+  updateDescription: function(e) {
+    this.setState({ description: e.currentTarget.value });
+  },
+
+  updateTags: function(e) {
+    this.setState({ tag: e.currentTarget.value });
   }
 });
 

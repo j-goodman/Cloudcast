@@ -1,6 +1,6 @@
 class Api::TracksController < ApplicationController
   def create
-    @track = Track.new(track_params)
+    @track = current_user.tracks.new(track_params)
     if @track.save
       render :show
     else

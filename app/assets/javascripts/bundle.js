@@ -52,6 +52,7 @@
 	var LoginForm = __webpack_require__(245);
 	var NewUserForm = __webpack_require__(246);
 	var TrackForm = __webpack_require__(247);
+	var TrackIndex = __webpack_require__(217);
 	var UserDetail = __webpack_require__(248);
 	var TrackDetail = __webpack_require__(252);
 	
@@ -66,11 +67,12 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: Run },
+	    React.createElement(IndexRoute, { component: TrackIndex }),
 	    React.createElement(Route, { path: 'newtrack', component: TrackForm }),
-	    React.createElement(Route, { path: '/signin', component: LoginForm }),
-	    React.createElement(Route, { path: '/newuser', component: NewUserForm }),
-	    React.createElement(Route, { path: '/user/:id', component: UserDetail }),
-	    React.createElement(Route, { path: '/track/:id', component: TrackDetail })
+	    React.createElement(Route, { path: 'signin', component: LoginForm }),
+	    React.createElement(Route, { path: 'newuser', component: NewUserForm }),
+	    React.createElement(Route, { path: 'user/:id', component: UserDetail }),
+	    React.createElement(Route, { path: 'track/:id', component: TrackDetail })
 	  )
 	);
 	
@@ -24754,7 +24756,7 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 	
-	var TrackIndex = __webpack_require__(217);
+	var Homebar = __webpack_require__(253);
 	
 	Run = React.createClass({
 	  displayName: 'Run',
@@ -24766,7 +24768,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'content-main' },
-	        React.createElement(TrackIndex, null),
+	        React.createElement(Homebar, null),
 	        this.props.children
 	      )
 	    );
@@ -24786,10 +24788,8 @@
 	var TrackIndexItem = __webpack_require__(243);
 	var IndexSidebar = __webpack_require__(244);
 	
-	var Link = __webpack_require__(159).Link;
-	
-	var TrackIndex = React.createClass({
-	  displayName: 'TrackIndex',
+	var MainIndex = React.createClass({
+	  displayName: 'MainIndex',
 	
 	  getInitialState: function () {
 	    return { tracks: TrackStore.all() };
@@ -24813,32 +24813,10 @@
 	
 	  render: function () {
 	
-	    var user = {};
-	
 	    var loggedIn = SessionStore.isLoggedIn();
 	
 	    if (loggedIn) {
 	      user = SessionStore.currentUser();
-	    }
-	
-	    var headerUserTab;
-	
-	    if (loggedIn) {
-	      headerUserTab = React.createElement(
-	        'button',
-	        { onClick: ApiUtil.logout, className: 'link-tab user-dropdown-tab', href: 'session/new' },
-	        'Sign Out'
-	      );
-	    } else {
-	      headerUserTab = React.createElement(
-	        'div',
-	        { className: 'link-tab user-or-signin-tab' },
-	        React.createElement(
-	          Link,
-	          { to: '/signin', className: 'link-tab header-sign-in-tab' },
-	          'Sign In'
-	        )
-	      );
 	    }
 	
 	    var welcomeMessage;
@@ -24861,69 +24839,32 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'index-main' },
+	      { className: 'index-wrapper group' },
 	      React.createElement(
 	        'div',
-	        { className: 'index-navbar-stretch' },
+	        { className: 'index-page-main' },
+	        React.createElement('br', null),
+	        welcomeMessage,
+	        React.createElement('br', null),
 	        React.createElement(
 	          'ul',
-	          { className: 'index-navbar group' },
-	          React.createElement('a', { href: '#', className: 'link-tab index-logo-image' }),
-	          React.createElement(
-	            'a',
-	            { href: '#', className: 'link-tab home-tab' },
-	            'Home'
-	          ),
-	          React.createElement(
-	            'a',
-	            { href: '#', className: 'link-tab collection-tab' },
-	            'Collection'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'search-bar-tab' },
-	            React.createElement('input', { className: 'search-bar',
-	              placeholder: 'Search',
-	              type: 'text' })
-	          ),
-	          React.createElement(
-	            Link,
-	            { to: '/newtrack', className: 'link-tab upload-tab' },
-	            'Upload'
-	          ),
-	          headerUserTab
+	          { className: 'track-list' },
+	          this.state.tracks.map(function (track) {
+	            return React.createElement(TrackIndexItem, { key: track.id,
+	              track: track });
+	          })
 	        )
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'index-page group' },
-	        React.createElement(
-	          'div',
-	          { className: 'index-page-main' },
-	          React.createElement('br', null),
-	          welcomeMessage,
-	          React.createElement('br', null),
-	          React.createElement(
-	            'ul',
-	            { className: 'track-list' },
-	            this.state.tracks.map(function (track) {
-	              return React.createElement(TrackIndexItem, { key: track.id,
-	                track: track });
-	            })
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'index-sidebar' },
-	          React.createElement(IndexSidebar, null)
-	        )
+	        { className: 'index-sidebar' },
+	        React.createElement(IndexSidebar, null)
 	      )
 	    );
 	  }
-	
 	});
 	
-	module.exports = TrackIndex;
+	module.exports = MainIndex;
 
 /***/ },
 /* 218 */
@@ -31961,6 +31902,8 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
+	var TrackIndex = __webpack_require__(217);
+	
 	var Link = __webpack_require__(159).Link;
 	
 	var LoginForm = React.createClass({
@@ -31981,6 +31924,7 @@
 					return React.createElement(
 							'div',
 							{ className: 'modal-wrapper' },
+							React.createElement(TrackIndex, null),
 							React.createElement('div', { className: 'modal-dimmer' }),
 							React.createElement(
 									'main',
@@ -32093,6 +32037,8 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
+	var TrackIndex = __webpack_require__(217);
+	
 	var Link = __webpack_require__(159).Link;
 	
 	var NewUserForm = React.createClass({
@@ -32113,6 +32059,7 @@
 					return React.createElement(
 							'div',
 							{ className: 'modal-wrapper' },
+							React.createElement(TrackIndex, null),
 							React.createElement('div', { className: 'modal-dimmer' }),
 							React.createElement(
 									'main',
@@ -32250,6 +32197,8 @@
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
 	var SessionStore = __webpack_require__(242);
+	var TrackIndex = __webpack_require__(217);
+	
 	var Link = __webpack_require__(159).Link;
 	
 	var TrackForm = React.createClass({
@@ -32262,9 +32211,9 @@
 	  getInitialState: function () {
 	    return {
 	      title: '',
-	      tags: '',
-	      description: '',
-	      user_id: SessionStore.currentUser().id
+	      file_url: 'django.wav',
+	      image_url: '',
+	      description: ''
 	    };
 	  },
 	
@@ -32272,6 +32221,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'modal-wrapper' },
+	      React.createElement(TrackIndex, null),
 	      React.createElement('div', { className: 'modal-dimmer' }),
 	      React.createElement(
 	        'main',
@@ -32371,12 +32321,16 @@
 	    });
 	  },
 	
-	  updateName: function (e) {
-	    this.setState({ username: e.currentTarget.value });
+	  updateTitle: function (e) {
+	    this.setState({ title: e.currentTarget.value });
 	  },
 	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
+	  updateDescription: function (e) {
+	    this.setState({ description: e.currentTarget.value });
+	  },
+	
+	  updateTags: function (e) {
+	    this.setState({ tag: e.currentTarget.value });
 	  }
 	});
 	
@@ -32514,7 +32468,7 @@
 		displayName: 'UserSidebar',
 	
 		render: function () {
-			return React.createElement('main', { className: 'user-detail-sidebar' });
+			return React.createElement('main', { className: 'index-sidebar' });
 		}
 	});
 	module.exports = UserSidebar;
@@ -32641,6 +32595,106 @@
 	});
 	
 	module.exports = TrackDetail;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var SessionStore = __webpack_require__(242);
+	var TrackStore = __webpack_require__(226);
+	
+	var Link = __webpack_require__(159).Link;
+	
+	var Homebar = React.createClass({
+	  displayName: 'Homebar',
+	
+	
+	  _onChange: function () {
+	    this.setState({ tracks: TrackStore.all() });
+	  },
+	
+	  componentDidMount: function () {
+	    this.sessionListener = SessionStore.addListener(this._onChange);
+	    ApiUtil.fetchCurrentUser();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.sessionListener.remove();
+	  },
+	
+	  render: function () {
+	
+	    var user = {};
+	
+	    var loggedIn = SessionStore.isLoggedIn();
+	
+	    if (loggedIn) {
+	      user = SessionStore.currentUser();
+	    }
+	
+	    var headerUserTab;
+	
+	    if (loggedIn) {
+	      headerUserTab = React.createElement(
+	        'button',
+	        { onClick: ApiUtil.logout, className: 'link-tab user-dropdown-tab', href: 'session/new' },
+	        'Sign Out'
+	      );
+	    } else {
+	      headerUserTab = React.createElement(
+	        'div',
+	        { className: 'link-tab user-or-signin-tab' },
+	        React.createElement(
+	          Link,
+	          { to: '/signin', className: 'link-tab header-sign-in-tab' },
+	          'Sign In'
+	        )
+	      );
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'index-main' },
+	      React.createElement(
+	        'div',
+	        { className: 'index-navbar-stretch' },
+	        React.createElement(
+	          'ul',
+	          { className: 'index-navbar group' },
+	          React.createElement('a', { href: '#', className: 'link-tab index-logo-image' }),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'link-tab home-tab' },
+	            'Home'
+	          ),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'link-tab collection-tab' },
+	            'Collection'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'search-bar-tab' },
+	            React.createElement('input', { className: 'search-bar',
+	              placeholder: 'Search',
+	              type: 'text' })
+	          ),
+	          React.createElement(
+	            Link,
+	            { to: '/newtrack', className: 'link-tab upload-tab' },
+	            'Upload'
+	          ),
+	          headerUserTab
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Homebar;
 
 /***/ }
 /******/ ]);

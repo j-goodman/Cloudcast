@@ -1,14 +1,14 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var TrackIndex = require('./tracks/index.jsx');
+var Homebar = require('./homebar.jsx');
 
 Run = React.createClass({
     render: function () {
       return(
         <div id='cloudcast'>
           <div className='content-main'>
-            <TrackIndex />
+            <Homebar />
             {this.props.children}
           </div>
         </div>

@@ -6,6 +6,7 @@ var Run = require('./components/run.jsx');
 var LoginForm = require('./components/auth/login_form.jsx');
 var NewUserForm = require('./components/auth/newuser_form.jsx');
 var TrackForm = require('./components/tracks/track_form.jsx');
+var TrackIndex = require('./components/tracks/index.jsx');
 var UserDetail = require('./components/users/user_detail.jsx');
 var TrackDetail = require('./components/tracks/track_detail.jsx');
 
@@ -17,11 +18,12 @@ var hashHistory = ReactRouter.hashHistory;
 var router = (
   <Router history={hashHistory} >
     <Route path='/' component={Run}>
+      <IndexRoute component={TrackIndex}/>
       <Route path='newtrack' component={TrackForm}/>
-			<Route path='/signin' component={LoginForm}/>
-			<Route path='/newuser' component={NewUserForm}/>
-			<Route path='/user/:id' component={UserDetail}/>
-			<Route path='/track/:id' component={TrackDetail}/>
+      <Route path='signin' component={LoginForm}/>
+      <Route path='newuser' component={NewUserForm}/>
+			<Route path='user/:id' component={UserDetail}/>
+			<Route path='track/:id' component={TrackDetail}/>
     </Route>
   </Router>
 );
