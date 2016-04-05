@@ -156,7 +156,7 @@ Membership.create!(
 
 atthecrossroads = Series.create!(
   title: 'Standing at the Crossroads',
-  user: marty,
+  user: johnson,
   description: "You know that new sound you been looking for? Well listen to this!",
 )
 
