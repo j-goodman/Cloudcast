@@ -10,7 +10,7 @@ var TrackActions = {
 
   receiveSingleTrack: function (track) {
     Dispatcher.dispatch({
-      actionType: "TRACK_RECEIVE",
+      actionType: "TRACK_RECEIVED",
       track: track
     });
   },

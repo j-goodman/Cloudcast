@@ -55,7 +55,7 @@
 	var TrackIndex = __webpack_require__(217);
 	var UserDetail = __webpack_require__(248);
 	var UserTrackIndex = __webpack_require__(251);
-	var UserPlaylistIndex = __webpack_require__(254);
+	var UserSeriesIndex = __webpack_require__(255);
 	var TrackDetail = __webpack_require__(252);
 	
 	var Router = ReactRouter.Router;
@@ -77,7 +77,7 @@
 	      Route,
 	      { path: 'user/:id', component: UserDetail },
 	      React.createElement(Route, { path: 'tracks', component: UserTrackIndex }),
-	      React.createElement(Route, { path: 'playlists', component: UserPlaylistIndex })
+	      React.createElement(Route, { path: 'series', component: UserSeriesIndex })
 	    ),
 	    React.createElement(Route, { path: 'track/:id', component: TrackDetail })
 	  )
@@ -24880,6 +24880,7 @@
 	var TrackActions = __webpack_require__(219);
 	var SessionActions = __webpack_require__(224);
 	var UserActions = __webpack_require__(225);
+	var SeriesActions = __webpack_require__(258);
 	var AppDispatcher = __webpack_require__(220);
 	
 	var ApiUtil = {
@@ -24894,9 +24895,18 @@
 	
 	  fetchSingleTrack: function (id) {
 	    $.ajax({
-	      url: 'api/track/' + id,
+	      url: 'api/tracks/' + id,
 	      success: function (track) {
 	        TrackActions.receiveSingleTrack(track);
+	      }
+	    });
+	  },
+	
+	  fetchSingleSeries: function (id) {
+	    $.ajax({
+	      url: 'api/series/' + id,
+	      success: function (series) {
+	        SeriesActions.receiveSingleSeries(series);
 	      }
 	    });
 	  },
@@ -24994,7 +25004,7 @@
 	
 	  receiveSingleTrack: function (track) {
 	    Dispatcher.dispatch({
-	      actionType: "TRACK_RECEIVE",
+	      actionType: "TRACK_RECEIVED",
 	      track: track
 	    });
 	  },
@@ -32322,10 +32332,10 @@
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	
-	    var router = this.context.router;
+	    var router = 'this.context.router';
 	
 	    ApiUtil.createTrack(this.state, function () {
-	      router.push('/#');
+	      router.push('/');
 	    });
 	  },
 	
@@ -32409,8 +32419,8 @@
 						),
 						React.createElement(
 							'a',
-							{ href: '#/user/' + this.state.user.id + '/playlists' },
-							'Playlists'
+							{ href: '#/user/' + this.state.user.id + '/series' },
+							'Shows'
 						),
 						React.createElement(
 							'a',
@@ -32710,13 +32720,16 @@
 	module.exports = Homebar;
 
 /***/ },
-/* 254 */
+/* 254 */,
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var UserStore = __webpack_require__(249);
 	var SessionStore = __webpack_require__(242);
 	var ApiUtil = __webpack_require__(218);
+	
+	var SeriesIndexItem = __webpack_require__(256);
 	
 	var UserIndex = React.createClass({
 	  displayName: 'UserIndex',
@@ -32750,12 +32763,11 @@
 	        button = React.createElement(
 	          'a',
 	          { href: '#', className: 'new-playlist-button' },
-	          'New Playlist'
+	          'New Show'
 	        );
 	      } else {
 	        button = React.createElement('span', null);
 	      }
-	
 	      return React.createElement(
 	        'main',
 	        { className: 'user-detail-index group' },
@@ -32763,6 +32775,18 @@
 	          'div',
 	          { className: 'index-page-main' },
 	          button
+	        ),
+	        React.createElement(
+	          'section',
+	          null,
+	          React.createElement(
+	            'ul',
+	            { className: 'series-list' },
+	            user.series.map(function (series) {
+	              return React.createElement(SeriesIndexItem, { key: series.id,
+	                seriesId: series.id });
+	            })
+	          )
 	        )
 	      );
 	    }
@@ -32770,6 +32794,240 @@
 	});
 	
 	module.exports = UserIndex;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var SeriesStore = __webpack_require__(257);
+	var ApiUtil = __webpack_require__(218);
+	
+	var CompactTrackIndexItem = __webpack_require__(259);
+	
+	var SeriesIndexItem = React.createClass({
+	  displayName: 'SeriesIndexItem',
+	
+	
+	  getInitialState: function () {
+	    return { series: null };
+	  },
+	
+	  componentDidMount: function () {
+	    this.seriesListener = SeriesStore.addListener(this._onChange);
+	    ApiUtil.fetchSingleSeries(this.props.seriesId);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.seriesListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ series: SeriesStore.getSeries() });
+	  },
+	
+	  render: function () {
+	    if (!this.state.series) {
+	      return React.createElement('span', null);
+	    } else {
+	      var series = this.state.series[this.props.seriesId];
+	      var plu = 's';
+	      if (Object.keys(series.tracks).length === 1) {
+	        plu = '';
+	      }
+	      return React.createElement(
+	        'main',
+	        { className: 'series-index-main group' },
+	        React.createElement(
+	          'section',
+	          { className: 'series-item-left' },
+	          React.createElement(
+	            'div',
+	            { className: 'series-item-image' },
+	            React.createElement(
+	              'div',
+	              { className: 'track-number' },
+	              Object.keys(series.tracks).length,
+	              ' track',
+	              plu
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'section',
+	          { className: 'series-item-right' },
+	          React.createElement(
+	            'div',
+	            { className: 'series-demo-main group' },
+	            React.createElement(
+	              'div',
+	              { className: 'series-subheader' },
+	              React.createElement('div', { className: 'playicon demo-play' }),
+	              React.createElement(
+	                'span',
+	                { className: 'series-username' },
+	                series.user.username
+	              ),
+	              React.createElement(
+	                'span',
+	                { className: 'series-title' },
+	                series.title
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'series-waveform' },
+	            React.createElement(
+	              'span',
+	              { className: 'track-time' },
+	              '4:33'
+	            )
+	          ),
+	          React.createElement(
+	            'section',
+	            { className: 'track-demo-list' },
+	            series.tracks.map(function (track, index) {
+	              return React.createElement(CompactTrackIndexItem, { key: track.id, trackId: track.id, index: index });
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }
+	});
+	
+	module.exports = SeriesIndexItem;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(227).Store;
+	var Dispatcher = __webpack_require__(220);
+	
+	var SeriesStore = new Store(Dispatcher);
+	
+	var _series = {};
+	
+	var resetSeries = function (series) {
+	  _series = {};
+	  series.forEach(function (series) {
+	    _series[series.id] = series;
+	  });
+	};
+	
+	var resetSeries = function (series) {
+	  _series[series.id] = series;
+	};
+	
+	SeriesStore.getSeries = function () {
+	  return _series;
+	};
+	
+	SeriesStore.all = function () {
+	  var series = [];
+	  for (var id in _series) {
+	    series.push(_series[id]);
+	  }
+	  return series;
+	};
+	
+	SeriesStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case 'SERIES_RECEIVED':
+	      resetSeries(payload.series);
+	      SeriesStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = SeriesStore;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(220);
+	
+	var SeriesActions = {
+	  receiveSingleSeries: function (series) {
+	    Dispatcher.dispatch({
+	      actionType: "SERIES_RECEIVED",
+	      series: series
+	    });
+	  }
+	};
+	
+	module.exports = SeriesActions;
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var TrackStore = __webpack_require__(226);
+	var ApiUtil = __webpack_require__(218);
+	
+	var IndexItem = React.createClass({
+	  displayName: 'IndexItem',
+	
+	
+	  getInitialState: function () {
+	    return { track: null };
+	  },
+	
+	  componentDidMount: function () {
+	    this.trackListener = TrackStore.addListener(this._onChange);
+	    ApiUtil.fetchSingleTrack(this.props.trackId);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.trackListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ track: TrackStore.getTrack() });
+	  },
+	
+	  render: function () {
+	    if (!this.state.track) {
+	      return React.createElement('main', null);
+	    } else {
+	      var track = this.state.track[this.props.trackId];
+	      return React.createElement(
+	        'ul',
+	        { className: 'track-demo' },
+	        React.createElement('li', { className: 'track-demo-image' }),
+	        React.createElement(
+	          'li',
+	          { className: 'track-order' },
+	          this.props.index + 1
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'track-demo-username' },
+	          track.user.username
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'track-demo-username' },
+	          '–'
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'track-demo-title' },
+	          track.title
+	        ),
+	        React.createElement('li', { className: 'small-play-icon' })
+	      );
+	    }
+	  }
+	});
+	
+	module.exports = IndexItem;
 
 /***/ }
 /******/ ]);

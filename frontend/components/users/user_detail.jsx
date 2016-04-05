@@ -41,7 +41,7 @@ var UserDetail = React.createClass({
 
 					<div className='user-detail-tabs'>
 						<a href={'#/user/'+this.state.user.id+'/tracks'}>Tracks</a>
-						<a href={'#/user/'+this.state.user.id+'/playlists'}>Playlists</a>
+						<a href={'#/user/'+this.state.user.id+'/series'}>Shows</a>
 						<a href={'#/user/'+this.state.user.id}>Reposts</a>
 					</div>
 

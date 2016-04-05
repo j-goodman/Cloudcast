@@ -27,6 +27,6 @@ class Api::MembershipsController < ApplicationController
 
   def membership_params
     params.require(:membership).permit(
-    :track_id, :playlist_id)
+    :track_id, :series_id)
   end
 end

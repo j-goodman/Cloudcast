@@ -302,7 +302,7 @@ ul {
 
 .index-sidebar {
   width: 340px;
-  float: left;
+  float: right;
   background: #fff;
   position: absolute;
   right: 0;
@@ -705,5 +705,131 @@ ul {
   cursor: pointer;
   text-align: center;
   width: 80px;
-  margin: 16px auto;
+  margin: 16px 0 4px 80px;
+}
+
+/* ~ USER DETAIL SERIES ~ */
+
+.series-index-main {
+  margin: 0 24px;
+  padding: 10px;
+}
+
+.series-item-left {
+  width: 190px;
+  float: left;
+}
+
+.series-item-image {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  background: asset-url('agents_of_fortune.jpg');
+  background-size: contain;
+  position: relative;
+}
+
+.track-number {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #fff;
+  background: #000;
+  height: 52px;
+  width: 60px;
+  font-weight: bold;
+  text-align: center;
+  margin: 8px 8px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  border-radius: 50%;
+  padding: 8px 0 0 0;
+}
+
+.series-item-right {
+  width: 400px;
+  float: right;
+  position: relative;
+}
+
+.series-subheader {
+  height: 50px;
+  position: relative;
+}
+
+.demo-play {
+  float: left;
+  margin: 5px;
+}
+
+.series-username {
+  color: #c0c0c0;
+  float: left;
+  position: absolute;
+  font-size: 14px;
+  top: 3px;
+  left: 50px;
+}
+
+.series-title {
+  color: #000;
+  position: absolute;
+  font-size: 14px;
+  top: 21px;
+  left: 52px;
+}
+
+.series-waveform {
+  background: #eee;
+  height: 70px;
+  width: 424px;
+  position: absolute;
+  top: 50px;
+  left: 0;
+}
+
+.track-demo-list {
+  position: absolute;
+  top: 130px;
+  left: 0;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.track-demo {
+  width: 414px;
+  font-size: 13px;
+  height: 20px;
+  border-top: 1px solid #eee;
+  padding: 4px;
+  position: relative;
+}
+
+.track-demo-image {
+  width: 20px;
+  height: 20px;
+  background: asset-url('agents_of_fortune.jpg');
+  background-size: contain;
+  float: left;
+}
+
+.track-demo-username, .track-demo-title, .track-order {
+  float: left;
+  padding: 2px 0 0 7px;
+}
+
+.track-demo-username {
+  color: #bbb;
+}
+
+.small-play-icon {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 30px;
+  top: 8px;
+  background: asset-url('small_play_icon.png');
+  background-size: cover;
+  float: right;
 }

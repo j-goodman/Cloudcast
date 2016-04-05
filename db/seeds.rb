@@ -36,7 +36,7 @@ byrne = User.create!(
   password: 'surfbort'
 )
 
-Track.create!(
+crossroadblues = Track.create!(
   title: 'Crossroad Blues',
   file_url: 'django.wav',
   user: johnson,
@@ -44,7 +44,7 @@ Track.create!(
   image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
 
-Track.create!(
+johnnybgoode = Track.create!(
 title: 'Johnny B. Goode',
 file_url: 'django.wav',
 user: marty,
@@ -60,7 +60,7 @@ description: "Thank you, come again.",
 image_url: 'https://i.imgur.com/G5RZH.jpg'
 )
 
-Track.create!(
+deadshrimpblues = Track.create!(
   title: 'Dead Shrimp Blues',
   file_url: 'django.wav',
   user: johnson,
@@ -122,4 +122,64 @@ Membership.create!(
   track: papalegba,
   series: talkingheads,
   order: 2
+)
+
+eightyeightmph = Series.create!(
+  title: '88 MPH',
+  user: marty,
+  description: "For the tape deck in the DeLorean.",
+)
+
+Membership.create!(
+  track: johnnybgoode,
+  series: eightyeightmph,
+  order: 0
+)
+
+Membership.create!(
+  track: onceinalifetime,
+  series: eightyeightmph,
+  order: 2
+)
+
+Membership.create!(
+  track: crossroadblues,
+  series: eightyeightmph,
+  order: 1
+)
+
+Membership.create!(
+  track: psychokiller,
+  series: eightyeightmph,
+  order: 3
+)
+
+atthecrossroads = Series.create!(
+  title: 'Standing at the Crossroads',
+  user: marty,
+  description: "You know that new sound you been looking for? Well listen to this!",
+)
+
+Membership.create!(
+  track: deadshrimpblues,
+  series: atthecrossroads,
+  order: 0
+)
+
+Membership.create!(
+track: papalegba,
+series: atthecrossroads,
+order: 1
+)
+
+Membership.create!(
+  track: johnnybgoode,
+  series: atthecrossroads,
+  order: 2
+)
+
+Membership.create!(
+  track: crossroadblues,
+  series: atthecrossroads,
+  order: 3
 )

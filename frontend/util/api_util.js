@@ -1,6 +1,7 @@
 var TrackActions = require('../actions/track_actions.js');
 var SessionActions = require('../actions/session_actions.js');
 var UserActions = require('../actions/user_actions.js');
+var SeriesActions = require('../actions/series_actions.js');
 var AppDispatcher = require('../dispatcher.js');
 
 var ApiUtil = {
@@ -15,9 +16,18 @@ var ApiUtil = {
 
   fetchSingleTrack: function (id) {
     $.ajax({
-      url: 'api/track/'+id,
+      url: 'api/tracks/'+id,
       success: function (track) {
         TrackActions.receiveSingleTrack(track);
+      }
+    });
+  },
+
+  fetchSingleSeries: function (id) {
+    $.ajax({
+      url: 'api/series/'+id,
+      success: function (series) {
+        SeriesActions.receiveSingleSeries(series);
       }
     });
   },

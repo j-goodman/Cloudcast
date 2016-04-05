@@ -1,4 +1,4 @@
 json.extract!(
   @series,
-  :id, :title, :description, :tracks,
+  :id, :title, :user, :description, :tracks,
 )

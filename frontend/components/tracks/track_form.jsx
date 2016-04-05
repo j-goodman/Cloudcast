@@ -83,10 +83,10 @@ var TrackForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
 
-    var router = this.context.router;
+    var router = 'this.context.router';
 
     ApiUtil.createTrack(this.state, function() {
-      router.push('/#');
+      router.push('/');
     });
   },
 
