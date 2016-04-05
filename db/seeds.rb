@@ -52,7 +52,7 @@ description: "This one's an oldie. Or at least it's an oldie where I come from."
 image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
 )
 
-Track.create!(
+babyonboard = Track.create!(
 title: 'Baby on Board',
 file_url: 'django.wav',
 user: apu,
@@ -154,6 +154,24 @@ Membership.create!(
   order: 3
 )
 
+Membership.create!(
+  track: deadshrimpblues,
+  series: eightyeightmph,
+  order: 4
+)
+
+Membership.create!(
+  track: papalegba,
+  series: eightyeightmph,
+  order: 5
+)
+
+Membership.create!(
+  track: babyonboard,
+  series: eightyeightmph,
+  order: 6
+)
+
 atthecrossroads = Series.create!(
   title: 'Standing at the Crossroads',
   user: johnson,
@@ -167,12 +185,6 @@ Membership.create!(
 )
 
 Membership.create!(
-track: papalegba,
-series: atthecrossroads,
-order: 1
-)
-
-Membership.create!(
   track: johnnybgoode,
   series: atthecrossroads,
   order: 2
@@ -182,4 +194,10 @@ Membership.create!(
   track: crossroadblues,
   series: atthecrossroads,
   order: 3
+)
+
+Membership.create!(
+  track: papalegba,
+  series: atthecrossroads,
+  order: 1
 )

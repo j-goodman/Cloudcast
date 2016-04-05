@@ -58,9 +58,9 @@ var MainIndex = React.createClass({
               track={track} user={track.user}/>;
             })}
           </ul>
-        </div>
-        <div className='index-sidebar'>
-          <IndexSidebar />
+          <div className='index-sidebar'>
+            <IndexSidebar />
+          </div>
         </div>
       </div>
     );

@@ -47,7 +47,7 @@ var ApiUtil = {
       method: 'POST',
       data: {track: track},
       success: function (track) {
-        TrackActions.recieveSingleTrack(track);
+        TrackActions.receiveSingleTrack(track);
         callback && callback();
       }
     });

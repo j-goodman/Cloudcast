@@ -19,21 +19,23 @@ var IndexItem = React.createClass({
   },
 
   _onChange: function () {
-    this.setState({ track: TrackStore.getTrack() });
+    this.setState({ track: TrackStore.getTrack(this.props.trackId) });
   },
 
   render: function () {
     if (!this.state.track) {
       return(<main></main>);
     } else {
-      var track = this.state.track[this.props.trackId];
+      var track = this.state.track;
       return(
         <ul className='track-demo'>
           <li className='track-demo-image' />
           <li className='track-order'>{this.props.index+1}</li>
           <li className='track-demo-username'>{track.user.username}</li>
           <li className='track-demo-username'>–</li>
-          <li className='track-demo-title'>{track.title}</li>
+          <a href={'#/track/'+track.id}>
+            <li className='track-demo-title'>{track.title}</li>
+          </a>
           <li className='small-play-icon' />
         </ul>
       );

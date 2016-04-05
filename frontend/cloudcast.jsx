@@ -24,11 +24,11 @@ var router = (
       <Route path='newtrack' component={TrackForm}/>
       <Route path='signin' component={LoginForm}/>
       <Route path='newuser' component={NewUserForm}/>
+      <Route path='track/:id' component={TrackDetail}/>
 			<Route path='user/:id' component={UserDetail}>
         <Route path='tracks' component={UserTrackIndex}/>
         <Route path='series' component={UserSeriesIndex}/>
       </Route>
-			<Route path='track/:id' component={TrackDetail}/>
     </Route>
   </Router>
 );

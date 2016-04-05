@@ -16,8 +16,8 @@ var resetTrack = function (track) {
   _tracks[track.id] = track;
 };
 
-TrackStore.getTrack = function () {
-	return _tracks;
+TrackStore.getTrack = function (id) {
+	return _tracks[id];
 };
 
 TrackStore.all = function () {

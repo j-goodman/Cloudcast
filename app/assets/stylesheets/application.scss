@@ -43,6 +43,10 @@ button, article, footer, small {
   display: block;
 }
 
+.non-display {
+  opacity: 0;
+}
+
 /* ~ USER AUTHENTICATION ~ */
 
 .login-dimmer {
@@ -302,6 +306,7 @@ ul {
 
 .index-sidebar {
   width: 340px;
+  height: 340px;
   float: right;
   background: #fff;
   position: absolute;
@@ -456,7 +461,6 @@ ul {
 }
 
 .followed-pane {
-  height: 400px;
   width: 340px;
 }
 
@@ -621,6 +625,117 @@ ul {
   color: #222;
 }
 
+/* ~ TRACK DETAIL ~ */
+
+.track-detail-header {
+  width: 1000px;
+  height: 380px;
+  position: relative;
+  background: linear-gradient( 330deg, #ff0000, #b30000);
+}
+
+.track-detail-sidebar {
+  border-left: 1px solid #eee;
+  width: 360px;
+  height: 300px;
+  float: right;
+}
+
+.track-avatar {
+  height: 340px;
+  width: 340px;
+  float: right;
+  margin: 20px;
+  background: asset-url('agents_of_fortune.jpg');
+  background-size: contain;
+}
+
+.track-header-info > h2 {
+  height: 26px;
+  padding: 4px 12px 0 12px;
+  background: black;
+  position: absolute;
+  top: 30px;
+  left: 96px;
+  text-align: center;
+  font-size: 16px;
+  color: #aaa;
+}
+
+.track-header-info > h1 {
+  height: 36px;
+  padding: 4px 12px 0 12px;
+  background: black;
+  position: absolute;
+  top: 66px;
+  left: 96px;
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+}
+
+.track-detail-waveform {
+  background: #ccc;
+  width: 560px;
+  height: 70px;
+  position: absolute;
+  bottom: 60px;
+  left: 40px;
+}
+
+.track-detail-main {
+	width: 1000px;
+	position: absolute;
+	top: 380px;
+	left: 50%;
+	margin-left: -500px;
+	z-index: 1000;
+	background: #fff;
+}
+
+.track-info-box {
+  margin: 20px 15px 0 0;
+  border-top: 1px solid #eee;
+  position: relative;
+  width: 950px;
+}
+
+.track-detail-playicon {
+  height: 64px;
+  width: 64px;
+  position: absolute;
+  left: 20px;
+  top: 30px;
+}
+
+.track-info-user-avatar {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  margin: 0 12px 0 0;
+  background: asset-url('medigoron.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.track-info-username {
+  position: absolute;
+  top: 140px;
+  left: 10px;
+  font-size: 14px;
+  width: 124px;
+  text-align: center;
+}
+
+.track-info-description {
+  position: absolute;
+  top: 10px;
+  left: 148px;
+  font-size: 14px;
+  width: 430px;
+}
+
+
 /* ~ USER DETAIL ~ */
 
 .user-detail-main {
@@ -664,10 +779,11 @@ ul {
 .user-header-info {
 	position: relative;
 	height: 50px;
-	width: 200px;
 	bottom: 172px;
 	color: white;
 	left: 260px;
+  display: inline;
+  padding: 6px 12px;
 	background: #000;
 	font-size: 24px;
 	text-align: center;
@@ -713,6 +829,7 @@ ul {
 .series-index-main {
   margin: 0 24px;
   padding: 10px;
+  height: 280px;
 }
 
 .series-item-left {
@@ -832,4 +949,17 @@ ul {
   background: asset-url('small_play_icon.png');
   background-size: cover;
   float: right;
+}
+
+.expand-bar {
+  text-align: center;
+  color: #aaa;
+  padding: 6px 0 0 0;
+  width: 422px;
+}
+
+.expand-bar:hover {
+  background: #eee;
+  color: #444;
+  cursor: pointer;
 }

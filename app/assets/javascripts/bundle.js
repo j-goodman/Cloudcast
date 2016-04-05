@@ -49,14 +49,14 @@
 	var ReactRouter = __webpack_require__(159);
 	
 	var Run = __webpack_require__(216);
-	var LoginForm = __webpack_require__(245);
-	var NewUserForm = __webpack_require__(246);
-	var TrackForm = __webpack_require__(247);
-	var TrackIndex = __webpack_require__(217);
-	var UserDetail = __webpack_require__(248);
-	var UserTrackIndex = __webpack_require__(251);
-	var UserSeriesIndex = __webpack_require__(255);
-	var TrackDetail = __webpack_require__(252);
+	var LoginForm = __webpack_require__(244);
+	var NewUserForm = __webpack_require__(248);
+	var TrackForm = __webpack_require__(249);
+	var TrackIndex = __webpack_require__(245);
+	var UserDetail = __webpack_require__(250);
+	var UserTrackIndex = __webpack_require__(253);
+	var UserSeriesIndex = __webpack_require__(254);
+	var TrackDetail = __webpack_require__(258);
 	
 	var Router = ReactRouter.Router;
 	var Route = ReactRouter.Route;
@@ -73,13 +73,13 @@
 	    React.createElement(Route, { path: 'newtrack', component: TrackForm }),
 	    React.createElement(Route, { path: 'signin', component: LoginForm }),
 	    React.createElement(Route, { path: 'newuser', component: NewUserForm }),
+	    React.createElement(Route, { path: 'track/:id', component: TrackDetail }),
 	    React.createElement(
 	      Route,
 	      { path: 'user/:id', component: UserDetail },
 	      React.createElement(Route, { path: 'tracks', component: UserTrackIndex }),
 	      React.createElement(Route, { path: 'series', component: UserSeriesIndex })
-	    ),
-	    React.createElement(Route, { path: 'track/:id', component: TrackDetail })
+	    )
 	  )
 	);
 	
@@ -24763,7 +24763,7 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 	
-	var Homebar = __webpack_require__(253);
+	var Homebar = __webpack_require__(217);
 	
 	Run = React.createClass({
 	  displayName: 'Run',
@@ -24790,35 +24790,31 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var TrackStore = __webpack_require__(226);
-	var SessionStore = __webpack_require__(242);
-	var TrackIndexItem = __webpack_require__(243);
-	var IndexSidebar = __webpack_require__(244);
+	var SessionStore = __webpack_require__(227);
+	var TrackStore = __webpack_require__(243);
 	
-	var MainIndex = React.createClass({
-	  displayName: 'MainIndex',
+	var Link = __webpack_require__(159).Link;
 	
-	  getInitialState: function () {
-	    return { tracks: TrackStore.all() };
-	  },
+	var Homebar = React.createClass({
+	  displayName: 'Homebar',
+	
 	
 	  _onChange: function () {
 	    this.setState({ tracks: TrackStore.all() });
 	  },
 	
 	  componentDidMount: function () {
-	    this.trackListener = TrackStore.addListener(this._onChange);
-	    ApiUtil.fetchAllTracks();
 	    this.sessionListener = SessionStore.addListener(this._onChange);
 	    ApiUtil.fetchCurrentUser();
 	  },
 	
 	  componentWillUnmount: function () {
-	    this.trackListener.remove();
 	    this.sessionListener.remove();
 	  },
 	
 	  render: function () {
+	
+	    var user = {};
 	
 	    var loggedIn = SessionStore.isLoggedIn();
 	
@@ -24826,52 +24822,67 @@
 	      user = SessionStore.currentUser();
 	    }
 	
-	    var welcomeMessage;
+	    var headerUserTab;
 	
 	    if (loggedIn) {
-	      welcomeMessage = React.createElement(
-	        'h2',
-	        { className: 'stream-header' },
-	        'Welcome, ',
-	        user.username,
-	        '. Hear the latest from your stream:'
+	      headerUserTab = React.createElement(
+	        'button',
+	        { onClick: ApiUtil.logout, className: 'link-tab user-dropdown-tab', href: 'session/new' },
+	        'Sign Out'
 	      );
 	    } else {
-	      welcomeMessage = React.createElement(
-	        'h2',
-	        { className: 'stream-header' },
-	        'Make an account to start collecting and sharing podcasts'
+	      headerUserTab = React.createElement(
+	        'div',
+	        { className: 'link-tab user-or-signin-tab' },
+	        React.createElement(
+	          Link,
+	          { to: '/signin', className: 'link-tab header-sign-in-tab' },
+	          'Sign In'
+	        )
 	      );
 	    }
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'index-wrapper group' },
+	      { className: 'index-main' },
 	      React.createElement(
 	        'div',
-	        { className: 'index-page-main' },
-	        React.createElement('br', null),
-	        welcomeMessage,
-	        React.createElement('br', null),
+	        { className: 'index-navbar-stretch' },
 	        React.createElement(
 	          'ul',
-	          { className: 'track-list' },
-	          this.state.tracks.map(function (track) {
-	            return React.createElement(TrackIndexItem, { key: track.id,
-	              track: track, user: track.user });
-	          })
+	          { className: 'index-navbar group' },
+	          React.createElement('a', { href: '#', className: 'link-tab index-logo-image' }),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'link-tab home-tab' },
+	            'Home'
+	          ),
+	          React.createElement(
+	            'a',
+	            { href: '#', className: 'link-tab collection-tab' },
+	            'Collection'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'search-bar-tab' },
+	            React.createElement('input', { className: 'search-bar',
+	              placeholder: 'Search',
+	              type: 'text' })
+	          ),
+	          React.createElement(
+	            Link,
+	            { to: '/newtrack', className: 'link-tab upload-tab' },
+	            'Upload'
+	          ),
+	          headerUserTab
 	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'index-sidebar' },
-	        React.createElement(IndexSidebar, null)
 	      )
 	    );
 	  }
+	
 	});
 	
-	module.exports = MainIndex;
+	module.exports = Homebar;
 
 /***/ },
 /* 218 */
@@ -24880,7 +24891,7 @@
 	var TrackActions = __webpack_require__(219);
 	var SessionActions = __webpack_require__(224);
 	var UserActions = __webpack_require__(225);
-	var SeriesActions = __webpack_require__(258);
+	var SeriesActions = __webpack_require__(226);
 	var AppDispatcher = __webpack_require__(220);
 	
 	var ApiUtil = {
@@ -24926,7 +24937,7 @@
 	      method: 'POST',
 	      data: { track: track },
 	      success: function (track) {
-	        TrackActions.recieveSingleTrack(track);
+	        TrackActions.receiveSingleTrack(track);
 	        callback && callback();
 	      }
 	    });
@@ -25385,57 +25396,61 @@
 /* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(227).Store;
 	var Dispatcher = __webpack_require__(220);
 	
-	var TrackStore = new Store(Dispatcher);
-	
-	var _tracks = {};
-	
-	var resetTracks = function (tracks) {
-	  _tracks = {};
-	  tracks.forEach(function (track) {
-	    _tracks[track.id] = track;
-	  });
-	};
-	
-	var resetTrack = function (track) {
-	  _tracks[track.id] = track;
-	};
-	
-	TrackStore.getTrack = function () {
-	  return _tracks;
-	};
-	
-	TrackStore.all = function () {
-	  var tracks = [];
-	  for (var id in _tracks) {
-	    tracks.push(_tracks[id]);
-	  }
-	  return tracks;
-	};
-	
-	TrackStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case 'TRACKS_RECEIVED':
-	      resetTracks(payload.tracks);
-	      TrackStore.__emitChange();
-	      break;
-	    case 'USER_TRACKS_RECEIVED':
-	      resetTracks(payload.tracks);
-	      TrackStore.__emitChange();
-	      break;
-	    case 'TRACK_RECEIVED':
-	      resetTrack(payload.track);
-	      TrackStore.__emitChange();
-	      break;
+	var SeriesActions = {
+	  receiveSingleSeries: function (series) {
+	    Dispatcher.dispatch({
+	      actionType: "SERIES_RECEIVED",
+	      series: series
+	    });
 	  }
 	};
 	
-	module.exports = TrackStore;
+	module.exports = SeriesActions;
 
 /***/ },
 /* 227 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(228).Store;
+	var AppDispatcher = __webpack_require__(220);
+	
+	var SessionStore = new Store(AppDispatcher);
+	
+	var _currentUser = null;
+	var _currentUserHasBeenFetched = false;
+	
+	SessionStore.currentUser = function () {
+	  return _currentUser;
+	};
+	
+	SessionStore.isLoggedIn = function () {
+	  return !!_currentUser;
+	};
+	
+	SessionStore.currentUserHasBeenFetched = function () {
+	  return _currentUserHasBeenFetched;
+	};
+	
+	SessionStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case 'CURRENT_USER_RECEIVED':
+	      _currentUser = payload.currentUser;
+	      _currentUserHasBeenFetched = true;
+	      SessionStore.__emitChange();
+	      break;
+	    case 'LOGOUT':
+	      _currentUser = null;
+	      SessionStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = SessionStore;
+
+/***/ },
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25447,15 +25462,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(228);
-	module.exports.MapStore = __webpack_require__(231);
-	module.exports.Mixin = __webpack_require__(241);
-	module.exports.ReduceStore = __webpack_require__(232);
-	module.exports.Store = __webpack_require__(233);
+	module.exports.Container = __webpack_require__(229);
+	module.exports.MapStore = __webpack_require__(232);
+	module.exports.Mixin = __webpack_require__(242);
+	module.exports.ReduceStore = __webpack_require__(233);
+	module.exports.Store = __webpack_require__(234);
 
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25477,10 +25492,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(229);
+	var FluxStoreGroup = __webpack_require__(230);
 	
 	var invariant = __webpack_require__(223);
-	var shallowEqual = __webpack_require__(230);
+	var shallowEqual = __webpack_require__(231);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -25638,7 +25653,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25719,7 +25734,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports) {
 
 	/**
@@ -25774,7 +25789,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25795,8 +25810,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(232);
-	var Immutable = __webpack_require__(240);
+	var FluxReduceStore = __webpack_require__(233);
+	var Immutable = __webpack_require__(241);
 	
 	var invariant = __webpack_require__(223);
 	
@@ -25924,7 +25939,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25945,9 +25960,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(233);
+	var FluxStore = __webpack_require__(234);
 	
-	var abstractMethod = __webpack_require__(239);
+	var abstractMethod = __webpack_require__(240);
 	var invariant = __webpack_require__(223);
 	
 	var FluxReduceStore = (function (_FluxStore) {
@@ -26031,7 +26046,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26050,7 +26065,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(234);
+	var _require = __webpack_require__(235);
 	
 	var EventEmitter = _require.EventEmitter;
 	
@@ -26214,7 +26229,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26227,14 +26242,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(235)
+	  EventEmitter: __webpack_require__(236)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26253,8 +26268,8 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(236);
-	var EventSubscriptionVendor = __webpack_require__(238);
+	var EmitterSubscription = __webpack_require__(237);
+	var EventSubscriptionVendor = __webpack_require__(239);
 	
 	var emptyFunction = __webpack_require__(15);
 	var invariant = __webpack_require__(13);
@@ -26431,7 +26446,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26452,7 +26467,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(237);
+	var EventSubscription = __webpack_require__(238);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -26484,7 +26499,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports) {
 
 	/**
@@ -26538,7 +26553,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26647,7 +26662,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26674,7 +26689,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31661,7 +31676,7 @@
 	}));
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -31678,7 +31693,7 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(229);
+	var FluxStoreGroup = __webpack_require__(230);
 	
 	var invariant = __webpack_require__(223);
 	
@@ -31784,143 +31799,65 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(227).Store;
-	var AppDispatcher = __webpack_require__(220);
-	
-	var SessionStore = new Store(AppDispatcher);
-	
-	var _currentUser = null;
-	var _currentUserHasBeenFetched = false;
-	
-	SessionStore.currentUser = function () {
-	  return _currentUser;
-	};
-	
-	SessionStore.isLoggedIn = function () {
-	  return !!_currentUser;
-	};
-	
-	SessionStore.currentUserHasBeenFetched = function () {
-	  return _currentUserHasBeenFetched;
-	};
-	
-	SessionStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case 'CURRENT_USER_RECEIVED':
-	      _currentUser = payload.currentUser;
-	      _currentUserHasBeenFetched = true;
-	      SessionStore.__emitChange();
-	      break;
-	    case 'LOGOUT':
-	      _currentUser = null;
-	      SessionStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = SessionStore;
-
-/***/ },
 /* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1);
+	var Store = __webpack_require__(228).Store;
+	var Dispatcher = __webpack_require__(220);
 	
-	var IndexItem = React.createClass({
-	  displayName: 'IndexItem',
+	var TrackStore = new Store(Dispatcher);
 	
-	  render: function () {
-	    return React.createElement(
-	      'li',
-	      { className: 'track-index-item group' },
-	      React.createElement(
-	        'div',
-	        { className: 'track-header' },
-	        React.createElement('a', { href: '#/user/' + this.props.user.id + '/tracks', className: 'track-poster-image' }),
-	        React.createElement(
-	          'h2',
-	          { className: 'track-header-text' },
-	          React.createElement(
-	            'a',
-	            { href: '#/user/' + this.props.user.id + '/tracks' },
-	            this.props.user.username,
-	            ' posted a track'
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'track-body' },
-	        React.createElement('div', { className: 'track-image' }),
-	        React.createElement(
-	          'div',
-	          { className: 'track-body-main group' },
-	          React.createElement(
-	            'div',
-	            { className: 'track-subheader' },
-	            React.createElement('div', { className: 'playicon' }),
-	            React.createElement(
-	              'span',
-	              { className: 'track-username' },
-	              this.props.track.description
-	            ),
-	            React.createElement(
-	              'span',
-	              { className: 'track-title' },
-	              this.props.track.title
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'waveform' },
-	          React.createElement(
-	            'span',
-	            { className: 'track-time' },
-	            '4:33'
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'track-buttons group' },
-	          React.createElement('div', { className: 'track-button track-like' }),
-	          React.createElement('div', { className: 'track-button track-repost' }),
-	          React.createElement('div', { className: 'track-button track-playlistadd' }),
-	          React.createElement('div', { className: 'track-button track-share' })
-	        )
-	      )
-	    );
+	var _tracks = {};
+	
+	var resetTracks = function (tracks) {
+	  _tracks = {};
+	  tracks.forEach(function (track) {
+	    _tracks[track.id] = track;
+	  });
+	};
+	
+	var resetTrack = function (track) {
+	  _tracks[track.id] = track;
+	};
+	
+	TrackStore.getTrack = function (id) {
+	  return _tracks[id];
+	};
+	
+	TrackStore.all = function () {
+	  var tracks = [];
+	  for (var id in _tracks) {
+	    tracks.push(_tracks[id]);
 	  }
-	});
+	  return tracks;
+	};
 	
-	module.exports = IndexItem;
+	TrackStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case 'TRACKS_RECEIVED':
+	      resetTracks(payload.tracks);
+	      TrackStore.__emitChange();
+	      break;
+	    case 'USER_TRACKS_RECEIVED':
+	      resetTracks(payload.tracks);
+	      TrackStore.__emitChange();
+	      break;
+	    case 'TRACK_RECEIVED':
+	      resetTrack(payload.track);
+	      TrackStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = TrackStore;
 
 /***/ },
 /* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	
-	var IndexItem = React.createClass({
-	  displayName: 'IndexItem',
-	
-	  render: function () {
-	    return React.createElement('div', { className: 'followed-pane' });
-	  }
-	});
-	
-	module.exports = IndexItem;
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var TrackIndex = __webpack_require__(217);
+	var TrackIndex = __webpack_require__(245);
 	
 	var Link = __webpack_require__(159).Link;
 	
@@ -32050,12 +31987,192 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 246 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var TrackIndex = __webpack_require__(217);
+	var TrackStore = __webpack_require__(243);
+	var SessionStore = __webpack_require__(227);
+	var TrackIndexItem = __webpack_require__(246);
+	var IndexSidebar = __webpack_require__(247);
+	
+	var MainIndex = React.createClass({
+	  displayName: 'MainIndex',
+	
+	  getInitialState: function () {
+	    return { tracks: TrackStore.all() };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ tracks: TrackStore.all() });
+	  },
+	
+	  componentDidMount: function () {
+	    this.trackListener = TrackStore.addListener(this._onChange);
+	    ApiUtil.fetchAllTracks();
+	    this.sessionListener = SessionStore.addListener(this._onChange);
+	    ApiUtil.fetchCurrentUser();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.trackListener.remove();
+	    this.sessionListener.remove();
+	  },
+	
+	  render: function () {
+	
+	    var loggedIn = SessionStore.isLoggedIn();
+	
+	    if (loggedIn) {
+	      user = SessionStore.currentUser();
+	    }
+	
+	    var welcomeMessage;
+	
+	    if (loggedIn) {
+	      welcomeMessage = React.createElement(
+	        'h2',
+	        { className: 'stream-header' },
+	        'Welcome, ',
+	        user.username,
+	        '. Hear the latest from your stream:'
+	      );
+	    } else {
+	      welcomeMessage = React.createElement(
+	        'h2',
+	        { className: 'stream-header' },
+	        'Make an account to start collecting and sharing podcasts'
+	      );
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'index-wrapper group' },
+	      React.createElement(
+	        'div',
+	        { className: 'index-page-main' },
+	        React.createElement('br', null),
+	        welcomeMessage,
+	        React.createElement('br', null),
+	        React.createElement(
+	          'ul',
+	          { className: 'track-list' },
+	          this.state.tracks.map(function (track) {
+	            return React.createElement(TrackIndexItem, { key: track.id,
+	              track: track, user: track.user });
+	          })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'index-sidebar' },
+	          React.createElement(IndexSidebar, null)
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = MainIndex;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var IndexItem = React.createClass({
+	  displayName: 'IndexItem',
+	
+	  render: function () {
+	    return React.createElement(
+	      'li',
+	      { className: 'track-index-item group' },
+	      React.createElement(
+	        'div',
+	        { className: 'track-header' },
+	        React.createElement('a', { href: '#/user/' + this.props.user.id + '/tracks', className: 'track-poster-image' }),
+	        React.createElement(
+	          'h2',
+	          { className: 'track-header-text' },
+	          React.createElement(
+	            'a',
+	            { href: '#/user/' + this.props.user.id + '/tracks' },
+	            this.props.user.username,
+	            ' posted a track'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'track-body' },
+	        React.createElement('div', { className: 'track-image' }),
+	        React.createElement(
+	          'div',
+	          { className: 'track-body-main group' },
+	          React.createElement(
+	            'div',
+	            { className: 'track-subheader' },
+	            React.createElement('div', { className: 'playicon' }),
+	            React.createElement(
+	              'span',
+	              { className: 'track-username' },
+	              this.props.track.description
+	            ),
+	            React.createElement(
+	              'span',
+	              { className: 'track-title' },
+	              this.props.track.title
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'waveform' },
+	          React.createElement(
+	            'span',
+	            { className: 'track-time' },
+	            '4:33'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'track-buttons group' },
+	          React.createElement('div', { className: 'track-button track-like' }),
+	          React.createElement('div', { className: 'track-button track-repost' }),
+	          React.createElement('div', { className: 'track-button track-playlistadd' }),
+	          React.createElement('div', { className: 'track-button track-share' })
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = IndexItem;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var IndexItem = React.createClass({
+	  displayName: 'IndexItem',
+	
+	  render: function () {
+	    return React.createElement('div', { className: 'followed-pane' });
+	  }
+	});
+	
+	module.exports = IndexItem;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var TrackIndex = __webpack_require__(245);
 	
 	var Link = __webpack_require__(159).Link;
 	
@@ -32209,13 +32326,13 @@
 	module.exports = NewUserForm;
 
 /***/ },
-/* 247 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var SessionStore = __webpack_require__(242);
-	var TrackIndex = __webpack_require__(217);
+	var SessionStore = __webpack_require__(227);
+	var TrackIndex = __webpack_require__(245);
 	
 	var Link = __webpack_require__(159).Link;
 	
@@ -32332,10 +32449,10 @@
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	
-	    var router = 'this.context.router';
+	    var router = this.context.router;
 	
 	    ApiUtil.createTrack(this.state, function () {
-	      router.push('/');
+	      router.push('/#');
 	    });
 	  },
 	
@@ -32355,16 +32472,16 @@
 	module.exports = TrackForm;
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(218);
-	var SessionStore = __webpack_require__(242);
-	var UserStore = __webpack_require__(249);
-	var TrackIndexItem = __webpack_require__(243);
-	var UserDetailSidebar = __webpack_require__(250);
-	var UserDetailIndex = __webpack_require__(251);
+	var SessionStore = __webpack_require__(227);
+	var UserStore = __webpack_require__(251);
+	var TrackIndexItem = __webpack_require__(246);
+	var UserDetailSidebar = __webpack_require__(252);
+	var UserDetailIndex = __webpack_require__(253);
 	
 	var Link = __webpack_require__(159).Link;
 	
@@ -32400,13 +32517,9 @@
 						{ className: 'user-header' },
 						React.createElement('div', { className: 'user-avatar' }),
 						React.createElement(
-							'div',
+							'h1',
 							{ className: 'user-header-info' },
-							React.createElement(
-								'h1',
-								null,
-								this.state.user.username
-							)
+							this.state.user.username
 						)
 					),
 					React.createElement(
@@ -32424,7 +32537,7 @@
 						),
 						React.createElement(
 							'a',
-							{ href: '#/user/' + this.state.user.id },
+							{ className: 'non-display', href: '#/user/' + this.state.user.id },
 							'Reposts'
 						)
 					),
@@ -32442,10 +32555,10 @@
 	module.exports = UserDetail;
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(227).Store;
+	var Store = __webpack_require__(228).Store;
 	var Dispatcher = __webpack_require__(220);
 	
 	var UserStore = new Store(Dispatcher);
@@ -32472,7 +32585,7 @@
 	module.exports = UserStore;
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32487,14 +32600,14 @@
 	module.exports = UserSidebar;
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var TrackStore = __webpack_require__(226);
-	var UserStore = __webpack_require__(249);
+	var TrackStore = __webpack_require__(243);
+	var UserStore = __webpack_require__(251);
 	var ApiUtil = __webpack_require__(218);
-	var TrackIndexItem = __webpack_require__(243);
+	var TrackIndexItem = __webpack_require__(246);
 	
 	var UserIndex = React.createClass({
 	  displayName: 'UserIndex',
@@ -32548,188 +32661,15 @@
 	module.exports = UserIndex;
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(218);
-	var SessionStore = __webpack_require__(242);
-	var TrackStore = __webpack_require__(226);
-	var TrackIndexItem = __webpack_require__(243);
-	
-	var Link = __webpack_require__(159).Link;
-	
-	var TrackDetail = React.createClass({
-		displayName: 'TrackDetail',
-	
-		getInitialState: function () {
-			return { track: null };
-		},
-	
-		componentDidMount: function () {
-			this.trackListener = TrackStore.addListener(this._onChange);
-			ApiUtil.fetchSingleTrack(this.props.params.id);
-		},
-	
-		componentWillUnmount: function () {
-			this.trackListener.remove();
-		},
-	
-		_onChange: function () {
-			this.setState({ track: TrackStore.getTrack() });
-		},
-	
-		render: function () {
-			if (!this.state.track) {
-				return React.createElement('main', null);
-			} else {
-				return React.createElement(
-					'main',
-					{ className: 'user-detail-main' },
-					React.createElement(
-						'section',
-						{ className: 'user-header' },
-						React.createElement('div', { className: 'user-avatar' }),
-						React.createElement(
-							'div',
-							{ className: 'user-header-info' },
-							React.createElement(
-								'h2',
-								null,
-								this.state.track.user
-							),
-							React.createElement(
-								'h1',
-								null,
-								this.state.track.title
-							)
-						)
-					),
-					React.createElement('div', { className: 'track-detail-commentbar' }),
-					React.createElement(
-						'section',
-						{ className: 'user-detail-box' },
-						React.createElement(UserDetailIndex, { user: this.state.user }),
-						React.createElement(UserDetailSidebar, { user: this.state.user })
-					)
-				);
-			}
-		}
-	});
-	
-	module.exports = TrackDetail;
-
-/***/ },
-/* 253 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(218);
-	var SessionStore = __webpack_require__(242);
-	var TrackStore = __webpack_require__(226);
-	
-	var Link = __webpack_require__(159).Link;
-	
-	var Homebar = React.createClass({
-	  displayName: 'Homebar',
-	
-	
-	  _onChange: function () {
-	    this.setState({ tracks: TrackStore.all() });
-	  },
-	
-	  componentDidMount: function () {
-	    this.sessionListener = SessionStore.addListener(this._onChange);
-	    ApiUtil.fetchCurrentUser();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.sessionListener.remove();
-	  },
-	
-	  render: function () {
-	
-	    var user = {};
-	
-	    var loggedIn = SessionStore.isLoggedIn();
-	
-	    if (loggedIn) {
-	      user = SessionStore.currentUser();
-	    }
-	
-	    var headerUserTab;
-	
-	    if (loggedIn) {
-	      headerUserTab = React.createElement(
-	        'button',
-	        { onClick: ApiUtil.logout, className: 'link-tab user-dropdown-tab', href: 'session/new' },
-	        'Sign Out'
-	      );
-	    } else {
-	      headerUserTab = React.createElement(
-	        'div',
-	        { className: 'link-tab user-or-signin-tab' },
-	        React.createElement(
-	          Link,
-	          { to: '/signin', className: 'link-tab header-sign-in-tab' },
-	          'Sign In'
-	        )
-	      );
-	    }
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'index-main' },
-	      React.createElement(
-	        'div',
-	        { className: 'index-navbar-stretch' },
-	        React.createElement(
-	          'ul',
-	          { className: 'index-navbar group' },
-	          React.createElement('a', { href: '#', className: 'link-tab index-logo-image' }),
-	          React.createElement(
-	            'a',
-	            { href: '#', className: 'link-tab home-tab' },
-	            'Home'
-	          ),
-	          React.createElement(
-	            'a',
-	            { href: '#', className: 'link-tab collection-tab' },
-	            'Collection'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'search-bar-tab' },
-	            React.createElement('input', { className: 'search-bar',
-	              placeholder: 'Search',
-	              type: 'text' })
-	          ),
-	          React.createElement(
-	            Link,
-	            { to: '/newtrack', className: 'link-tab upload-tab' },
-	            'Upload'
-	          ),
-	          headerUserTab
-	        )
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = Homebar;
-
-/***/ },
-/* 254 */,
-/* 255 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var UserStore = __webpack_require__(249);
-	var SessionStore = __webpack_require__(242);
+	var UserStore = __webpack_require__(251);
+	var SessionStore = __webpack_require__(227);
 	var ApiUtil = __webpack_require__(218);
 	
-	var SeriesIndexItem = __webpack_require__(256);
+	var SeriesIndexItem = __webpack_require__(255);
 	
 	var UserIndex = React.createClass({
 	  displayName: 'UserIndex',
@@ -32783,7 +32723,8 @@
 	            'ul',
 	            { className: 'series-list' },
 	            user.series.map(function (series) {
-	              return React.createElement(SeriesIndexItem, { key: series.id,
+	              return React.createElement(SeriesIndexItem, {
+	                key: series.id,
 	                seriesId: series.id });
 	            })
 	          )
@@ -32796,15 +32737,15 @@
 	module.exports = UserIndex;
 
 /***/ },
-/* 256 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	
-	var SeriesStore = __webpack_require__(257);
+	var SeriesStore = __webpack_require__(256);
 	var ApiUtil = __webpack_require__(218);
 	
-	var CompactTrackIndexItem = __webpack_require__(259);
+	var CompactTrackIndexItem = __webpack_require__(257);
 	
 	var SeriesIndexItem = React.createClass({
 	  displayName: 'SeriesIndexItem',
@@ -32824,17 +32765,53 @@
 	  },
 	
 	  _onChange: function () {
-	    this.setState({ series: SeriesStore.getSeries() });
+	    this.setState({ series: SeriesStore.getSeries(this.props.seriesId) });
+	  },
+	
+	  _expandTracks: function () {
+	    this.trackSample = this.state.series.tracks;
+	    this._onChange();
+	  },
+	
+	  _collapseTracks: function () {
+	    this.trackSample = this.state.series.tracks.slice(0, 4);
+	    this._onChange();
 	  },
 	
 	  render: function () {
+	
 	    if (!this.state.series) {
 	      return React.createElement('span', null);
 	    } else {
-	      var series = this.state.series[this.props.seriesId];
+	      var series = this.state.series;
+	      var expandBar;
+	      if (series.tracks.length <= 4) {
+	        expandBar = React.createElement('span', null);
+	      } else if (!this.trackSample || this.trackSample.length <= 4) {
+	        expandBar = React.createElement(
+	          'div',
+	          {
+	            className: 'track-demo expand-bar',
+	            onClick: this._expandTracks },
+	          'See all ',
+	          series.tracks.length,
+	          ' tracks'
+	        );
+	      } else {
+	        expandBar = React.createElement(
+	          'div',
+	          {
+	            className: 'track-demo expand-bar',
+	            onClick: this._collapseTracks },
+	          'See fewer tracks'
+	        );
+	      }
 	      var plu = 's';
 	      if (Object.keys(series.tracks).length === 1) {
 	        plu = '';
+	      }
+	      if (!this.trackSample) {
+	        this.trackSample = series.tracks.slice(0, 4);
 	      }
 	      return React.createElement(
 	        'main',
@@ -32888,9 +32865,10 @@
 	          React.createElement(
 	            'section',
 	            { className: 'track-demo-list' },
-	            series.tracks.map(function (track, index) {
+	            this.trackSample.map(function (track, index) {
 	              return React.createElement(CompactTrackIndexItem, { key: track.id, trackId: track.id, index: index });
-	            })
+	            }),
+	            expandBar
 	          )
 	        )
 	      );
@@ -32901,10 +32879,10 @@
 	module.exports = SeriesIndexItem;
 
 /***/ },
-/* 257 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(227).Store;
+	var Store = __webpack_require__(228).Store;
 	var Dispatcher = __webpack_require__(220);
 	
 	var SeriesStore = new Store(Dispatcher);
@@ -32922,8 +32900,8 @@
 	  _series[series.id] = series;
 	};
 	
-	SeriesStore.getSeries = function () {
-	  return _series;
+	SeriesStore.getSeries = function (id) {
+	  return _series[id];
 	};
 	
 	SeriesStore.all = function () {
@@ -32946,29 +32924,12 @@
 	module.exports = SeriesStore;
 
 /***/ },
-/* 258 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Dispatcher = __webpack_require__(220);
-	
-	var SeriesActions = {
-	  receiveSingleSeries: function (series) {
-	    Dispatcher.dispatch({
-	      actionType: "SERIES_RECEIVED",
-	      series: series
-	    });
-	  }
-	};
-	
-	module.exports = SeriesActions;
-
-/***/ },
-/* 259 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	
-	var TrackStore = __webpack_require__(226);
+	var TrackStore = __webpack_require__(243);
 	var ApiUtil = __webpack_require__(218);
 	
 	var IndexItem = React.createClass({
@@ -32989,14 +32950,14 @@
 	  },
 	
 	  _onChange: function () {
-	    this.setState({ track: TrackStore.getTrack() });
+	    this.setState({ track: TrackStore.getTrack(this.props.trackId) });
 	  },
 	
 	  render: function () {
 	    if (!this.state.track) {
 	      return React.createElement('main', null);
 	    } else {
-	      var track = this.state.track[this.props.trackId];
+	      var track = this.state.track;
 	      return React.createElement(
 	        'ul',
 	        { className: 'track-demo' },
@@ -33017,9 +32978,13 @@
 	          '–'
 	        ),
 	        React.createElement(
-	          'li',
-	          { className: 'track-demo-title' },
-	          track.title
+	          'a',
+	          { href: '#/track/' + track.id },
+	          React.createElement(
+	            'li',
+	            { className: 'track-demo-title' },
+	            track.title
+	          )
 	        ),
 	        React.createElement('li', { className: 'small-play-icon' })
 	      );
@@ -33028,6 +32993,103 @@
 	});
 	
 	module.exports = IndexItem;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(218);
+	var SessionStore = __webpack_require__(227);
+	var TrackStore = __webpack_require__(243);
+	var TrackIndexItem = __webpack_require__(246);
+	
+	var Link = __webpack_require__(159).Link;
+	
+	var TrackDetail = React.createClass({
+		displayName: 'TrackDetail',
+	
+		getInitialState: function () {
+			return { track: null };
+		},
+	
+		componentDidMount: function () {
+			this.trackListener = TrackStore.addListener(this._onChange);
+			ApiUtil.fetchSingleTrack(this.props.params.id);
+		},
+	
+		componentWillUnmount: function () {
+			this.trackListener.remove();
+		},
+	
+		_onChange: function () {
+			this.setState({ track: TrackStore.getTrack(this.props.params.id) });
+		},
+	
+		render: function () {
+			if (!this.state.track) {
+				return React.createElement('main', null);
+			} else {
+				var track = this.state.track;
+				return React.createElement(
+					'main',
+					{ className: 'user-detail-main' },
+					React.createElement(
+						'section',
+						{ className: 'track-detail-header' },
+						React.createElement('div', { className: 'track-detail-playicon playicon' }),
+						React.createElement('div', { className: 'track-avatar' }),
+						React.createElement(
+							'div',
+							{ className: 'track-header-info' },
+							React.createElement(
+								'h2',
+								null,
+								track.user.username
+							),
+							React.createElement(
+								'h1',
+								null,
+								track.title
+							)
+						),
+						React.createElement(
+							'div',
+							{ className: 'track-detail-waveform' },
+							React.createElement(
+								'div',
+								{ className: 'track-time' },
+								'4:33'
+							)
+						)
+					),
+					React.createElement(
+						'section',
+						{ className: 'track-detail-main' },
+						React.createElement('div', { className: 'interact-bar' }),
+						React.createElement(
+							'ul',
+							{ className: 'track-info-box group' },
+							React.createElement('section', { className: 'track-detail-sidebar' }),
+							React.createElement('li', { className: 'track-info-user-avatar' }),
+							React.createElement(
+								'li',
+								{ className: 'track-info-username' },
+								track.user.username
+							),
+							React.createElement(
+								'li',
+								{ className: 'track-info-description' },
+								track.description
+							)
+						)
+					)
+				);
+			}
+		}
+	});
+	
+	module.exports = TrackDetail;
 
 /***/ }
 /******/ ]);

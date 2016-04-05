@@ -46,8 +46,9 @@ var UserIndex = React.createClass({
           <section>
             <ul className='series-list'>
               {user.series.map(function (series) {
-                return <SeriesIndexItem key={series.id}
-                seriesId={series.id}/>;
+                return <SeriesIndexItem
+                  key={series.id}
+                  seriesId={series.id}/>;
               })}
             </ul>
           </section>

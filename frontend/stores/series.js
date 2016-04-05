@@ -16,8 +16,8 @@ var resetSeries = function (series) {
   _series[series.id] = series;
 };
 
-SeriesStore.getSeries = function () {
-	return _series;
+SeriesStore.getSeries = function (id) {
+	return _series[id];
 };
 
 SeriesStore.all = function () {

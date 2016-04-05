@@ -21,29 +21,36 @@ var TrackDetail = React.createClass({
   },
 
 	_onChange: function () {
-		this.setState({ track: TrackStore.getTrack() });
+		this.setState({ track: TrackStore.getTrack(this.props.params.id) });
 	},
 
   render: function () {
 		if (!this.state.track) {
 			return (<main ></main>);
 		} else {
+      var track = this.state.track;
 			return (
 				<main className='user-detail-main'>
-					<section className='user-header'>
-						<div className='user-avatar'></div>
-						<div className='user-header-info'>
-							<h2>{this.state.track.user}</h2>
-							<h1>{this.state.track.title}</h1>
+					<section className='track-detail-header'>
+            <div className='track-detail-playicon playicon'></div>
+						<div className='track-avatar'></div>
+						<div className='track-header-info'>
+							<h2>{track.user.username}</h2>
+							<h1>{track.title}</h1>
 						</div>
+            <div className='track-detail-waveform'>
+              <div className='track-time'>4:33</div>
+            </div>
 					</section>
 
-					<div className='track-detail-commentbar'>
-					</div>
-
-					<section className='user-detail-box'>
-						<UserDetailIndex user={this.state.user}/>
-						<UserDetailSidebar user={this.state.user}/>
+					<section className='track-detail-main'>
+            <div className = 'interact-bar'></div>
+            <ul className = 'track-info-box group'>
+            <section className='track-detail-sidebar'></section>
+              <li className = 'track-info-user-avatar' />
+              <li className = 'track-info-username'>{track.user.username}</li>
+              <li className = 'track-info-description'>{track.description}</li>
+            </ul>
 					</section>
 				</main>
 			);
