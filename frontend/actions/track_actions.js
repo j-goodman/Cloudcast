@@ -15,12 +15,19 @@ var TrackActions = {
     });
   },
 
+  deleteTrack: function (trackId) {
+    Dispatcher.dispatch({
+      actionType: "DELETE_TRACK",
+      trackId: trackId
+    });
+  },
+
   receiveTracksByUser: function (tracks) {
     Dispatcher.dispatch({
       actionType: "USER_TRACKS_RECEIVED",
       tracks: tracks
     });
-  }
+  },
 };
 
 module.exports = TrackActions;

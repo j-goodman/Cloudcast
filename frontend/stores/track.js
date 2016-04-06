@@ -12,6 +12,10 @@ var resetTracks = function (tracks) {
   });
 };
 
+var deleteTrack = function (id) {
+  _tracks[id] = null;
+};
+
 var resetTrack = function (track) {
   _tracks[track.id] = track;
 };
@@ -40,6 +44,10 @@ TrackStore.__onDispatch = function (payload) {
       break;
     case 'TRACK_RECEIVED':
       resetTrack(payload.track);
+      TrackStore.__emitChange();
+      break;
+    case 'DELETE_TRACK':
+      deleteTrack(payload.trackId);
       TrackStore.__emitChange();
       break;
   }

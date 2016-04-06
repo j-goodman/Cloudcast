@@ -23,6 +23,15 @@ var ApiUtil = {
     });
   },
 
+  fetchTracksByUser: function (userId) {
+    $.ajax({
+      url: 'api/users/'+userId,
+      success: function (user) {
+        TrackActions.receiveTracksByUser(user.tracks);
+      }
+    });
+  },
+
   fetchSingleSeries: function (id) {
     $.ajax({
       url: 'api/series/'+id,
@@ -52,6 +61,14 @@ var ApiUtil = {
         TrackActions.receiveSingleTrack(track);
         callback && callback();
       }
+    });
+  },
+
+  destroyTrack: function (id, callback) {
+    $.ajax({
+      url: ('api/tracks/'+id),
+      type: 'DELETE',
+      success: callback
     });
   },
 

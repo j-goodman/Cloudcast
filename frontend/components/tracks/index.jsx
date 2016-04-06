@@ -53,8 +53,10 @@ var MainIndex = React.createClass({
           <br />
           <ul className='track-list'>
             {this.state.tracks.map(function (track) {
-              return <TrackIndexItem key={track.id}
-              track={track} user={track.user}/>;
+              if (track) {
+                return <TrackIndexItem key={track.id}
+                track={track} user={track.user}/>;
+              }
             })}
           </ul>
           <div className='index-sidebar'>

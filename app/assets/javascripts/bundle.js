@@ -24830,6 +24830,11 @@
 	        { onClick: ApiUtil.logout, className: 'link-tab user-dropdown-tab', href: 'session/new' },
 	        'Sign Out'
 	      );
+	      profileTab = React.createElement(
+	        'a',
+	        { href: '/#/user/' + SessionStore.currentUser().id + '/tracks', className: 'link-tab collection-tab' },
+	        'Profile'
+	      );
 	    } else {
 	      headerUserTab = React.createElement(
 	        'div',
@@ -24840,6 +24845,7 @@
 	          'Sign In'
 	        )
 	      );
+	      profileTab = React.createElement('a', { href: '#', className: 'link-tab collection-tab' });
 	    }
 	
 	    return React.createElement(
@@ -24857,11 +24863,7 @@
 	            { href: '#', className: 'link-tab home-tab' },
 	            'Home'
 	          ),
-	          React.createElement(
-	            'a',
-	            { href: '#', className: 'link-tab collection-tab' },
-	            'Collection'
-	          ),
+	          profileTab,
 	          React.createElement(
 	            'div',
 	            { className: 'search-bar-tab' },
@@ -24913,6 +24915,15 @@
 	    });
 	  },
 	
+	  fetchTracksByUser: function (userId) {
+	    $.ajax({
+	      url: 'api/users/' + userId,
+	      success: function (user) {
+	        TrackActions.receiveTracksByUser(user.tracks);
+	      }
+	    });
+	  },
+	
 	  fetchSingleSeries: function (id) {
 	    $.ajax({
 	      url: 'api/series/' + id,
@@ -24942,6 +24953,14 @@
 	        TrackActions.receiveSingleTrack(track);
 	        callback && callback();
 	      }
+	    });
+	  },
+	
+	  destroyTrack: function (id, callback) {
+	    $.ajax({
+	      url: 'api/tracks/' + id,
+	      type: 'DELETE',
+	      success: callback
 	    });
 	  },
 	
@@ -25019,6 +25038,13 @@
 	    Dispatcher.dispatch({
 	      actionType: "TRACK_RECEIVED",
 	      track: track
+	    });
+	  },
+	
+	  deleteTrack: function (trackId) {
+	    Dispatcher.dispatch({
+	      actionType: "DELETE_TRACK",
+	      trackId: trackId
 	    });
 	  },
 	
@@ -31818,6 +31844,10 @@
 	  });
 	};
 	
+	var deleteTrack = function (id) {
+	  _tracks[id] = null;
+	};
+	
 	var resetTrack = function (track) {
 	  _tracks[track.id] = track;
 	};
@@ -31846,6 +31876,10 @@
 	      break;
 	    case 'TRACK_RECEIVED':
 	      resetTrack(payload.track);
+	      TrackStore.__emitChange();
+	      break;
+	    case 'DELETE_TRACK':
+	      deleteTrack(payload.trackId);
 	      TrackStore.__emitChange();
 	      break;
 	  }
@@ -32060,8 +32094,10 @@
 	          'ul',
 	          { className: 'track-list' },
 	          this.state.tracks.map(function (track) {
-	            return React.createElement(TrackIndexItem, { key: track.id,
-	              track: track, user: track.user });
+	            if (track) {
+	              return React.createElement(TrackIndexItem, { key: track.id,
+	                track: track, user: track.user });
+	            }
 	          })
 	        ),
 	        React.createElement(
@@ -32081,13 +32117,38 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(227);
+	var ApiUtil = __webpack_require__(218);
+	var TrackActions = __webpack_require__(219);
 	
 	var IndexItem = React.createClass({
 	  displayName: 'IndexItem',
 	
+	  destroyTrack: function () {
+	    ApiUtil.destroyTrack(this.props.track.id, TrackActions.deleteTrack.bind(null, this.props.track.id));
+	  },
+	
 	  render: function () {
 	    var track = this.props.track;
 	    var user = this.props.track.user || this.props.user;
+	    if (SessionStore.currentUser() && user.id === SessionStore.currentUser().id) {
+	      trackButtons = React.createElement(
+	        'section',
+	        null,
+	        React.createElement('div', { className: 'track-button track-playlistadd' }),
+	        React.createElement('div', { className: 'track-button track-edit' }),
+	        React.createElement('div', {
+	          className: 'track-button track-delete',
+	          onClick: this.destroyTrack
+	        })
+	      );
+	    } else {
+	      trackButtons = React.createElement(
+	        'section',
+	        null,
+	        React.createElement('div', { className: 'track-button track-playlistadd' })
+	      );
+	    }
 	    return React.createElement(
 	      'li',
 	      { className: 'track-index-item group' },
@@ -32154,10 +32215,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'track-buttons group' },
-	          React.createElement('div', { className: 'track-button track-like' }),
-	          React.createElement('div', { className: 'track-button track-repost' }),
-	          React.createElement('div', { className: 'track-button track-playlistadd' }),
-	          React.createElement('div', { className: 'track-button track-share' })
+	          trackButtons
 	        )
 	      )
 	    );
@@ -32393,19 +32451,15 @@
 	          React.createElement(
 	            'label',
 	            null,
-	            React.createElement(
-	              'input',
-	              {
-	                className: 'image-uploaad-button',
-	                onChange: this.handleImageFileChange,
-	                type: 'file'
-	              },
-	              ' 📷     Upload an image'
-	            )
+	            React.createElement('input', {
+	              className: 'image-upload-button',
+	              onChange: this.handleImageFileChange,
+	              type: 'file'
+	            })
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'track-info-box' },
+	            { className: 'track-form-info-box' },
 	            React.createElement(
 	              'label',
 	              null,
@@ -32421,19 +32475,6 @@
 	            ),
 	            ' ',
 	            React.createElement('br', null),
-	            React.createElement(
-	              'label',
-	              null,
-	              'Tags ',
-	              React.createElement('br', null),
-	              React.createElement('input', {
-	                className: 'track-tags-input',
-	                onChange: this.updateTags,
-	                type: 'text',
-	                placeholder: 'Add tags to help people find your podcast',
-	                defaultValue: this.state.tags
-	              })
-	            ),
 	            React.createElement(
 	              'label',
 	              null,
@@ -32662,13 +32703,14 @@
 	
 	  _onChange: function () {
 	    this.setState({ user: UserStore.getUser() });
-	    this.setState({ tracks: this.state.user.tracks });
+	    this.setState({ tracks: TrackStore.all() });
 	  },
 	
 	  componentDidMount: function () {
 	    this.trackListener = TrackStore.addListener(this._onChange);
 	    this.userListener = UserStore.addListener(this._onChange);
 	    ApiUtil.fetchUser(this.props.params.id);
+	    ApiUtil.fetchTracksByUser(this.props.params.id);
 	  },
 	
 	  componentWillUnmount: function () {
@@ -32687,13 +32729,20 @@
 	        { className: 'user-detail-index group' },
 	        React.createElement(
 	          'div',
+	          { className: 'user-track-tab' },
+	          'Tracks'
+	        ),
+	        React.createElement(
+	          'div',
 	          { className: 'index-page-main' },
 	          React.createElement(
 	            'ul',
 	            { className: 'track-list' },
 	            tracks.map(function (track) {
-	              return React.createElement(TrackIndexItem, { key: track.id,
-	                track: track, user: user });
+	              if (track) {
+	                return React.createElement(TrackIndexItem, { key: track.id,
+	                  track: track, user: user });
+	              }
 	            })
 	          )
 	        )
@@ -32755,6 +32804,11 @@
 	      return React.createElement(
 	        'main',
 	        { className: 'user-detail-index group' },
+	        React.createElement(
+	          'div',
+	          { className: 'user-series-tab' },
+	          'Shows'
+	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'index-page-main' },

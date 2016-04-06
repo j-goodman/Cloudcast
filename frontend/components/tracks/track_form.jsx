@@ -35,13 +35,13 @@ var TrackForm = React.createClass({
             <img className='image-upload' src={this.state.imageUrl} />
             <label>
               <input
-                className="image-uploaad-button"
+                className="image-upload-button"
                 onChange={this.handleImageFileChange}
                 type="file"
-              > 📷     Upload an image</input>
+              ></input>
             </label>
 
-            <div className='track-info-box'>
+            <div className='track-form-info-box'>
               <label>
                 Title * <br />
                 <input
@@ -52,16 +52,6 @@ var TrackForm = React.createClass({
                   defaultValue={this.state.title}
                 />
               </label> <br />
-              <label>
-                Tags <br />
-                <input
-                  className="track-tags-input"
-                  onChange={this.updateTags}
-                  type="text"
-                  placeholder='Add tags to help people find your podcast'
-                  defaultValue={this.state.tags}
-                />
-              </label>
               <label>
                 Description <br />
                 <textarea

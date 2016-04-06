@@ -40,6 +40,7 @@ var UserIndex = React.createClass({
       }
   		return (
   			<main className='user-detail-index group'>
+          <div className='user-series-tab'>Shows</div>
   				<div className='index-page-main'>
   					{button}
   				</div>

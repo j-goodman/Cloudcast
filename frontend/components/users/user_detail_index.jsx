@@ -11,13 +11,14 @@ var UserIndex = React.createClass({
 
 	_onChange: function () {
 		this.setState({ user: UserStore.getUser() });
-		this.setState({ tracks: this.state.user.tracks });
+		this.setState({ tracks: TrackStore.all() });
 	},
 
 	componentDidMount: function () {
 		this.trackListener = TrackStore.addListener(this._onChange);
     this.userListener = UserStore.addListener(this._onChange);
     ApiUtil.fetchUser(this.props.params.id);
+    ApiUtil.fetchTracksByUser(this.props.params.id);
 	},
 
 	componentWillUnmount: function () {
@@ -33,11 +34,14 @@ var UserIndex = React.createClass({
     } else {
   		return (
   			<main className='user-detail-index group'>
+          <div className='user-track-tab'>Tracks</div>
   				<div className='index-page-main'>
   					<ul className='track-list'>
   						{tracks.map(function (track) {
-  							return <TrackIndexItem key={track.id}
-  							track={track} user={user} />;
+                if (track) {
+    							return <TrackIndexItem key={track.id}
+    							track={track} user={user} />;
+                }
   						})}
   					</ul>
   				</div>

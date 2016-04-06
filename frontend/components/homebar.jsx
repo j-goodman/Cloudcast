@@ -36,11 +36,17 @@ var Homebar = React.createClass({
       headerUserTab = (
         <button onClick={ApiUtil.logout} className='link-tab user-dropdown-tab' href='session/new'>Sign Out</button>
       );
+      profileTab = (
+        <a href={'/#/user/'+SessionStore.currentUser().id+'/tracks'} className='link-tab collection-tab'>Profile</a>
+      );
     } else {
       headerUserTab = (
         <div className='link-tab user-or-signin-tab'>
           <Link to={'/signin'} className='link-tab header-sign-in-tab'>Sign In</Link>
         </div>
+      );
+      profileTab = (
+        <a href='#' className='link-tab collection-tab'></a>
       );
     }
 
@@ -50,7 +56,7 @@ var Homebar = React.createClass({
           <ul className='index-navbar group'>
             <a href='#' className='link-tab index-logo-image'></a>
             <a href='#' className='link-tab home-tab'>Home</a>
-            <a href='#' className='link-tab collection-tab'>Collection</a>
+            {profileTab}
             <div className='search-bar-tab'>
               <input className='search-bar'
 							placeholder='Search'

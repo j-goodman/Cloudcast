@@ -1,9 +1,34 @@
 var React = require('react');
+var SessionStore = require('../../stores/session.js');
+var ApiUtil = require('../../util/api_util.js');
+var TrackActions = require('../../actions/track_actions.js');
 
 var IndexItem = React.createClass({
+  destroyTrack: function () {
+    ApiUtil.destroyTrack(this.props.track.id, TrackActions.deleteTrack.bind(null, this.props.track.id));
+  },
+
   render: function () {
     var track = this.props.track;
     var user = this.props.track.user || this.props.user;
+    if (SessionStore.currentUser() && user.id === SessionStore.currentUser().id) {
+      trackButtons = (
+        <section>
+          <div className='track-button track-playlistadd'></div>
+          <div className='track-button track-edit'></div>
+          <div
+            className='track-button track-delete'
+            onClick={this.destroyTrack}
+          ></div>
+        </section>
+      );
+    } else {
+      trackButtons = (
+        <section>
+          <div className='track-button track-playlistadd'></div>
+        </section>
+      );
+    }
     return(
       <li className='track-index-item group'>
         <div className='track-header'>
@@ -42,10 +67,7 @@ var IndexItem = React.createClass({
             </div>
           </a>
           <div className='track-buttons group'>
-            <div className='track-button track-like'></div>
-            <div className='track-button track-repost'></div>
-            <div className='track-button track-playlistadd'></div>
-            <div className='track-button track-share'></div>
+            {trackButtons}
           </div>
         </div>
       </li>
