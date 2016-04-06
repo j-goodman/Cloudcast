@@ -29,9 +29,13 @@ var IndexItem = React.createClass({
       var track = this.state.track;
       return(
         <ul className='track-demo'>
-          <li className='track-demo-image' />
+          <img className='track-demo-image' src={track.image}></img>
           <li className='track-order'>{this.props.index+1}</li>
-          <li className='track-demo-username'>{track.user.username}</li>
+          <a
+            href={'#/user/'+track.user.id+'/tracks'}
+            className='track-demo-username'>
+            {track.user.username}
+          </a>
           <li className='track-demo-username'>–</li>
           <a href={'#/track/'+track.id}>
             <li className='track-demo-title'>{track.title}</li>

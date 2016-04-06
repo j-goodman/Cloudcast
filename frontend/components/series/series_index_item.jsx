@@ -67,10 +67,17 @@ var SeriesIndexItem = React.createClass({
       if (!this.trackSample) {
         this.trackSample = series.tracks.slice(0,4);
       }
+      if (!this.representedTrack) {
+        this.representedTrack = Math.floor(Object.keys(series.tracks).length*(Math.random()));
+      }
       return(
         <main className='series-index-main group'>
           <section className='series-item-left'>
-            <div className='series-item-image'>
+            <div className='series-item-image-box'>
+            <img
+              className='series-item-image'
+              src={series.tracks[this.representedTrack].image}
+            ></img>
               <div className='track-number'>{Object.keys(series.tracks).length} track{plu}</div>
             </div>
           </section>

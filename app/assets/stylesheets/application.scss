@@ -306,11 +306,13 @@ ul {
 
 .index-sidebar {
   width: 340px;
+  height: 1000px;
   float: right;
   background: #fff;
-  position: absolute;
-  right: 0;
-  top: 0;
+  position: fixed;
+  right: 10px;
+  top: 0px;
+  z-index: -1;
 }
 
 /* ~ TRACK INDEX ITEM ~ */
@@ -357,7 +359,7 @@ ul {
   height: 160px;
   object-fit: cover;
   object-position: 0 0;
-  background: asset-url('agents_of_fortune.jpg');
+  background: #eee;// asset-url('agents_of_fortune.jpg');
   background-size: contain;
 }
 
@@ -651,7 +653,7 @@ ul {
   margin: 20px;
   object-fit: cover;
   object-position: 0 0;
-  background: asset-url('agents_of_fortune.jpg');
+  background: #eee;// asset-url('agents_of_fortune.jpg');
   background-size: contain;
 }
 
@@ -842,13 +844,26 @@ ul {
   float: left;
 }
 
+.series-item-image-box {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  background: #eee;//asset-url('agents_of_fortune.jpg');
+  background-size: contain;
+  position: relative;
+}
+
 .series-item-image {
   width: 160px;
   height: 160px;
   margin: 0 auto;
-  background: asset-url('agents_of_fortune.jpg');
+  object-fit: cover;
+  object-position: 0 0;
+  background: #eee;//asset-url('agents_of_fortune.jpg');
   background-size: contain;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .track-number {
@@ -931,7 +946,9 @@ ul {
 .track-demo-image {
   width: 20px;
   height: 20px;
-  background: asset-url('agents_of_fortune.jpg');
+  object-fit: cover;
+  object-position: 0 0;
+  background: #eee;//asset-url('agents_of_fortune.jpg');
   background-size: contain;
   float: left;
 }

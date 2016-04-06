@@ -2,26 +2,41 @@ var React = require('react');
 
 var IndexItem = React.createClass({
   render: function () {
+    var track = this.props.track;
+    var user = this.props.track.user || this.props.user;
     return(
       <li className='track-index-item group'>
         <div className='track-header'>
-          <a href={'#/user/'+this.props.user.id+'/tracks'} className='track-poster-image'></a>
+          <a href={'#/user/'+user.id+'/tracks'} className='track-poster-image'></a>
           <h2 className='track-header-text'>
-            <a href={'#/user/'+this.props.user.id+'/tracks'}>{this.props.user.username} posted a track</a>
+            <a href={'#/user/'+user.id+'/tracks'}>
+              {user.username}
+            </a>
+              {' posted '}
+            <a href={'#/track/'+track.id}>
+              a track
+            </a>
           </h2>
         </div>
 
-
         <div className='track-body'>
-          <img className='track-image' src={this.props.track.image}></img>
+          <img className='track-image' src={track.image}></img>
           <div className='track-body-main group'>
             <div className='track-subheader'>
               <div className='playicon'></div>
-              <span className='track-username'>{this.props.track.description}</span>
-              <span className='track-title'>{this.props.track.title}</span>
+              <a
+                href={'/#/user/'+user.id+'/tracks'}
+                className='track-username'>
+                {user.username}
+              </a>
+              <a
+                href={'/#/track/'+track.id}
+                className='track-title'>
+                {track.title}
+              </a>
             </div>
           </div>
-          <a href={'/#/track/'+this.props.track.id}>
+          <a href={'/#/track/'+track.id}>
             <div className='waveform'>
               <span className='track-time'>4:33</span>
             </div>

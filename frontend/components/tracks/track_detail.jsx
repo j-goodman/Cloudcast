@@ -35,7 +35,7 @@ var TrackDetail = React.createClass({
             <div className='track-detail-playicon playicon'></div>
             <img className='track-avatar' src={this.state.track.image}></img>
 						<div className='track-header-info'>
-							<h2>{track.user.username}</h2>
+							<h2><a href={'/#/user/'+track.user.id+'/tracks'}>{track.user.username}</a></h2>
 							<h1>{track.title}</h1>
 						</div>
             <div className='track-detail-waveform'>
@@ -47,8 +47,10 @@ var TrackDetail = React.createClass({
             <div className = 'interact-bar'></div>
             <ul className = 'track-info-box group'>
             <section className='track-detail-sidebar'></section>
-              <li className = 'track-info-user-avatar' />
-              <li className = 'track-info-username'>{track.user.username}</li>
+              <a href={'/#/user/'+track.user.id+'/tracks'}>
+                <li className = 'track-info-user-avatar' />
+                <li className = 'track-info-username'>{track.user.username}</li>
+              </a>
               <li className = 'track-info-description'>{track.description}</li>
             </ul>
 					</section>

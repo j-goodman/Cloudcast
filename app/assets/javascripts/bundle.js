@@ -32086,28 +32086,35 @@
 	  displayName: 'IndexItem',
 	
 	  render: function () {
+	    var track = this.props.track;
+	    var user = this.props.track.user || this.props.user;
 	    return React.createElement(
 	      'li',
 	      { className: 'track-index-item group' },
 	      React.createElement(
 	        'div',
 	        { className: 'track-header' },
-	        React.createElement('a', { href: '#/user/' + this.props.user.id + '/tracks', className: 'track-poster-image' }),
+	        React.createElement('a', { href: '#/user/' + user.id + '/tracks', className: 'track-poster-image' }),
 	        React.createElement(
 	          'h2',
 	          { className: 'track-header-text' },
 	          React.createElement(
 	            'a',
-	            { href: '#/user/' + this.props.user.id + '/tracks' },
-	            this.props.user.username,
-	            ' posted a track'
+	            { href: '#/user/' + user.id + '/tracks' },
+	            user.username
+	          ),
+	          ' posted ',
+	          React.createElement(
+	            'a',
+	            { href: '#/track/' + track.id },
+	            'a track'
 	          )
 	        )
 	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'track-body' },
-	        React.createElement('img', { className: 'track-image', src: this.props.track.image }),
+	        React.createElement('img', { className: 'track-image', src: track.image }),
 	        React.createElement(
 	          'div',
 	          { className: 'track-body-main group' },
@@ -32116,20 +32123,24 @@
 	            { className: 'track-subheader' },
 	            React.createElement('div', { className: 'playicon' }),
 	            React.createElement(
-	              'span',
-	              { className: 'track-username' },
-	              this.props.track.description
+	              'a',
+	              {
+	                href: '/#/user/' + user.id + '/tracks',
+	                className: 'track-username' },
+	              user.username
 	            ),
 	            React.createElement(
-	              'span',
-	              { className: 'track-title' },
-	              this.props.track.title
+	              'a',
+	              {
+	                href: '/#/track/' + track.id,
+	                className: 'track-title' },
+	              track.title
 	            )
 	          )
 	        ),
 	        React.createElement(
 	          'a',
-	          { href: '/#/track/' + this.props.track.id },
+	          { href: '/#/track/' + track.id },
 	          React.createElement(
 	            'div',
 	            { className: 'waveform' },
@@ -32846,6 +32857,9 @@
 	      if (!this.trackSample) {
 	        this.trackSample = series.tracks.slice(0, 4);
 	      }
+	      if (!this.representedTrack) {
+	        this.representedTrack = Math.floor(Object.keys(series.tracks).length * Math.random());
+	      }
 	      return React.createElement(
 	        'main',
 	        { className: 'series-index-main group' },
@@ -32854,7 +32868,11 @@
 	          { className: 'series-item-left' },
 	          React.createElement(
 	            'div',
-	            { className: 'series-item-image' },
+	            { className: 'series-item-image-box' },
+	            React.createElement('img', {
+	              className: 'series-item-image',
+	              src: series.tracks[this.representedTrack].image
+	            }),
 	            React.createElement(
 	              'div',
 	              { className: 'track-number' },
@@ -32994,15 +33012,17 @@
 	      return React.createElement(
 	        'ul',
 	        { className: 'track-demo' },
-	        React.createElement('li', { className: 'track-demo-image' }),
+	        React.createElement('img', { className: 'track-demo-image', src: track.image }),
 	        React.createElement(
 	          'li',
 	          { className: 'track-order' },
 	          this.props.index + 1
 	        ),
 	        React.createElement(
-	          'li',
-	          { className: 'track-demo-username' },
+	          'a',
+	          {
+	            href: '#/user/' + track.user.id + '/tracks',
+	            className: 'track-demo-username' },
 	          track.user.username
 	        ),
 	        React.createElement(
@@ -33078,7 +33098,11 @@
 							React.createElement(
 								'h2',
 								null,
-								track.user.username
+								React.createElement(
+									'a',
+									{ href: '/#/user/' + track.user.id + '/tracks' },
+									track.user.username
+								)
 							),
 							React.createElement(
 								'h1',
@@ -33104,11 +33128,15 @@
 							'ul',
 							{ className: 'track-info-box group' },
 							React.createElement('section', { className: 'track-detail-sidebar' }),
-							React.createElement('li', { className: 'track-info-user-avatar' }),
 							React.createElement(
-								'li',
-								{ className: 'track-info-username' },
-								track.user.username
+								'a',
+								{ href: '/#/user/' + track.user.id + '/tracks' },
+								React.createElement('li', { className: 'track-info-user-avatar' }),
+								React.createElement(
+									'li',
+									{ className: 'track-info-username' },
+									track.user.username
+								)
 							),
 							React.createElement(
 								'li',
