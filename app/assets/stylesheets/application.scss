@@ -726,7 +726,9 @@ ul {
   width: 124px;
   height: 124px;
   border-radius: 50%;
-  margin: 0 12px 0 0;
+  position: absolute;
+  top: 12px;
+  left: 12px;
   background: asset-url('medigoron.png');
   background-size: cover;
   background-position: center;
