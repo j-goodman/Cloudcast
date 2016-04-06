@@ -6,6 +6,8 @@
 
 # Ignore bundler config.
 /.bundle
+app/assets/javascripts/bundle.js
+app/assets/javascripts/bundle.js.map
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
