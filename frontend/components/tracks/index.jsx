@@ -45,7 +45,6 @@ var MainIndex = React.createClass({
         <h2 className='stream-header'>Make an account to start collecting and sharing podcasts</h2>
       );
     }
-
     return (
       <div className='index-wrapper group'>
         <div className='index-page-main'>

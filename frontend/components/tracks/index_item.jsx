@@ -11,8 +11,9 @@ var IndexItem = React.createClass({
           </h2>
         </div>
 
+
         <div className='track-body'>
-          <div className='track-image'></div>
+          <img className='track-image' src={this.props.track.image}></img>
           <div className='track-body-main group'>
             <div className='track-subheader'>
               <div className='playicon'></div>
@@ -20,9 +21,11 @@ var IndexItem = React.createClass({
               <span className='track-title'>{this.props.track.title}</span>
             </div>
           </div>
-          <div className='waveform'>
-            <span className='track-time'>4:33</span>
-          </div>
+          <a href={'/#/track/'+this.props.track.id}>
+            <div className='waveform'>
+              <span className='track-time'>4:33</span>
+            </div>
+          </a>
           <div className='track-buttons group'>
             <div className='track-button track-like'></div>
             <div className='track-button track-repost'></div>

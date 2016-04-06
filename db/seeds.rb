@@ -38,66 +38,58 @@ byrne = User.create!(
 
 crossroadblues = Track.create!(
   title: 'Crossroad Blues',
-  file_url: 'django.wav',
   user: johnson,
   description: 'Standing at the crossroads, I tried to flag a ride.',
-  image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
+  image: File.open('app/assets/images/rjohnson.png')
 )
 
 johnnybgoode = Track.create!(
-title: 'Johnny B. Goode',
-file_url: 'django.wav',
-user: marty,
-description: "This one's an oldie. Or at least it's an oldie where I come from.",
-image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
+  title: 'Johnny B. Goode',
+  user: marty,
+  description: "This one's an oldie. Or at least it's an oldie where I come from.",
+  image: File.open('app/assets/images/michael-j-fox.jpg')
 )
 
 babyonboard = Track.create!(
-title: 'Baby on Board',
-file_url: 'django.wav',
-user: apu,
-description: "Thank you, come again.",
-image_url: 'https://i.imgur.com/G5RZH.jpg'
+  title: 'Baby on Board',
+  user: apu,
+  description: "Thank you, come again.",
+  image: File.open('app/assets/images/besharps.jpg')
 )
 
 deadshrimpblues = Track.create!(
   title: 'Dead Shrimp Blues',
-  file_url: 'django.wav',
   user: johnson,
   description: 'All my shrimp was dead and gone.',
-  image_url: 'http://www.dafont.com/forum/attach/orig/5/5/551494.jpg'
+  image: File.open('app/assets/images/rjohnson.png')
 )
 
 onceinalifetime = Track.create!(
   title: 'Once in a Lifetime',
-  file_url: 'django.wav',
   user: byrne,
   description: 'You may find yourself living in a shotgun shack.',
-  image_url: 'https://hackskeptic.files.wordpress.com/2016/02/talking.jpg'
+  image: File.open('app/assets/images/talkingheads.jpg')
 )
 
 Track.create!(
 	title: "You've fought bravely, Master Windu",
-	file_url: 'django.wav',
 	user: dooku,
 	description: 'Worthy of recognition in the archives of the Jedi order.',
-	image_url: 'https://rborg42.files.wordpress.com/2013/05/gunshiparena4.png'
+  image: File.open('app/assets/images/arena.jpg')
 )
 
 psychokiller = Track.create!(
   title: 'Psycho Killer',
-  file_url: 'django.wav',
   user: byrne,
   description: "You're talking a lot but you're not saying anything.",
-  image_url: 'https://hackskeptic.files.wordpress.com/2016/02/talking.jpg'
+  image: File.open('app/assets/images/talkingheads.jpg')
 )
 
 papalegba = Track.create!(
   title: 'Papa Legba',
-  file_url: 'django.wav',
   user: byrne,
   description: "Rompiendo la monotonia del tiempo.",
-  image_url: 'https://hackskeptic.files.wordpress.com/2016/02/talking.jpg'
+  image: File.open('app/assets/images/talkingheads.jpg')
 )
 
 talkingheads = Series.create!(

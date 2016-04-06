@@ -41,11 +41,13 @@ var ApiUtil = {
     });
   },
 
-  createTrack: function (track, callback) {
+  createTrack: function (formData, callback) {
     $.ajax({
       url: 'api/tracks',
-      method: 'POST',
-      data: {track: track},
+      type: 'POST',
+      processData: false,
+      contentType: false,
+      data: formData,
       success: function (track) {
         TrackActions.receiveSingleTrack(track);
         callback && callback();

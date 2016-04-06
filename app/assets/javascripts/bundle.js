@@ -24931,11 +24931,13 @@
 	    });
 	  },
 	
-	  createTrack: function (track, callback) {
+	  createTrack: function (formData, callback) {
 	    $.ajax({
 	      url: 'api/tracks',
-	      method: 'POST',
-	      data: { track: track },
+	      type: 'POST',
+	      processData: false,
+	      contentType: false,
+	      data: formData,
 	      success: function (track) {
 	        TrackActions.receiveSingleTrack(track);
 	        callback && callback();
@@ -32045,7 +32047,6 @@
 	        'Make an account to start collecting and sharing podcasts'
 	      );
 	    }
-	
 	    return React.createElement(
 	      'div',
 	      { className: 'index-wrapper group' },
@@ -32106,7 +32107,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'track-body' },
-	        React.createElement('div', { className: 'track-image' }),
+	        React.createElement('img', { className: 'track-image', src: this.props.track.image }),
 	        React.createElement(
 	          'div',
 	          { className: 'track-body-main group' },
@@ -32127,12 +32128,16 @@
 	          )
 	        ),
 	        React.createElement(
-	          'div',
-	          { className: 'waveform' },
+	          'a',
+	          { href: '/#/track/' + this.props.track.id },
 	          React.createElement(
-	            'span',
-	            { className: 'track-time' },
-	            '4:33'
+	            'div',
+	            { className: 'waveform' },
+	            React.createElement(
+	              'span',
+	              { className: 'track-time' },
+	              '4:33'
+	            )
 	          )
 	        ),
 	        React.createElement(
@@ -32347,8 +32352,8 @@
 	    return {
 	      title: '',
 	      file_url: 'django.wav',
-	      image_url: '',
-	      description: ''
+	      imageFile: null,
+	      imageUrl: null
 	    };
 	  },
 	
@@ -32369,12 +32374,23 @@
 	        React.createElement('input', { className: 'track-submit-button', type: 'submit', value: 'Choose a file to upload' }),
 	        React.createElement(
 	          'form',
-	          { className: 'track-info-main',
-	            onSubmit: this.handleSubmit },
+	          {
+	            className: 'track-info-main',
+	            onSubmit: this.handleSubmit
+	          },
+	          React.createElement('img', { className: 'image-upload', src: this.state.imageUrl }),
 	          React.createElement(
-	            'div',
-	            { className: 'image-upload' },
-	            React.createElement('input', { className: 'image-upload-button', type: 'button', value: '📷     Upload an image' })
+	            'label',
+	            null,
+	            React.createElement(
+	              'input',
+	              {
+	                className: 'image-uploaad-button',
+	                onChange: this.handleImageFileChange,
+	                type: 'file'
+	              },
+	              ' 📷     Upload an image'
+	            )
 	          ),
 	          React.createElement(
 	            'div',
@@ -32446,12 +32462,29 @@
 	    );
 	  },
 	
+	  handleImageFileChange: function (e) {
+	    var file = e.currentTarget.files[0];
+	    var reader = new FileReader();
+	
+	    reader.onloadend = function () {
+	      var result = reader.result;
+	      this.setState({ imageFile: file, imageUrl: result });
+	    }.bind(this);
+	
+	    reader.readAsDataURL(file);
+	  },
+	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	
+	    var formData = new FormData();
+	    formData.append('track[title]', this.state.title);
+	    formData.append('track[description]', this.state.description);
+	    formData.append('track[image]', this.state.imageFile);
+	
 	    var router = this.context.router;
 	
-	    ApiUtil.createTrack(this.state, function () {
+	    ApiUtil.createTrack(formData, function () {
 	      router.push('/#');
 	    });
 	  },
@@ -33038,7 +33071,7 @@
 						'section',
 						{ className: 'track-detail-header' },
 						React.createElement('div', { className: 'track-detail-playicon playicon' }),
-						React.createElement('div', { className: 'track-avatar' }),
+						React.createElement('img', { className: 'track-avatar', src: this.state.track.image }),
 						React.createElement(
 							'div',
 							{ className: 'track-header-info' },

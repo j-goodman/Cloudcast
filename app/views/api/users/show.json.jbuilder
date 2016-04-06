@@ -1,4 +1,4 @@
 json.extract!(
   @user,
-  :id, :username, :avatar_url, :tracks, :series
+  :id, :username, :tracks, :series
 )

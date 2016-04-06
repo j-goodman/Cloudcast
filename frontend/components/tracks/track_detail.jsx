@@ -33,7 +33,7 @@ var TrackDetail = React.createClass({
 				<main className='user-detail-main'>
 					<section className='track-detail-header'>
             <div className='track-detail-playicon playicon'></div>
-						<div className='track-avatar'></div>
+            <img className='track-avatar' src={this.state.track.image}></img>
 						<div className='track-header-info'>
 							<h2>{track.user.username}</h2>
 							<h1>{track.title}</h1>

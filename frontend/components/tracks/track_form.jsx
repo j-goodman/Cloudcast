@@ -14,8 +14,8 @@ var TrackForm = React.createClass({
     return {
       title: '',
       file_url: 'django.wav',
-      image_url: '',
-      description: '',
+      imageFile: null,
+      imageUrl: null
   	};
   },
 
@@ -27,11 +27,19 @@ var TrackForm = React.createClass({
         <main className='track-form-main group'>
           <h2 className='track-form-header'>Upload to Cloudcast</h2>
           <input className="track-submit-button" type="submit" value="Choose a file to upload" />
-          <form className='track-info-main'
-            onSubmit={this.handleSubmit}>
-            <div className='image-upload'>
-              <input className="image-upload-button" type="button" value="📷     Upload an image" />
-            </div>
+
+          <form
+            className='track-info-main'
+            onSubmit={this.handleSubmit}
+          >
+            <img className='image-upload' src={this.state.imageUrl} />
+            <label>
+              <input
+                className="image-uploaad-button"
+                onChange={this.handleImageFileChange}
+                type="file"
+              > 📷     Upload an image</input>
+            </label>
 
             <div className='track-info-box'>
               <label>
@@ -80,12 +88,29 @@ var TrackForm = React.createClass({
     );
   },
 
+  handleImageFileChange: function(e) {
+    var file = e.currentTarget.files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+      var result = reader.result;
+      this.setState({ imageFile: file, imageUrl: result });
+    }.bind(this);
+
+    reader.readAsDataURL(file);
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
 
+    var formData = new FormData();
+    formData.append('track[title]', this.state.title);
+    formData.append('track[description]', this.state.description);
+    formData.append('track[image]', this.state.imageFile);
+
     var router = this.context.router;
 
-    ApiUtil.createTrack(this.state, function() {
+    ApiUtil.createTrack(formData, function() {
       router.push('/#');
     });
   },
