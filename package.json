@@ -12,6 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+
+  "devtool": "source-maps",
+
   "dependencies": {
     "babel-core": "^6.7.4",
     "babel-loader": "^6.2.4",
