@@ -710,16 +710,17 @@ ul {
   position: absolute;
   bottom: 60px;
   left: 40px;
-  border-right: 12px solid #1D79C9;
+  border-right: 6px solid #1D79C9;
 }
 
 .track-detail-waveform-oreo {
-  background: #fff;
+  background: transparent;
+  width: 0;
   height: 70px;
   position: absolute;
   bottom: 60px;
   left: 40px;
-  border-right: 12px solid #FF5500;
+  border-right: 6px solid #FF5500;
   z-index: 99;
 }
 
@@ -768,6 +769,7 @@ ul {
   left: 164px;
   font-size: 14px;
   width: 430px;
+  min-height: 70px;
   border-top: 2px solid #FF5500;
   border-bottom: 2px solid #1D79C9;
   text-align: justify;

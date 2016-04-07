@@ -29,11 +29,12 @@ var TrackDetail = React.createClass({
   },
 
   componentDidMount: function () {
-    debugger
 		this.trackListener = TrackStore.addListener(this._onChange);
     ApiUtil.fetchSingleTrack(this.props.params.id);
     this.audio = document.getElementById("trackAudio");
     this.state.interval = setInterval(this.tick, 120);
+    window.addEventListener("scroll", this.updatePosition, false);
+    window.addEventListener("resize", this.updatePosition, false);
   },
 
   componentWillUnmount: function () {
@@ -75,6 +76,15 @@ var TrackDetail = React.createClass({
     this.state.audioTrack.addEventListener('ended', this.endOfTrack);
   },
 
+  seekByClick: function (e) {
+    var element = document.getElementById('track-rectangle');
+    var rect = element.getBoundingClientRect();
+    var selected = ((e.pageX-rect.left)/560);
+    if (this.state.playing) {
+      this.trackSeek(selected);
+    }
+  },
+
   pauseTrack: function () {
     if (this.state.audioTrack) {
       this.state.audioTrack.pause();
@@ -107,7 +117,7 @@ var TrackDetail = React.createClass({
       } else {
         playerpauser =(<div className='pauseicon track-detail-playicon' onClick={this.pauseTrack}></div>);
       }
-      var waveStyle = {width: (Math.floor(548*this.state.completion)+'px')};
+      var waveStyle = {left: (40+Math.floor(554*this.state.completion)+'px')};
 			return (
 				<main className='user-detail-main'>
           <audio src={track.audio} id='trackAudio' />
@@ -119,7 +129,11 @@ var TrackDetail = React.createClass({
 							<h1>{track.title}</h1>
 						</div>
             <div className='track-detail-waveform-oreo' style={waveStyle} />
-            <div className='track-detail-waveform'>
+            <div
+              className='track-detail-waveform'
+              id='track-rectangle'
+              onClick={this.seekByClick}
+            >
               <div className='track-time'>{this.stringifyTime(this.state.duration)}</div>
             </div>
 					</section>
