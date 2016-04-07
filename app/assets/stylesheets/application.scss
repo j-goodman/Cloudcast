@@ -387,6 +387,13 @@ ul {
   background-size: contain;
 }
 
+.pauseicon {
+  width: 40px;
+  height: 40px;
+  background: asset-url('pause_icon.png');
+  background-size: contain;
+}
+
 .track-username {
   color: #c0c0c0;
   position: absolute;

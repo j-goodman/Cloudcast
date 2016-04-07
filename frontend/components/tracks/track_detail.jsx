@@ -14,6 +14,7 @@ var TrackDetail = React.createClass({
   componentDidMount: function () {
 		this.trackListener = TrackStore.addListener(this._onChange);
     ApiUtil.fetchSingleTrack(this.props.params.id);
+    this.audio = document.getElementById("trackAudio");
   },
 
   componentWillUnmount: function () {
@@ -22,17 +23,31 @@ var TrackDetail = React.createClass({
 
 	_onChange: function () {
 		this.setState({ track: TrackStore.getTrack(this.props.params.id) });
+    this.audio = document.getElementById("trackAudio");
 	},
+
+  playTrack: function () {
+    if (this.audio) {
+      this.audio.play();
+    }
+  },
 
   render: function () {
 		if (!this.state.track) {
 			return (<main ></main>);
 		} else {
       var track = this.state.track;
+      var playerpauser;
+      if (this.state.playing === false) {
+        playerpauser = (<div className='track-detail-playicon' onClick={this.playTrack}></div>);
+      } else {
+        playerpauser =(<div className='track-detail-pauseicon' onClick={this.pauseTrack}></div>);
+      }
 			return (
 				<main className='user-detail-main'>
+          <audio src={track.audio} id='trackAudio' />
 					<section className='track-detail-header'>
-            <div className='track-detail-playicon playicon'></div>
+            {playerpauser}
             <img className='track-avatar' src={this.state.track.image}></img>
 						<div className='track-header-info'>
 							<h2><a href={'/#/user/'+track.user.id+'/tracks'}>{track.user.username}</a></h2>

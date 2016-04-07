@@ -26,7 +26,7 @@ class Api::TracksController < ApplicationController
 
   def track_params
     params.require(:track).permit(
-      :title, :user_id, :description, :image
+      :title, :user_id, :description, :image, :audio
     )
   end
 end

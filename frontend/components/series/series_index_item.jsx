@@ -30,7 +30,7 @@ var SeriesIndexItem = React.createClass({
   },
 
   _collapseTracks: function () {
-    this.trackSample = this.state.series.tracks.slice(0,4);
+    this.trackSample = this.state.series.tracks.slice(0,3);
     this._onChange();
   },
 
@@ -41,9 +41,9 @@ var SeriesIndexItem = React.createClass({
     } else {
       var series = this.state.series;
       var expandBar;
-      if (series.tracks.length <= 4) {
+      if (series.tracks.length <= 3) {
         expandBar = (<span></span>);
-      } else if (!this.trackSample || this.trackSample.length <= 4){
+      } else if (!this.trackSample || this.trackSample.length <= 3){
         expandBar = (
           <div
             className='track-demo expand-bar'
@@ -65,7 +65,7 @@ var SeriesIndexItem = React.createClass({
         plu = '';
       }
       if (!this.trackSample) {
-        this.trackSample = series.tracks.slice(0,4);
+        this.trackSample = series.tracks.slice(0,3);
       }
       if (!this.representedTrack) {
         this.representedTrack = Math.floor(Object.keys(series.tracks).length*(Math.random()));

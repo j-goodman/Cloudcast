@@ -13,10 +13,60 @@ var TrackForm = React.createClass({
   getInitialState: function () {
     return {
       title: '',
-      file_url: 'django.wav',
       imageFile: null,
-      imageUrl: null
+      imageUrl: null,
+      audio: null,
   	};
+  },
+
+  handleImageFileChange: function(e) {
+    var file = e.currentTarget.files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+      var result = reader.result;
+      this.setState({ imageFile: file, imageUrl: result });
+    }.bind(this);
+
+    reader.readAsDataURL(file);
+  },
+
+  handleAudioFileChange: function(e) {
+    var file = e.currentTarget.files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+      this.setState({ audio: file});
+    }.bind(this);
+
+    reader.readAsDataURL(file);
+  },
+
+  handleSubmit: function(e) {
+    e.preventDefault();
+
+    var formData = new FormData();
+    formData.append('track[title]', this.state.title);
+    formData.append('track[description]', this.state.description);
+    formData.append('track[image]', this.state.imageFile);
+    formData.append('track[audio]', this.state.audio);
+
+    var router = this.context.router;
+    ApiUtil.createTrack(formData, function() {
+      router.push('/#');
+    });
+  },
+
+  updateTitle: function(e) {
+    this.setState({ title: e.currentTarget.value });
+  },
+
+  updateDescription: function(e) {
+    this.setState({ description: e.currentTarget.value });
+  },
+
+  updateTags: function(e) {
+    this.setState({ tag: e.currentTarget.value });
   },
 
   render: function () {
@@ -25,8 +75,14 @@ var TrackForm = React.createClass({
         <TrackIndex />
         <div className='modal-dimmer' />
         <main className='track-form-main group'>
-          <h2 className='track-form-header'>Upload to Cloudcast</h2>
-          <input className="track-submit-button" type="submit" value="Choose a file to upload" />
+          <h2 className='track-form-header'>Upload Audio to Cloudcast</h2>
+          <label>
+            <input
+              className="track-submit-button"
+              onChange={this.handleAudioFileChange}
+              type="file"
+            ></input>
+          </label>
 
           <form
             className='track-info-main'
@@ -76,46 +132,8 @@ var TrackForm = React.createClass({
         </main>
       </div>
     );
-  },
-
-  handleImageFileChange: function(e) {
-    var file = e.currentTarget.files[0];
-    var reader = new FileReader();
-
-    reader.onloadend = function () {
-      var result = reader.result;
-      this.setState({ imageFile: file, imageUrl: result });
-    }.bind(this);
-
-    reader.readAsDataURL(file);
-  },
-
-  handleSubmit: function(e) {
-    e.preventDefault();
-
-    var formData = new FormData();
-    formData.append('track[title]', this.state.title);
-    formData.append('track[description]', this.state.description);
-    formData.append('track[image]', this.state.imageFile);
-
-    var router = this.context.router;
-
-    ApiUtil.createTrack(formData, function() {
-      router.push('/#');
-    });
-  },
-
-  updateTitle: function(e) {
-    this.setState({ title: e.currentTarget.value });
-  },
-
-  updateDescription: function(e) {
-    this.setState({ description: e.currentTarget.value });
-  },
-
-  updateTags: function(e) {
-    this.setState({ tag: e.currentTarget.value });
   }
+
 });
 
 module.exports = TrackForm;

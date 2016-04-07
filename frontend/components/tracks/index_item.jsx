@@ -4,8 +4,26 @@ var ApiUtil = require('../../util/api_util.js');
 var TrackActions = require('../../actions/track_actions.js');
 
 var IndexItem = React.createClass({
+  getInitialState: function () {
+    return({playing: false});
+  },
+
   destroyTrack: function () {
     ApiUtil.destroyTrack(this.props.track.id, TrackActions.deleteTrack.bind(null, this.props.track.id));
+  },
+
+  audioTag: function () {
+    return(document.getElementById('trackAudio'+this.props.track.id));
+  },
+
+  playTrack: function () {
+    this.audioTag().play();
+    this.setState({playing: true});
+  },
+
+  pauseTrack: function () {
+    this.audioTag().pause();
+    this.setState({playing: false});
   },
 
   render: function () {
@@ -29,6 +47,12 @@ var IndexItem = React.createClass({
         </section>
       );
     }
+    var playerpauser;
+    if (this.state.playing === false) {
+      playerpauser = (<div className='playicon' onClick={this.playTrack}></div>);
+    } else {
+      playerpauser =(<div className='pauseicon' onClick={this.pauseTrack}></div>);
+    }
     return(
       <li className='track-index-item group'>
         <div className='track-header'>
@@ -48,7 +72,7 @@ var IndexItem = React.createClass({
           <img className='track-image' src={track.image}></img>
           <div className='track-body-main group'>
             <div className='track-subheader'>
-              <div className='playicon'></div>
+              {playerpauser}
               <a
                 href={'/#/user/'+user.id+'/tracks'}
                 className='track-username'>
@@ -61,11 +85,11 @@ var IndexItem = React.createClass({
               </a>
             </div>
           </div>
-          <a href={'/#/track/'+track.id}>
-            <div className='waveform'>
-              <span className='track-time'>4:33</span>
-            </div>
-          </a>
+
+          <div className='waveform'>
+            <audio src={this.props.track.audio} id={'trackAudio'+this.props.track.id} />
+          </div>
+
           <div className='track-buttons group'>
             {trackButtons}
           </div>

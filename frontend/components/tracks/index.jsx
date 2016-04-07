@@ -46,7 +46,7 @@ var MainIndex = React.createClass({
       );
     }
     return (
-      <div className='index-wrapper group'>
+      <main className='index-wrapper group'>
         <div className='index-page-main'>
           <br />
           {welcomeMessage}
@@ -63,7 +63,7 @@ var MainIndex = React.createClass({
             <IndexSidebar />
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 });
