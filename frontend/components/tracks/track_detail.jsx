@@ -29,6 +29,7 @@ var TrackDetail = React.createClass({
   },
 
   componentDidMount: function () {
+    debugger
 		this.trackListener = TrackStore.addListener(this._onChange);
     ApiUtil.fetchSingleTrack(this.props.params.id);
     this.audio = document.getElementById("trackAudio");
