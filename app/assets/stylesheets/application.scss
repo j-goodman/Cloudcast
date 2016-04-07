@@ -423,7 +423,7 @@ ul {
   padding: 2px 3px 0 3px;
   height: 16px;
   position: absolute;
-  bottom: 2px;
+  bottom: 0px;
   right: 20px;
   color: #aaa;
   font-size: 11px;
@@ -714,7 +714,7 @@ ul {
 }
 
 .track-detail-waveform-oreo {
-  background: transparent;
+  background: #fff;
   height: 70px;
   position: absolute;
   bottom: 60px;
