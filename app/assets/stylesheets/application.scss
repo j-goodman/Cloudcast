@@ -428,6 +428,7 @@ ul {
   color: #aaa;
   font-size: 11px;
   text-align: center;
+  z-index: 101;
 }
 
 .track-buttons {
@@ -703,28 +704,23 @@ ul {
 }
 
 .track-detail-waveform {
-  background: #ccc;
+  background: #fff;
   width: 560px;
   height: 70px;
   position: absolute;
   bottom: 60px;
   left: 40px;
-  border-bottom-right-radius: 35px;
-  border-top-right-radius: 35px;
-  border-right: 12px solid #bbb;
+  border-right: 12px solid #1D79C9;
 }
 
 .track-detail-waveform-oreo {
-  background: #ccc;
-  width: 560px;
+  background: transparent;
   height: 70px;
   position: absolute;
   bottom: 60px;
   left: 40px;
-  border-bottom-right-radius: 35px;
-  border-top-right-radius: 35px;
-  border-right: 12px solid #f40;
-  z-index: 100;
+  border-right: 12px solid #FF5500;
+  z-index: 99;
 }
 
 .track-detail-main {
@@ -772,6 +768,10 @@ ul {
   left: 164px;
   font-size: 14px;
   width: 430px;
+  border-top: 2px solid #FF5500;
+  border-bottom: 2px solid #1D79C9;
+  text-align: justify;
+  padding: 10px 0;
 }
 
 /* ~ USER DETAIL ~ */

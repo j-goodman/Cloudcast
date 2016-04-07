@@ -71,13 +71,27 @@ var TrackDetail = React.createClass({
       this.state.audioTrack.play();
       this.setState({playing: true});
     }
-    this.state.audioTrack.addEventListener('ended', this.pauseTrack);
+    this.state.audioTrack.addEventListener('ended', this.endOfTrack);
   },
 
   pauseTrack: function () {
     if (this.state.audioTrack) {
       this.state.audioTrack.pause();
       this.setState({playing: false});
+    }
+  },
+
+  trackSeek: function (decimal) {
+    if (this.state.audioTrack) {
+      var targetSec = Math.floor(this.state.audioTrack.duration*decimal);
+      this.state.audioTrack.currentTime = targetSec;
+    }
+  },
+
+  endOfTrack: function () {
+    if (this.state.audioTrack) {
+      this.state.audioTrack.pause();
+      this.setState({playing: false, completion: 1});
     }
   },
 
@@ -92,7 +106,7 @@ var TrackDetail = React.createClass({
       } else {
         playerpauser =(<div className='pauseicon track-detail-playicon' onClick={this.pauseTrack}></div>);
       }
-      var waveStyle = {width: (Math.floor(560*this.state.completion)+'px')};
+      var waveStyle = {width: (Math.floor(548*this.state.completion)+'px')};
 			return (
 				<main className='user-detail-main'>
           <audio src={track.audio} id='trackAudio' />
