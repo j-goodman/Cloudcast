@@ -8,7 +8,7 @@ var Link = require('react-router').Link;
 
 var TrackDetail = React.createClass({
 	getInitialState: function () {
-		return { track: null };
+		return { track: null, playing: false };
 	},
 
   componentDidMount: function () {
@@ -29,6 +29,14 @@ var TrackDetail = React.createClass({
   playTrack: function () {
     if (this.audio) {
       this.audio.play();
+      this.setState({playing: true});
+    }
+  },
+
+  pauseTrack: function () {
+    if (this.audio) {
+      this.audio.pause();
+      this.setState({playing: false});
     }
   },
 
@@ -39,9 +47,9 @@ var TrackDetail = React.createClass({
       var track = this.state.track;
       var playerpauser;
       if (this.state.playing === false) {
-        playerpauser = (<div className='track-detail-playicon' onClick={this.playTrack}></div>);
+        playerpauser = (<div className='playicon track-detail-playicon' onClick={this.playTrack}></div>);
       } else {
-        playerpauser =(<div className='track-detail-pauseicon' onClick={this.pauseTrack}></div>);
+        playerpauser =(<div className='pauseicon track-detail-playicon' onClick={this.pauseTrack}></div>);
       }
 			return (
 				<main className='user-detail-main'>
