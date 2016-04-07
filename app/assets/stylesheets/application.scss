@@ -420,12 +420,12 @@ ul {
 
 .track-time {
   background: #000;
-  width: 28px;
+  padding: 2px 3px 0 3px;
   height: 16px;
   position: absolute;
   bottom: 0;
-  right: 6px;
-  color: #888;
+  right: 20px;
+  color: #aaa;
   font-size: 11px;
   text-align: center;
 }
@@ -709,6 +709,22 @@ ul {
   position: absolute;
   bottom: 60px;
   left: 40px;
+  border-bottom-right-radius: 35px;
+  border-top-right-radius: 35px;
+  border-right: 12px solid #bbb;
+}
+
+.track-detail-waveform-oreo {
+  background: #ccc;
+  width: 560px;
+  height: 70px;
+  position: absolute;
+  bottom: 60px;
+  left: 40px;
+  border-bottom-right-radius: 35px;
+  border-top-right-radius: 35px;
+  border-right: 12px solid #f40;
+  z-index: 100;
 }
 
 .track-detail-main {
@@ -743,8 +759,8 @@ ul {
 
 .track-info-username {
   position: absolute;
-  top: 140px;
-  left: 10px;
+  top: 144px;
+  left: 12px;
   font-size: 14px;
   width: 124px;
   text-align: center;
@@ -752,8 +768,8 @@ ul {
 
 .track-info-description {
   position: absolute;
-  top: 10px;
-  left: 148px;
+  top: 26px;
+  left: 164px;
   font-size: 14px;
   width: 430px;
 }

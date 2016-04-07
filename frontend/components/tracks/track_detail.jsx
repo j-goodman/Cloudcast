@@ -8,34 +8,75 @@ var Link = require('react-router').Link;
 
 var TrackDetail = React.createClass({
 	getInitialState: function () {
-		return { track: null, playing: false };
+		return { track: null, playing: false, duration: 0, audioTrack: null, completion: 0 };
 	},
+
+  stringifyTime: function (seconds) {
+    var hrs = 0;
+    var min = 0;
+    var sec = seconds;
+    while (sec > 59) { min ++; sec-=60; }
+    while (min > 59) { hrs ++; min-=-60; }
+    if (sec > 9) { sec = sec.toString(); }
+    else { sec = ('0'+sec.toString()); }
+    if (hrs > 0) {
+      if (min > 9) { min = min.toString(); }
+      else { min = ('0'+min.toString()); }
+      return hrs+':'+min+':'+sec;
+    } else {
+      return min+':'+sec;
+    }
+  },
 
   componentDidMount: function () {
 		this.trackListener = TrackStore.addListener(this._onChange);
     ApiUtil.fetchSingleTrack(this.props.params.id);
     this.audio = document.getElementById("trackAudio");
+    this.state.interval = setInterval(this.tick, 120);
   },
 
   componentWillUnmount: function () {
 		this.trackListener.remove();
+    this.pauseTrack();
+  },
+
+  _mediaLoaded: function () {
+    var audioTrack = document.getElementById("trackAudio");
+    this.setState({ audioTrack: audioTrack });
+    this.setState({
+      duration: Math.floor(this.state.audioTrack.duration),
+      currentTime: this.state.audioTrack.currentTime
+    });
+  },
+
+  tick: function () {
+    if (this.state.playing) {
+      var time = this.state.audioTrack.currentTime;
+      var duration = this.state.audioTrack.duration;
+      this.setState({completion: time/duration});
+    }
   },
 
 	_onChange: function () {
 		this.setState({ track: TrackStore.getTrack(this.props.params.id) });
-    this.audio = document.getElementById("trackAudio");
+    var audioTrack = document.getElementById("trackAudio");
+    if (audioTrack) {
+      this.setState({ audioTrack: audioTrack });
+      this.state.audioTrack.addEventListener('loadedmetadata', this._mediaLoaded);
+    }
 	},
 
   playTrack: function () {
-    if (this.audio) {
-      this.audio.play();
+    if (this.state.audioTrack) {
+      this.state.audioTrack.play();
       this.setState({playing: true});
     }
+    this.state.audioTrack.addEventListener('ended', this.pauseTrack);
   },
 
   pauseTrack: function () {
-    if (this.audio) {
-      this.audio.pause();
+    if (this.state.audioTrack) {
+      this.state.audioTrack.pause();
       this.setState({playing: false});
     }
   },
@@ -51,6 +92,7 @@ var TrackDetail = React.createClass({
       } else {
         playerpauser =(<div className='pauseicon track-detail-playicon' onClick={this.pauseTrack}></div>);
       }
+      var waveStyle = {width: (Math.floor(560*this.state.completion)+'px')};
 			return (
 				<main className='user-detail-main'>
           <audio src={track.audio} id='trackAudio' />
@@ -61,8 +103,9 @@ var TrackDetail = React.createClass({
 							<h2><a href={'/#/user/'+track.user.id+'/tracks'}>{track.user.username}</a></h2>
 							<h1>{track.title}</h1>
 						</div>
+            <div className='track-detail-waveform-oreo' style={waveStyle} />
             <div className='track-detail-waveform'>
-              <div className='track-time'>4:33</div>
+              <div className='track-time'>{this.stringifyTime(this.state.duration)}</div>
             </div>
 					</section>
 

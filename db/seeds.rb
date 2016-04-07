@@ -19,7 +19,7 @@ lovecraft = User.create!(
 erichzann1 = Track.create!(
   title: 'The Music of Erich Zann, Part 1',
   user: lovecraft,
-  description: "Part 1 of 3. Read by Cameron Halket for LibriVox. All LibriVox recordings are in the public domain. A university student in an unnamed French city becomes acquainted with the strange and reclusive musician living on the floor above his own. Gradually he comes to understand that the eldritch quality of the old viol player's music may describe something from a world other than our own. First published in National Amateur, March 1922.",
+  description: "Part 1 of 3. Read by Cameron Halket for LibriVox. A French university student becomes acquainted with the strange and reclusive musician living on the floor above his own. Gradually he comes to understand that the eldritch quality of the old viol player's music may describe something from a world other than our own. First published in National Amateur, March 1922.",
   image: File.open('app/assets/images/night_window.jpg'),
   audio: File.open('app/assets/sounds/Erich_Zann_1.wav')
 )
@@ -38,7 +38,7 @@ woolf = User.create!(
 jeffersoninaugural = Track.create!(
   title: 'First Inaugural Address',
   user: jefferson,
-  description: "Read by M. L. Cohen for LibriVox. All LibriVox recordings are in the public domain. Originally delivered in 1801, Jefferson's was the first Inaugural Address delivered in the nation's new capital in Washington. Though he was known more for his skills as a writer than an orator, the speech came to serve as the statement of principles for the newly developing Democratic-Republican party.",
+  description: "Read by M. L. Cohen for LibriVox. Originally delivered in 1801, Jefferson's was the first Inaugural Address delivered in the nation's new capital in Washington. Though he was known more for his skills as a writer than an orator, the speech came to serve as the statement of principles for the newly developing Democratic-Republican party.",
   image: File.open('app/assets/images/declaration.jpg'),
   audio: File.open('app/assets/sounds/Jefferson_Inauguration.mp3')
 )
@@ -59,7 +59,7 @@ peacewithhonor = Track.create!(
 erichzann2 = Track.create!(
   title: 'The Music of Erich Zann, Part 2',
   user: lovecraft,
-  description: "Part 2 of 3. Read by Cameron Halket for LibriVox. All LibriVox recordings are in the public domain. A university student in an unnamed French city becomes acquainted with the strange and reclusive musician living on the floor above his own. Gradually he comes to understand that the eldritch quality of the old viol player's music may describe something from a world other than our own. First published in National Amateur, March 1922.",
+  description: "Part 2 of 3. Read by Cameron Halket for LibriVox. A French university student becomes acquainted with the strange and reclusive musician living on the floor above his own. Gradually he comes to understand that the eldritch quality of the old viol player's music may describe something from a world other than our own. First published in National Amateur, March 1922.",
   image: File.open('app/assets/images/night_window.jpg'),
   audio: File.open('app/assets/sounds/Erich_Zann_2.wav')
 )
@@ -67,7 +67,7 @@ erichzann2 = Track.create!(
 blueandgreen = Track.create!(
   title: 'Blue and Green',
   user: woolf,
-  description: "Read by Andrea L. for LibriVox. All LibriVox recordings are in the public domain. A consideration in prose-poetry of perceptions and experiences of color. Published in 1921 as part of the collection Monday or Tuesday.",
+  description: "Read by Andrea L. for LibriVox. A consideration in prose-poetry of perceptions and experiences of color. Published in 1921 as part of the collection Monday or Tuesday.",
   image: File.open('app/assets/images/mondayortuesday.jpg'),
   audio: File.open('app/assets/sounds/Blue_and_Green.mp3')
 )
@@ -96,7 +96,7 @@ ichbineinberliner = Track.create!(
 erichzann3 = Track.create!(
   title: 'The Music of Erich Zann, Part 3',
   user: lovecraft,
-  description: "Part 3 of 3. Read by Cameron Halket for LibriVox. All LibriVox recordings are in the public domain. A university student in an unnamed French city becomes acquainted with the strange and reclusive musician living on the floor above his own. Gradually he comes to understand that the eldritch quality of the old viol player's music may describe something from a world other than our own. First published in National Amateur, March 1922.",
+  description: "Part 3 of 3. Read by Cameron Halket for LibriVox. A French university student becomes acquainted with the strange and reclusive musician living on the floor above his own. Gradually he comes to understand that the eldritch quality of the old viol player's music may describe something from a world other than our own. First published in National Amateur, March 1922.",
   image: File.open('app/assets/images/night_window.jpg'),
   audio: File.open('app/assets/sounds/Erich_Zann_3.wav')
 )
@@ -104,7 +104,7 @@ erichzann3 = Track.create!(
 erichzannseries = Series.create!(
   title: 'The Music of Erich Zann',
   user: lovecraft,
-  description: "Read by Cameron Halket for LibriVox. All LibriVox recordings are in the public domain. A university student in an unnamed French city becomes acquainted with the strange and reclusive musician living on the floor above his own. Gradually he comes to understand that the eldritch quality of the old viol player's music may describe something from a world other than our own. First published in National Amateur, March 1922.",
+  description: "Read by Cameron Halket for LibriVox. A university student in an unnamed French city becomes acquainted with the strange and reclusive musician living on the floor above his own. Gradually he comes to understand that the eldritch quality of the old viol player's music may describe something from a world other than our own. First published in National Amateur, March 1922.",
 )
 
 Membership.create!(

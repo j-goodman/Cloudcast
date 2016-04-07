@@ -90,7 +90,6 @@ var SeriesIndexItem = React.createClass({
               </div>
             </div>
             <div className='series-waveform'>
-              <span className='track-time'>4:33</span>
             </div>
             <section className='track-demo-list'>
             {this.trackSample.map(function (track, index) {

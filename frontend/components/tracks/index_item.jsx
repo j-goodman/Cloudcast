@@ -5,7 +5,33 @@ var TrackActions = require('../../actions/track_actions.js');
 
 var IndexItem = React.createClass({
   getInitialState: function () {
-    return({playing: false});
+		return { track: null, playing: false, duration: 0, audioTrack: null };
+	},
+
+  stringifyTime: function (seconds) {
+    var hrs = 0;
+    var min = 0;
+    var sec = seconds;
+    while (sec > 59) { min ++; sec-=60; }
+    while (min > 59) { hrs ++; min-=-60; }
+    if (sec > 9) { sec = sec.toString(); }
+    else { sec = ('0'+sec.toString()); }
+    if (hrs > 0) {
+      if (min > 9) { min = min.toString(); }
+      else { min = ('0'+min.toString()); }
+      return hrs+':'+min+':'+sec;
+    } else {
+      return min+':'+sec;
+    }
+  },
+
+  componentWillUnmount: function () {
+    this.pauseTrack();
+  },
+
+  componentDidMount: function () {
+    var audio = this.audioTag();
+    audio.addEventListener('loadedmetadata', this._mediaLoaded);
   },
 
   destroyTrack: function () {
@@ -13,7 +39,15 @@ var IndexItem = React.createClass({
   },
 
   audioTag: function () {
-    return(document.getElementById('trackAudio'+this.props.track.id));
+    var audio = (document.getElementById('trackAudio'+this.props.track.id));
+    audio.addEventListener('ended', this.pauseTrack);
+    return audio;
+  },
+
+  _mediaLoaded: function () {
+    var audioTrack = this.audioTag();
+    this.setState({duration: Math.floor(audioTrack.duration)});
+    audioTrack.addEventListener('ended', this.pauseTrack);
   },
 
   playTrack: function () {
@@ -88,6 +122,7 @@ var IndexItem = React.createClass({
 
           <div className='waveform'>
             <audio src={this.props.track.audio} id={'trackAudio'+this.props.track.id} />
+            <div className='track-time'>{this.stringifyTime(this.state.duration)}</div>
           </div>
 
           <div className='track-buttons group'>

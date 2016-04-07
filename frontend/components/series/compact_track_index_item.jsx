@@ -40,7 +40,6 @@ var IndexItem = React.createClass({
           <a href={'#/track/'+track.id}>
             <li className='track-demo-title'>{track.title}</li>
           </a>
-          <li className='small-play-icon' />
         </ul>
       );
     }
