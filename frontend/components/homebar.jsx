@@ -34,7 +34,9 @@ var Homebar = React.createClass({
 
     if (loggedIn) {
       headerUserTab = (
-        <button onClick={ApiUtil.logout} className='link-tab user-dropdown-tab' href='session/new'>Sign Out</button>
+        <section>
+          <button onClick={ApiUtil.logout} className='link-tab user-dropdown-tab' href='session/new'>Sign Out</button>
+        </section>
       );
       profileTab = (
         <a href={'/#/user/'+SessionStore.currentUser().id+'/tracks'} className='link-tab collection-tab'>Profile</a>
