@@ -5,6 +5,6 @@ json.extract!(
 
 json.tracks do
   json.array!(@user.tracks) do |track|
-    json.extract!(track, :id, :title, :description, :user, :image)
+    json.extract!(track, :id, :title, :description, :user, :audio, :image)
   end
 end

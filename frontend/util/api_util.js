@@ -72,12 +72,14 @@ var ApiUtil = {
     });
   },
 
-  createUser: function (credentials, callback) {
+  createUser: function (formData, callback) {
     $.ajax({
       type: 'POST',
       url: '/api/users',
+      processData: false,
+      contentType: false,
       dataType: 'json',
-      data: {user: credentials},
+      data: formData,
       success: function(currentUser) {
         SessionActions.currentUserReceived(currentUser);
         callback && callback();

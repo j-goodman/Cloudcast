@@ -8,11 +8,14 @@ var Link = require('react-router').Link;
 
 var TrackDetail = React.createClass({
 	getInitialState: function () {
-		return { track: null, playing: false, duration: 0, audioTrack: null, completion: 0 };
+		return { track: null, playing: false, duration: "loading", audioTrack: null, completion: 0 };
 	},
 
   stringifyTime: function (seconds) {
-    var hrs = 0; var min = 0; var sec = seconds;
+    if (seconds === "loading") {
+      return "loading...";
+    }
+    var hrs = 0; var min = 0; var sec = Math.floor(seconds);
     while (sec > 59) { min ++; sec-=60; }
     while (min > 59) { hrs ++; min-=-60; }
     if (sec > 9) { sec = sec.toString(); }
@@ -31,6 +34,11 @@ var TrackDetail = React.createClass({
     ApiUtil.fetchSingleTrack(this.props.params.id);
     this.audio = document.getElementById("trackAudio");
     this.state.interval = setInterval(this.tick, 120);
+    this.setState({ duration: "loading" });
+    if (this.audio) {
+      this.setState({ audioTrack: audioTrack });
+      this.state.audioTrack.addEventListener('loadedmetadata', this._mediaLoaded);
+    }
   },
 
   componentWillUnmount: function () {
@@ -43,7 +51,7 @@ var TrackDetail = React.createClass({
     var audioTrack = document.getElementById("trackAudio");
     this.setState({ audioTrack: audioTrack });
     this.setState({
-      duration: Math.floor(this.state.audioTrack.duration),
+      duration: this.state.audioTrack.duration,
       currentTime: this.state.audioTrack.currentTime
     });
   },
@@ -148,7 +156,7 @@ var TrackDetail = React.createClass({
             <ul className = 'track-info-box group'>
             <section className='track-detail-sidebar'></section>
               <a href={'/#/user/'+track.user.id+'/tracks'}>
-                <li className = 'track-info-user-avatar' />
+                <img className='track-info-user-avatar' src={this.state.track.user.image}></img>
                 <li className = 'track-info-username'>{track.user.username}</li>
               </a>
               <li className = 'track-info-description'>{track.description}</li>

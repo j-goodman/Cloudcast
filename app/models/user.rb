@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   validates :username, :password_digest, :session_token, presence: true
   validates :password, length: { minimum: 5, allow_nil: true }
+  has_attached_file :image, default_url: "/app/assets/images/agents_of_fortune.jpg"
+
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   has_many :tracks
   has_many :series

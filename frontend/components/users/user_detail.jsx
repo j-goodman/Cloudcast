@@ -33,13 +33,13 @@ var UserDetail = React.createClass({
 			return (
 				<main className='user-detail-main'>
 					<section className='user-header'>
-						<div className='user-avatar'></div>
+						<img className='user-avatar' src={this.state.user.image}></img>
 						<h1 className='user-header-info'>{this.state.user.username}</h1>
 					</section>
 
 					<div className='user-detail-tabs'>
 						<a href={'#/user/'+this.state.user.id+'/tracks'}>Tracks</a>
-						<a href={'#/user/'+this.state.user.id+'/series'}>Shows</a>
+						<a href={'#/user/'+this.state.user.id+'/series'}></a>
 						<a className='non-display' href={'#/user/'+this.state.user.id}>Reposts</a>
 					</div>
 

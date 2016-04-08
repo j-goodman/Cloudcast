@@ -334,7 +334,9 @@ ul {
   height: 32px;
   display: block;
   margin: auto 0;
-  background: asset-url('medigoron.png');
+  object-fit: cover;
+  object-position: 0 0;
+	background: #eee; //asset-url('medigoron.png');
   background-size: contain;
   border-radius: 50%;
   margin: 12px 0 0 0;
@@ -411,23 +413,23 @@ ul {
 
 .waveform {
   background: #fff;
-  height: 70px;
+  height: 50px;
   width: 394px;
   position: absolute;
   right: 0;
-  bottom: 80px;
+  bottom: 90px;
   border-right: 6px solid #1D79C9;
   border-bottom: 1px solid #eee;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #f2f2f2;
 }
 
 .waveform-oreo {
-  background: #transparent;
-  height: 74px;
+  background: transparent;
+  height: 54px;
   width: 0px;
   position: absolute;
   left: 216px;
-  bottom: 79px;
+  bottom: 89px;
   z-index: 101;
   border-right: 6px solid #FF5500;
 }
@@ -439,7 +441,7 @@ ul {
   position: absolute;
   bottom: 0px;
   right: 10px;
-  color: #aaa;
+  color: #bbb;
   font-size: 11px;
   text-align: center;
   z-index: 101;
@@ -565,8 +567,8 @@ ul {
 }
 
 .track-submit-button {
-  background: #ff5500;
-  color: #eee;
+  background: #fff;
+  color: #777;
   padding: 5px 10px;
   display: block;
   margin: 30px auto;
@@ -575,7 +577,7 @@ ul {
 }
 
 .track-submit-button:hover {
-  color: #fff;
+  color: #999;
 }
 
 .track-info-main {
@@ -776,7 +778,9 @@ ul {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: asset-url('medigoron.png');
+  object-fit: cover;
+  object-position: 0 0;
+	background: #eee; //asset-url('medigoron.png');
   background-size: cover;
   background-position: center;
 }
@@ -825,7 +829,7 @@ ul {
 .user-header {
 	width: 1000px;
 	height: 262px;
-	background: asset-url('tie_fighters.jpg');
+	background: linear-gradient( 330deg, #aaa, #eee);
 	background-size: cover;
 	background-position: center;
 	letter-spacing: 1px;
@@ -837,7 +841,9 @@ ul {
 	position: relative;
 	top: 30px;
 	left: 30px;
-	background: asset-url('medigoron.png');
+  object-fit: cover;
+  object-position: 0 0;
+	background: #eee; //asset-url('medigoron.png');
 	background-size: cover;
 	background-position: center;
 	border-radius: 50%;
@@ -846,7 +852,7 @@ ul {
 .user-header-info {
 	position: relative;
 	height: 50px;
-	bottom: 172px;
+	bottom: 102px;
 	color: white;
 	left: 260px;
   display: inline;

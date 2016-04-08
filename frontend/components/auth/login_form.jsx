@@ -16,11 +16,15 @@ var LoginForm = React.createClass({
     };
   },
 
+  backToIndex: function () {
+    this.context.router.push('/');
+  },
+
   render: function () {
     return (
 			<div className='modal-wrapper'>
       <TrackIndex />
-				<div className='modal-dimmer'></div>
+				<div className='modal-dimmer' onClick={this.backToIndex}></div>
 				<main className='auth-form-main group'>
 	        <div className="auth-header-stretch group">
 	          <header className="auth-header-bar">

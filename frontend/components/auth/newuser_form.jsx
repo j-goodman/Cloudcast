@@ -16,11 +16,15 @@ var NewUserForm = React.createClass({
     };
   },
 
+  backToIndex: function () {
+    this.context.router.push('/');
+  },
+
   render: function () {
     return (
 			<div className='modal-wrapper'>
       <TrackIndex />
-				<div className='modal-dimmer'></div>
+				<div className='modal-dimmer' onClick={this.backToIndex}></div>
 	      <main className='auth-form-main group'>
 	        <div className="auth-header-stretch group">
 	          <header className="auth-header-bar">
@@ -68,7 +72,7 @@ var NewUserForm = React.createClass({
 	            </label>
 
 	            <label className="halved-password-input-wrapper">
-	              Re-type password
+
 	              <br />
 	              <input
 	                onChange={this.updatePassword}
@@ -78,6 +82,15 @@ var NewUserForm = React.createClass({
 	              />
 	            </label>
 	            <br />
+
+              <label>
+                Upload a Photo
+                <input
+                  className="track-submit-button"
+                  onChange={this.handleFileChange}
+                  type="file"
+                ></input>
+              </label>
 
 	            <label className="terms-agreement-wrapper">
 	              <input type="checkbox" name="" value="unchecked" />
@@ -92,12 +105,29 @@ var NewUserForm = React.createClass({
     );
   },
 
+  handleFileChange: function(e) {
+    var file = e.currentTarget.files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+      var result = reader.result;
+      this.setState({ imageFile: file, imageUrl: result });
+    }.bind(this);
+
+    reader.readAsDataURL(file);
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
 
+    var formData = new FormData();
+    formData.append('user[username]', this.state.username);
+    formData.append('user[password]', this.state.password);
+    formData.append('user[image]', this.state.imageFile);
+
     var router = this.context.router;
 
-    ApiUtil.createUser(this.state, function() {
+    ApiUtil.createUser(formData, function() {
       router.push('/#');
     });
   },

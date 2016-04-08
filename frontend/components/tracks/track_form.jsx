@@ -10,6 +10,10 @@ var TrackForm = React.createClass({
     router: React.PropTypes.object.isRequired
   },
 
+  backToIndex: function () {
+    this.context.router.push('/');
+  },
+
   getInitialState: function () {
     return {
       title: '',
@@ -73,7 +77,7 @@ var TrackForm = React.createClass({
     return(
         <div className='modal-wrapper'>
         <TrackIndex />
-        <div className='modal-dimmer' />
+        <div className='modal-dimmer' onClick={this.backToIndex}/>
         <main className='track-form-main group'>
           <h2 className='track-form-header'>Upload Audio to Cloudcast</h2>
           <label>

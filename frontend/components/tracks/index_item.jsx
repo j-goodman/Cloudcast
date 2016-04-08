@@ -9,7 +9,10 @@ var IndexItem = React.createClass({
 	},
 
   stringifyTime: function (seconds) {
-    var hrs = 0; var min = 0; var sec = seconds;
+    if (seconds === "ready") {
+      return "ready";
+    }
+    var hrs = 0; var min = 0; var sec = Math.floor(seconds);
     while (sec > 59) { min ++; sec-=60; }
     while (min > 59) { hrs ++; min-=-60; }
     if (sec > 9) { sec = sec.toString(); }
@@ -27,6 +30,7 @@ var IndexItem = React.createClass({
     var audio = this.audioTag();
     audio.addEventListener('loadedmetadata', this._mediaLoaded);
     this.state.interval = setInterval(this.tick, 450);
+    this.setState({ duration: "ready" });
   },
 
   tick: function () {
@@ -55,9 +59,15 @@ var IndexItem = React.createClass({
   },
 
   _mediaLoaded: function () {
+    clearInterval(window);
     var audioTrack = this.audioTag();
-    this.setState({duration: Math.floor(audioTrack.duration)});
-    audioTrack.addEventListener('ended', this.pauseTrack);
+    if (audioTrack) {
+      audioTrack.addEventListener('ended', this.pauseTrack);
+      this.setState({duration: Math.floor(audioTrack.duration)});
+    } else {
+      debugger
+      window.addInterval(1600, this._mediaLoaded);
+    }
   },
 
   playTrack: function () {
@@ -129,20 +139,22 @@ var IndexItem = React.createClass({
     return(
       <li className='track-index-item group'>
         <div className='track-header'>
-          <a href={'#/user/'+user.id+'/tracks'} className='track-poster-image'></a>
+          <a href={'#/user/'+user.id+'/tracks'}><img className='track-poster-image' src={this.props.track.user.image} /></a>
           <h2 className='track-header-text'>
             <a href={'#/user/'+user.id+'/tracks'}>
               {user.username}
             </a>
-              {' posted '}
+              {' added '}
             <a href={'#/track/'+track.id}>
-              a track
+              a podcast
             </a>
           </h2>
         </div>
 
         <div className='track-body'>
-          <img className='track-image' src={track.image}></img>
+          <a href={'#/track/'+track.id}>
+            <img className='track-image' src={track.image}></img>
+          </a>
           <div className='track-body-main group'>
             <div className='track-subheader'>
               {playerpauser}
@@ -165,7 +177,7 @@ var IndexItem = React.createClass({
             id='track-rectangle'
             onClick={this.seekByClick}
           >
-            <audio src={this.props.track.audio} id={'trackAudio'+this.props.track.id} />
+            <audio preload="none" src={this.props.track.audio} id={'trackAudio'+this.props.track.id} />
             <div className='track-time'>{this.stringifyTime(this.state.duration)}</div>
             {trackTimer}
           </div>

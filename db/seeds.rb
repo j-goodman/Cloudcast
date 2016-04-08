@@ -13,7 +13,8 @@ Membership.destroy_all
 
 lovecraft = User.create!(
   username: 'H. P. Lovecraft',
-  password: 'password'
+  password: 'password',
+  image: File.open('app/assets/images/hp_lovecraft.jpg')
 )
 
 erichzann1 = Track.create!(
@@ -26,12 +27,14 @@ erichzann1 = Track.create!(
 
 jefferson = User.create!(
   username: 'Thomas Jefferson',
-  password: 'password'
+  password: 'password',
+  image: File.open('app/assets/images/two_dollar.jpg')
 )
 
 woolf = User.create!(
   username: 'Virginia Woolf',
-  password: 'password'
+  password: 'password',
+  image: File.open('app/assets/images/virginia_woolf.jpg')
 )
 
 
@@ -45,7 +48,8 @@ jeffersoninaugural = Track.create!(
 
 nixon = User.create!(
   username: 'Richard M. Nixon',
-  password: 'password'
+  password: 'password',
+  image: File.open('app/assets/images/dick_nixon.jpg')
 )
 
 peacewithhonor = Track.create!(
@@ -74,7 +78,8 @@ blueandgreen = Track.create!(
 
 jfk = User.create!(
   username: 'John F. Kennedy',
-  password: 'password'
+  password: 'password',
+  image: File.open('app/assets/images/john_kennedy.jpg')
 )
 
 resignation = Track.create!(

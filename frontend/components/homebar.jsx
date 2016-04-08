@@ -39,6 +39,7 @@ var Homebar = React.createClass({
       profileTab = (
         <a href={'/#/user/'+SessionStore.currentUser().id+'/tracks'} className='link-tab collection-tab'>Profile</a>
       );
+      uploadTab = (<Link to={'/newtrack'} className='link-tab upload-tab'>Upload</Link>);
     } else {
       headerUserTab = (
         <div className='link-tab user-or-signin-tab'>
@@ -48,6 +49,7 @@ var Homebar = React.createClass({
       profileTab = (
         <a href='#' className='link-tab collection-tab'></a>
       );
+      uploadTab = (<Link to={'/newuser'} className='link-tab upload-tab'>New User</Link>);
     }
 
     return(
@@ -57,12 +59,12 @@ var Homebar = React.createClass({
             <a href='#' className='link-tab index-logo-image'></a>
             <a href='#' className='link-tab home-tab'>Home</a>
             {profileTab}
-            <div className='search-bar-tab'>
+            <div className='search-bar-tab non-display'>
               <input className='search-bar'
 							placeholder='Search'
 							type='text'></input>
             </div>
-            <Link to={'/newtrack'} className='link-tab upload-tab'>Upload</Link>
+            {uploadTab}
             {headerUserTab}
           </ul>
         </div>
