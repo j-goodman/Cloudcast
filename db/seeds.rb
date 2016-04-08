@@ -51,7 +51,7 @@ nixon = User.create!(
 peacewithhonor = Track.create!(
   title: "Peace With Honor",
   user: nixon,
-  description: "Speech delivered on January 23, 1973, by President Richard Nixon after the Paris Peace Accord, which ended the Vietnam War. Nixon describes the terms of the treaty, which specified a ceasefire in four days' time, and addresses a promise of his 1968 presidential campaign: ''I pledge to you that we shall have an honorable end to the war in Vietnam.''",
+  description: "Speech delivered on January 23, 1973, by President Richard Nixon after the Paris Peace Accord, which ended the Vietnam War. Nixon describes the terms of the treaty, which specified a ceasefire in four days' time, and addresses his 1968 campaign promise of ''an honorable end to the war in Vietnam.''",
   image: File.open('app/assets/images/peacewithhonor.jpg'),
   audio: 'https://s3.amazonaws.com/cloudcast-dev/audio_seeds/Peace_With_Honor.wav'
 )

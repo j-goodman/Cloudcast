@@ -52,7 +52,7 @@ var MainIndex = React.createClass({
           {welcomeMessage}
           <br />
           <ul className='track-list'>
-            {this.state.tracks.map(function (track) {
+            {this.state.tracks.reverse().map(function (track) {
               if (track) {
                 return <TrackIndexItem key={track.id}
                 track={track} user={track.user}/>;

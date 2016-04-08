@@ -5,13 +5,11 @@ var TrackActions = require('../../actions/track_actions.js');
 
 var IndexItem = React.createClass({
   getInitialState: function () {
-		return { track: null, playing: false, duration: 0, audioTrack: null };
+		return { track: null, playing: false, duration: 0, audioTrack: null, completion: 0 };
 	},
 
   stringifyTime: function (seconds) {
-    var hrs = 0;
-    var min = 0;
-    var sec = seconds;
+    var hrs = 0; var min = 0; var sec = seconds;
     while (sec > 59) { min ++; sec-=60; }
     while (min > 59) { hrs ++; min-=-60; }
     if (sec > 9) { sec = sec.toString(); }
@@ -25,13 +23,23 @@ var IndexItem = React.createClass({
     }
   },
 
-  componentWillUnmount: function () {
-    this.pauseTrack();
-  },
-
   componentDidMount: function () {
     var audio = this.audioTag();
     audio.addEventListener('loadedmetadata', this._mediaLoaded);
+    this.state.interval = setInterval(this.tick, 450);
+  },
+
+  tick: function () {
+    if (this.state.playing) {
+      var time = this.audioTag().currentTime;
+      var duration = this.audioTag().duration;
+      this.setState({completion: time/duration});
+    }
+  },
+
+  componentWillUnmount: function () {
+    clearInterval(this.state.interval);
+    this.pauseTrack();
   },
 
   destroyTrack: function () {
@@ -40,8 +48,10 @@ var IndexItem = React.createClass({
 
   audioTag: function () {
     var audio = (document.getElementById('trackAudio'+this.props.track.id));
-    audio.addEventListener('ended', this.pauseTrack);
-    return audio;
+    if (audio) {
+      audio.addEventListener('ended', this.endOfTrack);
+      return audio;
+    }
   },
 
   _mediaLoaded: function () {
@@ -60,7 +70,35 @@ var IndexItem = React.createClass({
     this.setState({playing: false});
   },
 
+  endOfTrack: function () {
+    this.audioTag().pause();
+    this.setState({playing: false, completion: 1});
+  },
+
+  seekByClick: function (e) {
+    if (!this.state.playing) {
+      this.playTrack();
+    }
+    var element = document.getElementById('track-rectangle');
+    var rect = element.getBoundingClientRect();
+    var selected = ((e.pageX-rect.left)/394);
+    this.trackSeek(selected);
+  },
+
+  trackSeek: function (decimal) {
+    if (this.audioTag()) {
+      var targetSec = Math.floor(this.audioTag().duration*decimal);
+      this.audioTag().currentTime = targetSec;
+    }
+  },
+
   render: function () {
+    var trackTimer;
+    if (this.audioTag() && (this.audioTag().currentTime === 0 || this.audioTag().currentTime > this.audioTag().duration-1)) {
+      trackTimer = (<div></div>);
+    } else if (this.audioTag()) {
+      trackTimer = (<div className='track-time-left'>{this.stringifyTime(Math.round(this.audioTag().currentTime))}</div>);
+    }
     var track = this.props.track;
     var user = this.props.track.user || this.props.user;
     if (SessionStore.currentUser() && user.id === SessionStore.currentUser().id) {
@@ -87,6 +125,7 @@ var IndexItem = React.createClass({
     } else {
       playerpauser =(<div className='pauseicon' onClick={this.pauseTrack}></div>);
     }
+    var waveStyle = {left: (216+Math.floor(394*this.state.completion)+'px')};
     return(
       <li className='track-index-item group'>
         <div className='track-header'>
@@ -120,11 +159,16 @@ var IndexItem = React.createClass({
             </div>
           </div>
 
-          <div className='waveform'>
+          <div className='waveform-oreo' style={waveStyle} />
+          <div
+            className='waveform'
+            id='track-rectangle'
+            onClick={this.seekByClick}
+          >
             <audio src={this.props.track.audio} id={'trackAudio'+this.props.track.id} />
             <div className='track-time'>{this.stringifyTime(this.state.duration)}</div>
+            {trackTimer}
           </div>
-
           <div className='track-buttons group'>
             {trackButtons}
           </div>

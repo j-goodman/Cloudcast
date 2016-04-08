@@ -12,9 +12,7 @@ var TrackDetail = React.createClass({
 	},
 
   stringifyTime: function (seconds) {
-    var hrs = 0;
-    var min = 0;
-    var sec = seconds;
+    var hrs = 0; var min = 0; var sec = seconds;
     while (sec > 59) { min ++; sec-=60; }
     while (min > 59) { hrs ++; min-=-60; }
     if (sec > 9) { sec = sec.toString(); }
@@ -33,12 +31,11 @@ var TrackDetail = React.createClass({
     ApiUtil.fetchSingleTrack(this.props.params.id);
     this.audio = document.getElementById("trackAudio");
     this.state.interval = setInterval(this.tick, 120);
-    window.addEventListener("scroll", this.updatePosition, false);
-    window.addEventListener("resize", this.updatePosition, false);
   },
 
   componentWillUnmount: function () {
 		this.trackListener.remove();
+    clearInterval(this.state.interval);
     this.pauseTrack();
   },
 
@@ -77,12 +74,13 @@ var TrackDetail = React.createClass({
   },
 
   seekByClick: function (e) {
+    if (!this.state.playing) {
+      this.playTrack();
+    }
     var element = document.getElementById('track-rectangle');
     var rect = element.getBoundingClientRect();
     var selected = ((e.pageX-rect.left)/560);
-    if (this.state.playing) {
-      this.trackSeek(selected);
-    }
+    this.trackSeek(selected);
   },
 
   pauseTrack: function () {
@@ -107,6 +105,12 @@ var TrackDetail = React.createClass({
   },
 
   render: function () {
+    var trackTimer;
+    if (this.state.audioTrack && (this.state.audioTrack.currentTime === 0 || this.state.audioTrack.currentTime > this.state.audioTrack.duration-1)) {
+      trackTimer = (<div></div>);
+    } else if (this.state.audioTrack) {
+      trackTimer = (<div className='track-time-left'>{this.stringifyTime(Math.round(this.state.audioTrack.currentTime))}</div>);
+    }
 		if (!this.state.track) {
 			return (<main ></main>);
 		} else {
@@ -135,6 +139,7 @@ var TrackDetail = React.createClass({
               onClick={this.seekByClick}
             >
               <div className='track-time'>{this.stringifyTime(this.state.duration)}</div>
+              {trackTimer}
             </div>
 					</section>
 
