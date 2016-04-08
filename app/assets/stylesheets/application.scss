@@ -435,26 +435,26 @@ ul {
 }
 
 .track-time {
-  background: #000;
+  background: transparent;
   padding: 2px 3px 0 3px;
   height: 16px;
   position: absolute;
   bottom: 0px;
   right: 10px;
-  color: #bbb;
+  color: #1D79C9;
   font-size: 11px;
   text-align: center;
   z-index: 101;
 }
 
 .track-time-left {
-  background: #000;
+  background: transparent;
   padding: 2px 3px 0 3px;
   height: 16px;
   position: absolute;
   bottom: 0px;
   left: 10px;
-  color: #aaa;
+  color: #FF5500;
   font-size: 11px;
   text-align: center;
   z-index: 101;
@@ -852,9 +852,9 @@ ul {
 .user-header-info {
 	position: relative;
 	height: 50px;
-	bottom: 102px;
+	bottom: 70px;
 	color: white;
-	left: 260px;
+	left: 70px;
   display: inline;
   padding: 6px 12px;
 	background: #000;

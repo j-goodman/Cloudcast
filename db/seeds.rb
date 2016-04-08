@@ -83,7 +83,7 @@ jfk = User.create!(
 )
 
 resignation = Track.create!(
-  title: "Nixon's Resignation",
+  title: "Resignation",
   user: nixon,
   description: "Speech delivered on August 9th, 1974, by President Richard Nixon, announcing his resignation from office in the wake of the Watergate scandal. Nixon was the first United States President to resign from the position, and was succeeded -- and later pardoned for any crimes committed while in office -- by his Vice President Gerald Ford.",
   image: File.open('app/assets/images/nixon.jpg'),
