@@ -2,7 +2,7 @@
 
 [Cloudcast][cloudcast]
 
-[cloudcast]: http://www.cloud-cast.herokuapp.com
+[cloudcast]: cloud-cast.herokuapp.com
 
 ## Features:
 
