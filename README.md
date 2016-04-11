@@ -2,7 +2,7 @@
 
 [Heroku link][heroku]
 
-[heroku]: http://www.herokuapp.com
+[Cloudcast]: http://www.cloud-cast.herokuapp.com
 
 ## Features:
 
