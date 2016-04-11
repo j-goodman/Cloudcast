@@ -27,7 +27,7 @@ TrackStore.getTrack = function (id) {
 TrackStore.all = function () {
   var tracks = [];
   for (var id in _tracks) {
-    tracks.push(_tracks[id]);
+    tracks.unshift(_tracks[id]);
   }
   return tracks;
 };

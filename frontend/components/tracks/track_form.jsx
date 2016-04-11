@@ -46,6 +46,12 @@ var TrackForm = React.createClass({
     reader.readAsDataURL(file);
   },
 
+  componentDidMount: function() {
+    if (!this.props.editOrCreate) {
+      this.props.editOrCreate = 'create';
+    }
+  },
+
   handleSubmit: function(e) {
     e.preventDefault();
 

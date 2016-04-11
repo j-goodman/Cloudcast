@@ -1,11 +1,12 @@
 var React = require('react');
-var SessionStore = require('../../stores/session.js');
 var ApiUtil = require('../../util/api_util.js');
+var SessionStore = require('../../stores/session.js');
 var TrackActions = require('../../actions/track_actions.js');
+var TrackForm = require('../tracks/track_form.jsx');
 
 var IndexItem = React.createClass({
   getInitialState: function () {
-		return { track: null, playing: false, duration: 0, audioTrack: null, completion: 0 };
+		return { track: null, playing: false, duration: 0, audioTrack: null, completion: 0, editForm: false};
 	},
 
   stringifyTime: function (seconds) {
@@ -50,6 +51,10 @@ var IndexItem = React.createClass({
     ApiUtil.destroyTrack(this.props.track.id, TrackActions.deleteTrack.bind(null, this.props.track.id));
   },
 
+  editTrack: function () {
+    this.setState({editForm: true});
+  },
+
   audioTag: function () {
     var audio = (document.getElementById('trackAudio'+this.props.track.id));
     if (audio) {
@@ -65,7 +70,6 @@ var IndexItem = React.createClass({
       audioTrack.addEventListener('ended', this.pauseTrack);
       this.setState({duration: Math.floor(audioTrack.duration)});
     } else {
-      debugger
       window.addInterval(1600, this._mediaLoaded);
     }
   },
@@ -115,7 +119,10 @@ var IndexItem = React.createClass({
       trackButtons = (
         <section>
           <div className='track-button track-playlistadd'></div>
-          <div className='track-button track-edit'></div>
+          <div
+            className='track-button track-edit'
+            onClick={this.editTrack}
+          ></div>
           <div
             className='track-button track-delete'
             onClick={this.destroyTrack}
@@ -136,6 +143,16 @@ var IndexItem = React.createClass({
       playerpauser =(<div className='pauseicon' onClick={this.pauseTrack}></div>);
     }
     var waveStyle = {left: (216+Math.floor(394*this.state.completion)+'px')};
+    var editModal;
+    if (this.state.editForm) {
+      editModal = (
+        <TrackForm /> //editOrCreate='edit'
+      )
+    } else {
+      editModal = (
+        <div></div>
+      )
+    }
     return(
       <li className='track-index-item group'>
         <div className='track-header'>
