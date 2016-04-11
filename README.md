@@ -1,8 +1,8 @@
 # Cloudcast
 
-[Heroku link][heroku]
+[Cloudcast][cloudcast]
 
-[Cloudcast]: http://www.cloud-cast.herokuapp.com
+[cloudcast]: http://www.cloud-cast.herokuapp.com
 
 ## Features:
 
