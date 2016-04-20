@@ -33,6 +33,12 @@ jefferson = User.create!(
   image: File.open('app/assets/images/two_dollar.jpg')
 )
 
+eisenhower = User.create!(
+  username: 'Dwight Eisenhower',
+  password: 'password',
+  image: File.open('app/assets/images/ike.jpg')
+)
+
 woolf = User.create!(
   username: 'Virginia Woolf',
   password: 'password',
@@ -114,37 +120,158 @@ nixoncomment1 = Comment.create!(
   body: "Great short story here. What's going on in it?"
 )
 
-nixoncomment2 = Comment.create!(
-  track: erichzann3,
-  user: nixon,
-  seconds: 124,
-  body: "Yes it's true, I really feel that way."
+jeffersoncomment1 = Comment.create!(
+  track: erichzann1,
+  user: jefferson,
+  seconds: 70,
+  body: "Singular and perplexing is right -- Rue d'Auseil is not that hard to find. The views are crazy though."
 )
 
-nixoncomment3 = Comment.create!(
-  track: erichzann3,
-  user: nixon,
-  seconds: 124,
-  body: "Who says I don't!"
-)
-
-woolfcomment1 = Comment.create!(
-  track: erichzann3,
-  user: woolf,
-  seconds: 128,
-  body: "I also agree with what has been said, yes."
+lovecraftcomment1 = Comment.create!(
+  track: erichzann1,
+  user: lovecraft,
+  seconds: 119,
+  body: "I should note that the narrator has since then seen a steeper street. It was in Rhode Island, if anyone was wondering."
 )
 
 kennedycomment1 = Comment.create!(
+  track: jeffersoninaugural,
+  user: jfk,
+  seconds: 150,
+  body: "TJ makes a fair point here.",
+)
+
+nixoncomment2 = Comment.create!(
+  track: jeffersoninaugural,
+  user: nixon,
+  seconds: 180,
+  body: "I'm pretty sure what he's saying here is that when the president does it that means it's not illegal.",
+)
+
+jeffersoncomment2 = Comment.create!(
+  track: peacewithhonor,
+  user: jefferson,
+  seconds: 49,
+  body: "I've been there, great conference center."
+)
+
+kennedycomment2 = Comment.create!(
   track: erichzann3,
   user: jfk,
   seconds: 164,
   body: "Have to disagree with you there Dick, not a fan. What's going on in it?"
 )
 
-nixonlike1 = Like.create!(
+woolfcomment1 = Comment.create!(
+  track: jeffersoninaugural,
+  user: woolf,
+  seconds: 508,
+  body: "Mild and safe sounds optimistic."
+)
+
+lovecraftcomment2 = Comment.create!(
+  track: blueandgreen,
+  user: lovecraft,
+  seconds: 122,
+  body: "Let's hear more about this giant whale next time. You're being way too concise here."
+)
+
+eisenhowercomment1 = Comment.create!(
+  track: resignation,
+  user: eisenhower,
+  seconds: 604,
+  body: "Solid talking point there Dick, where'd you come up with that one?"
+)
+
+nixoncomment3 = Comment.create!(
+  track: ichbineinberliner,
+  user: nixon,
+  seconds: 192,
+  body: "Do people say that? I don't know if I've heard anyone say that."
+)
+
+kennedycomment3 = Comment.create!(
+  track: ichbineinberliner,
+  user: jfk,
+  seconds: 330,
+  body: "How's my German here?"
+)
+
+woolfcomment2 = Comment.create!(
+  track: erichzann2,
+  user: woolf,
+  seconds: 364,
+  body: "Not bad, but gets a little wordy in the middle here."
+)
+
+Like.create!(
   track: erichzann3,
   user: nixon
+)
+
+Like.create!(
+  track: peacewithhonor,
+  user: eisenhower
+)
+
+Like.create!(
+  track: peacewithhonor,
+  user: woolf
+)
+
+Like.create!(
+  track: jeffersoninaugural,
+  user: jfk
+)
+
+Like.create!(
+  track: jeffersoninaugural,
+  user: lovecraft
+)
+
+Like.create!(
+  track: ichbineinberliner,
+  user: jefferson
+)
+
+Like.create!(
+  track: erichzann3,
+  user: woolf
+)
+
+Like.create!(
+  track: erichzann3,
+  user: jefferson
+)
+
+Like.create!(
+  track: erichzann2,
+  user: nixon
+)
+
+Like.create!(
+  track: erichzann1,
+  user: woolf
+)
+
+Like.create!(
+  track: erichzann1,
+  user: jefferson
+)
+
+Like.create!(
+  track: resignation,
+  user: jfk
+)
+
+Like.create!(
+  track: blueandgreen,
+  user: jefferson
+)
+
+Like.create!(
+  track: blueandgreen,
+  user: lovecraft
 )
 
 erichzannseries = Series.create!(

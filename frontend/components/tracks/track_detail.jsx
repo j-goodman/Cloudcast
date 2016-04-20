@@ -155,15 +155,21 @@ var TrackDetail = React.createClass({
 								var commentStyle = {left: (Math.floor(554*(comment.seconds/this.state.duration))+'px'), top: 0};
 								commentPositions.forEach(function(otherComment){
 									var diff = parseInt(commentStyle.left) - parseInt(otherComment.left);
-									if (diff > 0 && diff < 30) {
-												commentStyle.top = (30-diff)/3+"px"
+									if (diff >= 0 && diff < 15) {
+												commentStyle.top = (15-diff)/2+"px"
 											}
 								});
 								commentPositions.push(commentStyle);
+								var commentPreview;
+								if (comment.body.length > 120) {
+									commentPreview = comment.body.slice(0,117)+"...";
+								} else {
+									commentPreview = comment.body;
+								}
 								return (
 									<li key={comment.id} seconds={comment.seconds} style={commentStyle} className="track-comment">
 										<img className="track-comment-image" src={comment.image}></img>
-										<article className="track-comment-body">{comment.body}</article>
+										<article className="track-comment-body">{commentPreview}</article>
 									</li>
 								)
 							}.bind(this))}
@@ -180,6 +186,35 @@ var TrackDetail = React.createClass({
               </a>
               <li className = 'track-info-description'>{track.description}</li>
             </ul>
+						<section className = "comments-main-wrapper">
+							{track.comments.map(function (comment) {
+								var commentTime = Math.floor(comment.seconds/60)+":"+(comment.seconds%60);
+								if (comment.seconds%60 < 10) {
+									commentTime = Math.floor(comment.seconds/60)+":0"+(comment.seconds%60);
+								}
+								return (
+									<ul className="comment-main">
+										<a href={'/#/user/'+comment.user_id+'/tracks'}><img className="comment-main-avatar" src={comment.image}></img></a>
+										<li className="comment-main-userinfo"><a href={'/#/user/'+comment.user_id+'/tracks'}><b className="blue">{comment.username}</b></a>
+										{"  says about  "}
+										<b className="blue">{commentTime}</b></li>
+										<li className="comment-main-body">{comment.body}</li>
+									</ul>
+								)
+							}.bind(this))}
+						</section>
+						<section className='track-detail-sidebar'>
+							<ul className="likes-box">
+								{track.likes.map(function (like) {
+									return (
+										<ul className="like-list-item">
+											<a href={'/#/user/'+like.user_id+'/tracks'}><img className="like-avatar" src={like.image}></img></a>
+											<li className="like-notification"><a href={'/#/user/'+like.user_id+'/tracks'}><b className="orange">{like.username}</b></a> likes this track</li>
+										</ul>
+									)
+								}.bind(this))}
+							</ul>
+						</section>
 					</section>
 				</main>
 			);

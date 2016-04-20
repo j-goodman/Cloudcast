@@ -842,6 +842,87 @@ ul {
   display: none;
 }
 
+.comments-main-wrapper {
+  width: 570px;
+  float: left;
+  padding-top: 190px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+.comment-main {
+  height: 70px;
+  padding: 10px;
+  position: relative;
+  border-top: 2px solid #ff5500;
+}
+
+.comment-main-avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: 0 0;
+  border-radius: 50%;
+}
+
+.blue {
+  color: #1d79c9;
+}
+
+.orange {
+  color: #ff5500;
+}
+
+.comment-main-userinfo {
+  position: absolute;
+  top: 18px;
+  left: 70px;
+}
+
+.comment-main-body {
+  position: absolute;
+  top: 33px;
+  left: 70px;
+}
+
+.track-detail-sidebar {
+  position: absolute;
+  right: 0;
+  width: 360;
+  float: right;
+}
+
+.likes-box {
+  display: block;
+  float: right;
+  width: 340px;
+  float: right;
+  margin: auto;
+  padding-left: 20px;
+}
+
+.like-list-item {
+  height: 60px;
+  padding: 0, 5px;
+  padding-top: 10px;
+}
+
+.like-avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: 0 0;
+  border-radius: 50%;
+  float: left;
+}
+
+.like-notification {
+  float: left;
+  font-size: 14px;
+  padding: 14px 8px;
+}
+
 /* ~ USER DETAIL ~ */
 
 .user-detail-main {
