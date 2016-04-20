@@ -822,6 +822,10 @@ ul {
   left: 0;
 }
 
+.track-comment:hover {
+  z-index: 1;
+}
+
 .track-comment:hover > .track-comment-body {
   display: block;
 }
@@ -913,7 +917,7 @@ ul {
   height: 50px;
   object-fit: cover;
   object-position: 0 0;
-  border-radius: 50%;
+  border-radius: 3px;
   float: left;
 }
 

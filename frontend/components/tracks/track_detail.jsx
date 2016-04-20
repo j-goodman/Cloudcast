@@ -168,7 +168,7 @@ var TrackDetail = React.createClass({
 								}
 								return (
 									<li key={comment.id} seconds={comment.seconds} style={commentStyle} className="track-comment">
-										<img className="track-comment-image" src={comment.image}></img>
+										<a href={'/#/user/'+comment.user_id+'/tracks'}><img className="track-comment-image" src={comment.image}></img></a>
 										<article className="track-comment-body">{commentPreview}</article>
 									</li>
 								)
@@ -197,7 +197,7 @@ var TrackDetail = React.createClass({
 										<a href={'/#/user/'+comment.user_id+'/tracks'}><img className="comment-main-avatar" src={comment.image}></img></a>
 										<li className="comment-main-userinfo"><a href={'/#/user/'+comment.user_id+'/tracks'}><b className="blue">{comment.username}</b></a>
 										{"  says about  "}
-										<b className="blue">{commentTime}</b></li>
+										{commentTime}</li>
 										<li className="comment-main-body">{comment.body}</li>
 									</ul>
 								)
