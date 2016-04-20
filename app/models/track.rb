@@ -1,6 +1,8 @@
 class Track < ActiveRecord::Base
   belongs_to :user
   has_many :memberships
+  has_many :comments
+  has_many :likes
   has_many :series, through: :memberships
   has_attached_file :image, default_url: "/app/assets/images/agents_of_fortune.jpg"
   has_attached_file :audio, default_utl: "audio_missing.wav"

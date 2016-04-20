@@ -689,6 +689,7 @@ ul {
   height: 380px;
   position: relative;
   background: linear-gradient( 330deg, #aaa, #eee);
+  list-style: none;
 }
 
 .track-detail-sidebar {
@@ -699,8 +700,8 @@ ul {
 }
 
 .track-avatar {
-  height: 340px;
-  width: 340px;
+  height: 330px;
+  width: 330px;
   float: right;
   margin: 20px;
   object-fit: cover;
@@ -806,6 +807,39 @@ ul {
   border-bottom: 2px solid #1D79C9;
   text-align: justify;
   padding: 10px 0;
+}
+
+.track-comments-wrapper {
+  position: absolute;
+  bottom: 28px;
+  left: 30px;
+  height: 30px;
+}
+
+.track-comment {
+  float: left;
+  position: absolute;
+  left: 0;
+}
+
+.track-comment:hover > .track-comment-body {
+  display: block;
+}
+
+.track-comment-image {
+  height: 30px;
+  width: 30px;
+  object-fit: cover;
+  object-position: 0 0;
+}
+
+.track-comment-body {
+  position: absolute;
+  top: 30px;
+  border-left: 2px solid #FF5500;
+  padding-left: 2px;
+  width: 380px;
+  display: none;
 }
 
 /* ~ USER DETAIL ~ */

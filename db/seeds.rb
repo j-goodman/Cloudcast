@@ -10,6 +10,8 @@ User.destroy_all
 Track.destroy_all
 Series.destroy_all
 Membership.destroy_all
+Like.destroy_all
+Comment.destroy_all
 
 lovecraft = User.create!(
   username: 'H. P. Lovecraft',
@@ -36,7 +38,6 @@ woolf = User.create!(
   password: 'password',
   image: File.open('app/assets/images/virginia_woolf.jpg')
 )
-
 
 jeffersoninaugural = Track.create!(
   title: 'First Inaugural Address',
@@ -106,6 +107,46 @@ erichzann3 = Track.create!(
   audio: 'https://s3.amazonaws.com/cloudcast-dev/audio_seeds/Erich_Zann_3.wav'
 )
 
+nixoncomment1 = Comment.create!(
+  track: erichzann3,
+  user: nixon,
+  seconds: 124,
+  body: "Great short story here. What's going on in it?"
+)
+
+nixoncomment2 = Comment.create!(
+  track: erichzann3,
+  user: nixon,
+  seconds: 124,
+  body: "Yes it's true, I really feel that way."
+)
+
+nixoncomment3 = Comment.create!(
+  track: erichzann3,
+  user: nixon,
+  seconds: 124,
+  body: "Who says I don't!"
+)
+
+woolfcomment1 = Comment.create!(
+  track: erichzann3,
+  user: woolf,
+  seconds: 128,
+  body: "I also agree with what has been said, yes."
+)
+
+kennedycomment1 = Comment.create!(
+  track: erichzann3,
+  user: jfk,
+  seconds: 164,
+  body: "Have to disagree with you there Dick, not a fan. What's going on in it?"
+)
+
+nixonlike1 = Like.create!(
+  track: erichzann3,
+  user: nixon
+)
+
 erichzannseries = Series.create!(
   title: 'The Music of Erich Zann',
   user: lovecraft,
@@ -159,188 +200,3 @@ Membership.create!(
   series: presidentialspeeches,
   order: 3
 )
-
-
-# johnson = User.create!(
-#   username: 'Robert Johnson',
-#   password: 'surfbort'
-# )
-#
-# marty = User.create!(
-#   username: 'Marty McFly',
-#   password: 'surfbort'
-# )
-#
-# apu = User.create!(
-#   username: 'Apu de Beaumarchais',
-#   password: 'surfbort'
-# )
-#
-# dooku = User.create!(
-#   username: 'Count Dooku',
-#   password: 'surfbort'
-# )
-#
-# byrne = User.create!(
-#   username: 'David Byrne',
-#   password: 'surfbort'
-# )
-#
-# crossroadblues = Track.create!(
-#   title: 'Crossroad Blues',
-#   user: johnson,
-#   description: 'Standing at the crossroads, I tried to flag a ride.',
-#   image: File.open('app/assets/images/rjohnson.png'),
-#   audio: File.open('app/assets/sounds/welcome.wav')
-# )
-#
-# johnnybgoode = Track.create!(
-#   title: 'Johnny B. Goode',
-#   user: marty,
-#   description: "This one's an oldie. Or at least it's an oldie where I come from.",
-#   image: File.open('app/assets/images/michael-j-fox.jpg')
-# )
-#
-# babyonboard = Track.create!(
-#   title: 'Baby on Board',
-#   user: apu,
-#   description: "Thank you, come again.",
-#   image: File.open('app/assets/images/besharps.jpg')
-# )
-#
-# deadshrimpblues = Track.create!(
-#   title: 'Dead Shrimp Blues',
-#   user: johnson,
-#   description: 'All my shrimp was dead and gone.',
-#   image: File.open('app/assets/images/rjohnson.png')
-# )
-#
-# onceinalifetime = Track.create!(
-#   title: 'Once in a Lifetime',
-#   user: byrne,
-#   description: 'You may find yourself living in a shotgun shack.',
-#   image: File.open('app/assets/images/talkingheads.jpg')
-# )
-#
-# Track.create!(
-# 	title: "You've fought bravely, Master Windu",
-# 	user: dooku,
-# 	description: 'Worthy of recognition in the archives of the Jedi order.',
-#   image: File.open('app/assets/images/arena.jpg')
-# )
-#
-# psychokiller = Track.create!(
-#   title: 'Psycho Killer',
-#   user: byrne,
-#   description: "You're talking a lot but you're not saying anything.",
-#   image: File.open('app/assets/images/talkingheads.jpg')
-# )
-#
-# papalegba = Track.create!(
-#   title: 'Papa Legba',
-#   user: byrne,
-#   description: "Rompiendo la monotonia del tiempo.",
-#   image: File.open('app/assets/images/talkingheads.jpg')
-# )
-#
-# talkingheads = Series.create!(
-#   title: 'Talking Heads',
-#   user: byrne,
-#   description: "Summer of Talking Heads!",
-# )
-#
-# Membership.create!(
-#   track: onceinalifetime,
-#   series: talkingheads,
-#   order: 0
-# )
-#
-# Membership.create!(
-#   track: psychokiller,
-#   series: talkingheads,
-#   order: 1
-# )
-#
-# Membership.create!(
-#   track: papalegba,
-#   series: talkingheads,
-#   order: 2
-# )
-#
-# eightyeightmph = Series.create!(
-#   title: '88 MPH',
-#   user: marty,
-#   description: "For the tape deck in the DeLorean.",
-# )
-#
-# Membership.create!(
-#   track: johnnybgoode,
-#   series: eightyeightmph,
-#   order: 0
-# )
-#
-# Membership.create!(
-#   track: onceinalifetime,
-#   series: eightyeightmph,
-#   order: 2
-# )
-#
-# Membership.create!(
-#   track: crossroadblues,
-#   series: eightyeightmph,
-#   order: 1
-# )
-#
-# Membership.create!(
-#   track: psychokiller,
-#   series: eightyeightmph,
-#   order: 3
-# )
-#
-# Membership.create!(
-#   track: deadshrimpblues,
-#   series: eightyeightmph,
-#   order: 4
-# )
-#
-# Membership.create!(
-#   track: papalegba,
-#   series: eightyeightmph,
-#   order: 5
-# )
-#
-# Membership.create!(
-#   track: babyonboard,
-#   series: eightyeightmph,
-#   order: 6
-# )
-#
-# atthecrossroads = Series.create!(
-#   title: 'Standing at the Crossroads',
-#   user: johnson,
-#   description: "You know that new sound you been looking for? Well listen to this!",
-# )
-#
-# Membership.create!(
-#   track: deadshrimpblues,
-#   series: atthecrossroads,
-#   order: 0
-# )
-#
-# Membership.create!(
-#   track: johnnybgoode,
-#   series: atthecrossroads,
-#   order: 2
-# )
-#
-# Membership.create!(
-#   track: crossroadblues,
-#   series: atthecrossroads,
-#   order: 3
-# )
-#
-# Membership.create!(
-#   track: papalegba,
-#   series: atthecrossroads,
-#   order: 1
-# )

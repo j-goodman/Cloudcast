@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   has_many :tracks
   has_many :series
+  has_many :comments
+  has_many :likes
 
   attr_reader :password
 

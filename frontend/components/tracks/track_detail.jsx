@@ -130,6 +130,7 @@ var TrackDetail = React.createClass({
         playerpauser =(<div className='pauseicon track-detail-playicon' onClick={this.pauseTrack}></div>);
       }
       var waveStyle = {left: (40+Math.floor(554*this.state.completion)+'px')};
+			var commentPositions = [];
 			return (
 				<main className='user-detail-main'>
           <audio src={track.audio} id='trackAudio' />
@@ -149,6 +150,24 @@ var TrackDetail = React.createClass({
               <div className='track-time'>{this.stringifyTime(this.state.duration)}</div>
               {trackTimer}
             </div>
+						<section className="track-comments-wrapper">
+							{track.comments.map(function (comment) {
+								var commentStyle = {left: (Math.floor(554*(comment.seconds/this.state.duration))+'px'), top: 0};
+								commentPositions.forEach(function(otherComment){
+									var diff = parseInt(commentStyle.left) - parseInt(otherComment.left);
+									if (diff > 0 && diff < 30) {
+												commentStyle.top = (30-diff)/3+"px"
+											}
+								});
+								commentPositions.push(commentStyle);
+								return (
+									<li key={comment.id} seconds={comment.seconds} style={commentStyle} className="track-comment">
+										<img className="track-comment-image" src={comment.image}></img>
+										<article className="track-comment-body">{comment.body}</article>
+									</li>
+								)
+							}.bind(this))}
+						</section>
 					</section>
 
 					<section className='track-detail-main'>
