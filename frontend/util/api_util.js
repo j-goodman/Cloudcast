@@ -1,4 +1,5 @@
 var TrackActions = require('../actions/track_actions.js');
+var TrackStore = require('../stores/track.js');
 var SessionActions = require('../actions/session_actions.js');
 var UserActions = require('../actions/user_actions.js');
 var SeriesActions = require('../actions/series_actions.js');
@@ -65,6 +66,26 @@ var ApiUtil = {
   },
 
   destroyTrack: function (id, callback) {
+    $.ajax({
+      url: ('api/tracks/'+id),
+      type: 'DELETE',
+      success: callback
+    });
+  },
+
+  createComment: function (comment, callback) {
+    $.ajax({
+      type: 'POST',
+      url: 'api/comments',
+      dataType: "json",
+      data: comment,
+      success: function (comment) {
+        callback && callback();
+      }
+    });
+  },
+
+  destroyComment: function (id, callback) {
     $.ajax({
       url: ('api/tracks/'+id),
       type: 'DELETE',

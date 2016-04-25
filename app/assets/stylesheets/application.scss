@@ -859,7 +859,7 @@ ul {
   height: 70px;
   padding: 10px;
   position: relative;
-  border-top: 2px solid #ff5500;
+  border-top: 1px solid #ff5500;
 }
 
 .comment-main-avatar {
@@ -875,6 +875,11 @@ ul {
 }
 
 .orange {
+  color: #ff5500;
+}
+
+.orange-button {
+  cursor: pointer;
   color: #ff5500;
 }
 
@@ -925,6 +930,53 @@ ul {
   float: left;
   font-size: 14px;
   padding: 14px 8px;
+}
+
+.comment-form-wrapper {
+  width: 450px;
+  height: 80px;
+  position: absolute;
+  left: 38px;
+  top: 160px;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.comment-form-textarea {
+  position: absolute;
+  top: 40px;
+  padding: 10px 12px;
+  width: 454px;
+  height: 16px;
+  border-top: 2px solid #ff5500;
+  border-bottom: 2px solid #1d79c9;
+  border-radius: 4px;
+}
+
+.comment-form-textarea:hover {
+  height: 50px;
+  top: 6px;
+}
+
+.comment-form-textarea:focus {
+  height: 50px;
+  top: 6px;
+  background: white;
+}
+
+.comment-submit-button {
+  color: #fff;
+  border-radius: 4px;
+  padding: 4px 6px;
+  background: #ff5500;
+  position: absolute;
+  top: 50px;
+  left: 494px;
+}
+
+.comment-submit-button:hover {
+  color: #ff5500;
+  background: #fff;
 }
 
 /* ~ USER DETAIL ~ */

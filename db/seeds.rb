@@ -78,7 +78,7 @@ erichzann2 = Track.create!(
 blueandgreen = Track.create!(
   title: 'Blue and Green',
   user: woolf,
-  description: "Read by Andrea L. for LibriVox. A consideration in prose-poetry of perceptions and experiences of color. Published in 1921 as part of the collection Monday or Tuesday.",
+  description: "Read by Andrea L. for LibriVox. A prose-poetry piece on perceptions and experiences of color. Published in 1921 as part of the collection Monday or Tuesday.",
   image: File.open('app/assets/images/mondayortuesday.jpg'),
   audio: 'https://s3.amazonaws.com/cloudcast-dev/audio_seeds/Blue_and_Green.mp3'
 )
@@ -159,14 +159,14 @@ kennedycomment2 = Comment.create!(
   track: erichzann3,
   user: jfk,
   seconds: 164,
-  body: "Have to disagree with you there Dick, not a fan. What's going on in it?"
+  body: "Have to disagree with you there, not a fan. What's going on in it?"
 )
 
 woolfcomment1 = Comment.create!(
   track: jeffersoninaugural,
   user: woolf,
   seconds: 508,
-  body: "Mild and safe sounds optimistic."
+  body: "Sounds optimistic."
 )
 
 lovecraftcomment2 = Comment.create!(
@@ -179,21 +179,21 @@ lovecraftcomment2 = Comment.create!(
 eisenhowercomment1 = Comment.create!(
   track: resignation,
   user: eisenhower,
-  seconds: 604,
+  seconds: 597,
   body: "Solid talking point there Dick, where'd you come up with that one?"
 )
 
 nixoncomment3 = Comment.create!(
   track: ichbineinberliner,
   user: nixon,
-  seconds: 192,
+  seconds: 186,
   body: "Do people say that? I don't know if I've heard anyone say that."
 )
 
 kennedycomment3 = Comment.create!(
   track: ichbineinberliner,
   user: jfk,
-  seconds: 330,
+  seconds: 492,
   body: "How's my German here?"
 )
 

@@ -3,6 +3,7 @@ var ApiUtil = require('../../util/api_util.js');
 var SessionStore = require('../../stores/session.js');
 var TrackStore = require('../../stores/track.js');
 var TrackIndexItem = require('../tracks/index_item.jsx');
+var CommentForm = require('./comment_form.jsx');
 
 var Link = require('react-router').Link;
 
@@ -74,7 +75,7 @@ var TrackDetail = React.createClass({
 	},
 
   playTrack: function () {
-    if (this.state.audioTrack) {
+    if (this.state.audioTrack) {i
       this.state.audioTrack.play();
       this.setState({playing: true});
     }
@@ -89,6 +90,15 @@ var TrackDetail = React.createClass({
     var rect = element.getBoundingClientRect();
     var selected = ((e.pageX-rect.left)/560);
     this.trackSeek(selected);
+  },
+
+  seekByTime: function (seconds) {
+		if (!this.state.playing) {
+			this.playTrack();
+		}
+		if (this.state.audioTrack) {
+    	this.state.audioTrack.currentTime = seconds;
+		}
   },
 
   pauseTrack: function () {
@@ -131,6 +141,14 @@ var TrackDetail = React.createClass({
       }
       var waveStyle = {left: (40+Math.floor(554*this.state.completion)+'px')};
 			var commentPositions = [];
+			var commentForm;
+			if (this.state.audioTrack) {
+				commentForm = (
+					<CommentForm seconds={this.state.audioTrack.currentTime} track={this.state.track} />
+				);
+			} else {
+				commentForm = (<div></div>);
+			}
 			return (
 				<main className='user-detail-main'>
           <audio src={track.audio} id='trackAudio' />
@@ -141,6 +159,7 @@ var TrackDetail = React.createClass({
 							<h2><a href={'/#/user/'+track.user.id+'/tracks'}>{track.user.username}</a></h2>
 							<h1>{track.title}</h1>
 						</div>
+						{commentForm}
             <div className='track-detail-waveform-oreo' style={waveStyle} />
             <div
               className='track-detail-waveform'
@@ -196,8 +215,8 @@ var TrackDetail = React.createClass({
 									<ul className="comment-main">
 										<a href={'/#/user/'+comment.user_id+'/tracks'}><img className="comment-main-avatar" src={comment.image}></img></a>
 										<li className="comment-main-userinfo"><a href={'/#/user/'+comment.user_id+'/tracks'}><b className="blue">{comment.username}</b></a>
-										{"  says about  "}
-										{commentTime}</li>
+										{"  says at  "}
+										<b className="orange-button" onClick={this.seekByTime.bind(this, comment.seconds)}>{commentTime}</b></li>
 										<li className="comment-main-body">{comment.body}</li>
 									</ul>
 								)
@@ -209,7 +228,7 @@ var TrackDetail = React.createClass({
 									return (
 										<ul className="like-list-item">
 											<a href={'/#/user/'+like.user_id+'/tracks'}><img className="like-avatar" src={like.image}></img></a>
-											<li className="like-notification"><a href={'/#/user/'+like.user_id+'/tracks'}><b className="orange">{like.username}</b></a> likes this track</li>
+											<li className="like-notification"><a href={'/#/user/'+like.user_id+'/tracks'}><b className="orange">{like.username}</b></a> likes this episode</li>
 										</ul>
 									)
 								}.bind(this))}
