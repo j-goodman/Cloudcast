@@ -75,7 +75,7 @@ var TrackDetail = React.createClass({
 	},
 
   playTrack: function () {
-    if (this.state.audioTrack) {i
+    if (this.state.audioTrack) {
       this.state.audioTrack.play();
       this.setState({playing: true});
     }
@@ -212,7 +212,7 @@ var TrackDetail = React.createClass({
 									commentTime = Math.floor(comment.seconds/60)+":0"+(comment.seconds%60);
 								}
 								return (
-									<ul className="comment-main">
+									<ul className="comment-main" key={comment.id}>
 										<a href={'/#/user/'+comment.user_id+'/tracks'}><img className="comment-main-avatar" src={comment.image}></img></a>
 										<li className="comment-main-userinfo"><a href={'/#/user/'+comment.user_id+'/tracks'}><b className="blue">{comment.username}</b></a>
 										{"  says at  "}
@@ -226,7 +226,7 @@ var TrackDetail = React.createClass({
 							<ul className="likes-box">
 								{track.likes.map(function (like) {
 									return (
-										<ul className="like-list-item">
+										<ul className="like-list-item" key={like.id}>
 											<a href={'/#/user/'+like.user_id+'/tracks'}><img className="like-avatar" src={like.image}></img></a>
 											<li className="like-notification"><a href={'/#/user/'+like.user_id+'/tracks'}><b className="orange">{like.username}</b></a> likes this episode</li>
 										</ul>
