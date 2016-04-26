@@ -85,6 +85,18 @@ var ApiUtil = {
     });
   },
 
+  createLike: function (like, callback) {
+    $.ajax({
+      type: 'POST',
+      url: 'api/likes',
+      dataType: "json",
+      data: like,
+      success: function (like) {
+        callback && callback();
+      }
+    });
+  },
+
   destroyComment: function (id, callback) {
     $.ajax({
       url: ('api/tracks/'+id),

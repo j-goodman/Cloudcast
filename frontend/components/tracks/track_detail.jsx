@@ -122,6 +122,29 @@ var TrackDetail = React.createClass({
     }
   },
 
+  handleLike: function (e) {
+    e.preventDefault();
+
+		var alreadyLiked = false;
+
+		this.state.track.likes.forEach(function(like){
+			if (like.user_id === SessionStore.currentUser().id) {
+				alreadyLiked = true;
+			}
+		}.bind(this));
+
+		if (!alreadyLiked) {
+			ApiUtil.createLike({
+				like: {
+					track_id: this.state.track.id
+				}
+			}, (function (id) {
+				ApiUtil.fetchSingleTrack(this.state.track.id);
+			}.bind(this))
+		);
+		}
+  },
+
   render: function () {
     var trackTimer;
     if (this.state.audioTrack && (this.state.audioTrack.currentTime === 0 || this.state.audioTrack.currentTime > this.state.audioTrack.duration-1)) {
@@ -232,6 +255,9 @@ var TrackDetail = React.createClass({
 										</ul>
 									)
 								}.bind(this))}
+								<form onSubmit={this.handleLike}>
+									<input className="like-button" type="submit" value="Like" />
+								</form>
 							</ul>
 						</section>
 					</section>

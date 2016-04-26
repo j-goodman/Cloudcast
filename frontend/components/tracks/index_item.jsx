@@ -106,6 +106,29 @@ var IndexItem = React.createClass({
     }
   },
 
+  handleLike: function (e) {
+    e.preventDefault();
+
+		var alreadyLiked = false;
+
+		this.props.track.likes.forEach(function(like){
+			if (like.user_id === SessionStore.currentUser().id) {
+				alreadyLiked = true;
+			}
+		}.bind(this));
+
+		if (!alreadyLiked) {
+			ApiUtil.createLike({
+				like: {
+					track_id: this.props.track.id
+				}
+			}, (function (id) {
+				ApiUtil.fetchSingleTrack(this.props.track.id);
+			}.bind(this))
+		);
+		}
+  },
+
   render: function () {
     var trackTimer;
     if (this.audioTag() && (this.audioTag().currentTime === 0 || this.audioTag().currentTime > this.audioTag().duration-1)) {
@@ -118,7 +141,6 @@ var IndexItem = React.createClass({
     if (SessionStore.currentUser() && user.id === SessionStore.currentUser().id) {
       trackButtons = (
         <section>
-          <div className='track-button track-playlistadd'></div>
           <div
             className='track-button track-edit'
             onClick={this.editTrack}
@@ -127,12 +149,19 @@ var IndexItem = React.createClass({
             className='track-button track-delete'
             onClick={this.destroyTrack}
           ></div>
+        <div
+          className='track-button track-like'
+          onClick={this.handleLike}
+        ></div>
         </section>
       );
     } else {
       trackButtons = (
         <section>
-          <div className='track-button track-playlistadd'></div>
+          <div
+            className='track-button track-like'
+            onClick={this.handleLike}
+          ></div>
         </section>
       );
     }
@@ -153,6 +182,38 @@ var IndexItem = React.createClass({
         <div></div>
       )
     }
+    var commentsCount = ("");
+    var commentsDisplay = ("");
+    if (this.props.track.comments) {
+      commentsCount = this.props.track.comments.length+" comment";
+      if (this.props.track.comments.length !== 1) {
+        commentsCount += "s";
+      }
+      commentsDisplay = (
+        <a href={'#/track/'+track.id}>
+          {this.props.track.comments.slice(
+            this.props.track.comments.length-4,
+            this.props.track.comments.length
+          ).map(function (comment) {
+            return <img className='commenter-avatar' src={comment.image}></img>;
+            })}
+        </a>
+      );
+    }
+    var likesDisplay = (<li></li>);
+    if (this.props.track.likes) {
+      var likesCountS = "";
+      if (this.props.track.likes.length !== 1) {
+        likesCountS = "s";
+      }
+      likesDisplay = (
+        <li className = "likes-count"><b className = "orange-circle">{this.props.track.likes.length}</b> like{likesCountS}</li>
+      )
+      if (this.props.track.likes.length === 0) {
+        likesDisplay = (<li></li>)
+      }
+    }
+
     return(
       <li className='track-index-item group'>
         <div className='track-header'>
@@ -198,10 +259,15 @@ var IndexItem = React.createClass({
             <div className='track-time'>{this.stringifyTime(this.state.duration)}</div>
             {trackTimer}
           </div>
-          <div className='track-buttons group'>
-            {trackButtons}
-          </div>
         </div>
+        <ul className='social-info-wrapper'>
+          {trackButtons}
+          {likesDisplay}
+          <ul className='commenter-avatars'>
+              {commentsDisplay}
+          </ul>
+          <a href={'#/track/'+track.id}><li className = "comments-count">{commentsCount}</li></a>
+        </ul>
       </li>
     );
   }

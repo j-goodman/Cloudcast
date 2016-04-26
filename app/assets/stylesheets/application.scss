@@ -322,6 +322,7 @@ ul {
   height: 240px;
   margin: 0 auto;
   background: #fff;
+  position: relative;
 }
 
 .track-header {
@@ -460,16 +461,6 @@ ul {
   z-index: 101;
 }
 
-.track-buttons {
-  width: 144px;
-  height: 32px;
-  position: absolute;
-  top: 140px;
-  font-size: 20px;
-  text-align: center;
-  left: 196px;
-}
-
 .track-button {
   float: left;
   width: 26px;
@@ -478,6 +469,41 @@ ul {
   margin: 3px;
   border: 1px solid #ddd;
   border-radius: 3px;
+}
+
+.social-info-wrapper {
+  position: absolute;
+  bottom: 32px;
+  right: 12px;
+  width: 388px;
+  font-size: 11px;
+}
+
+.likes-count, .comments-count {
+  margin: 8px;
+}
+
+.likes-count {
+  float: left;
+}
+
+.comments-count {
+  float: right;
+}
+
+.commenter-avatars {
+  float: right;
+}
+
+.commenter-avatar {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 0 0;
+  display: block;
+  float: right;
+  padding: 0 1px;
 }
 
 .track-button:hover {
@@ -504,6 +530,7 @@ ul {
 .track-edit {
   background: asset-url('edit_icon.png');
   background-size: contain;
+  display: none;
 }
 
 .track-delete {
@@ -878,6 +905,13 @@ ul {
   color: #ff5500;
 }
 
+.orange-circle {
+  color: #fff;
+  padding: 2px 4px;
+  border-radius: 36%;
+  background: #ff5500;
+}
+
 .orange-button {
   cursor: pointer;
   color: #ff5500;
@@ -932,6 +966,10 @@ ul {
   padding: 14px 8px;
 }
 
+.like-button {
+  cursor: pointer;
+}
+
 .comment-form-wrapper {
   width: 450px;
   height: 80px;
@@ -973,6 +1011,23 @@ ul {
   cursor: pointer;
   top: 50px;
   left: 494px;
+}
+
+.like-button {
+  color: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 6px 8px;
+  background: #ff5500;
+  margin: 30px 143px;
+  cursor: pointer;
+}
+
+.like-button:hover {
+  color: #ff5500;
+  border: 1px solid #ff5500;
+  background: #fff;
 }
 
 .comment-submit-button:hover {
