@@ -19,7 +19,7 @@ var TrackForm = React.createClass({
       title: '',
       imageFile: null,
       imageUrl: null,
-      audio: null,
+      audio: null
   	};
   },
 

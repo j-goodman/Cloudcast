@@ -165,12 +165,18 @@ var TrackDetail = React.createClass({
       var waveStyle = {left: (40+Math.floor(554*this.state.completion)+'px')};
 			var commentPositions = [];
 			var commentForm;
-			if (this.state.audioTrack) {
+			if (this.state.audioTrack && SessionStore.currentUser()) {
 				commentForm = (
 					<CommentForm seconds={this.state.audioTrack.currentTime} track={this.state.track} />
 				);
 			} else {
 				commentForm = (<div></div>);
+			}
+			var likeButton = "";
+			if (SessionStore.currentUser()) {
+				likeButton = (
+					<input className="like-button" type="submit" value="Like" />
+				)
 			}
 			return (
 				<main className='user-detail-main'>
@@ -256,7 +262,7 @@ var TrackDetail = React.createClass({
 									)
 								}.bind(this))}
 								<form onSubmit={this.handleLike}>
-									<input className="like-button" type="submit" value="Like" />
+									{likeButton}
 								</form>
 							</ul>
 						</section>

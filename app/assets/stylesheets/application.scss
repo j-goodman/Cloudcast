@@ -255,16 +255,25 @@ ul {
   color: #999;
 }
 
-.home-tab, .collection-tab {
-  width: 104px;
+.home-tab, {
+  width: 120px;
   height: 24px;
   padding: 14px 6px 6px 6px;
   display: block;
   border-right: 1px solid #000;
+  cursor: pointer;
   float: left;
 }
 
 .upload-tab, .header-sign-in-tab, .user-dropdown-tab {
+  width: 70px;
+  height: 24px;
+  padding: 14px 6px 6px 6px;
+  display: block;
+  float: right;
+}
+
+.profile-tab, .header-sign-in-tab, .user-dropdown-tab {
   width: 70px;
   height: 24px;
   padding: 14px 6px 6px 6px;

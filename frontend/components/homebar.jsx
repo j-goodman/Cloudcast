@@ -20,6 +20,19 @@ var Homebar = React.createClass({
     this.sessionListener.remove();
   },
 
+  signInGuest: function (e) {
+    e.preventDefault();
+
+    var router = this.context.router;
+
+    ApiUtil.login({
+      username: 'H. P. Lovecraft',
+      password: 'password'
+    }, function() {
+      router.push('/#');
+    });
+  },
+
   render: function () {
 
     var user = {};
@@ -31,17 +44,18 @@ var Homebar = React.createClass({
     }
 
     var headerUserTab;
+    var profileTab;
 
     if (loggedIn) {
       headerUserTab = (
-        <section>
-          <button onClick={ApiUtil.logout} className='link-tab user-dropdown-tab' href='session/new'>Sign Out</button>
-        </section>
+        <button onClick={ApiUtil.logout} className='link-tab user-dropdown-tab' href='session/new'>Sign Out</button>
       );
       profileTab = (
-        <a href={'/#/user/'+SessionStore.currentUser().id+'/tracks'} className='link-tab collection-tab'>Profile</a>
+        <a href={'/#/user/'+SessionStore.currentUser().id+'/tracks'} className='profile-tab'></a>
       );
-      uploadTab = (<Link to={'/newtrack'} className='link-tab upload-tab'>Upload</Link>);
+      uploadTab = (
+        <Link to={'/newtrack'} className='link-tab upload-tab'>Upload</Link>
+      );
     } else {
       headerUserTab = (
         <div className='link-tab user-or-signin-tab'>
@@ -59,7 +73,7 @@ var Homebar = React.createClass({
         <div className='index-navbar-stretch'>
           <ul className='index-navbar group'>
             <a href='#' className='link-tab index-logo-image'></a>
-            <a href='#' className='link-tab home-tab'>Home</a>
+            <div onClick={this.signInGuest} className='link-tab home-tab'>Demo Signin</div>
             {profileTab}
             <div className='search-bar-tab non-display'>
               <input className='search-bar'

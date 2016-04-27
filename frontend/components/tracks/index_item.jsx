@@ -138,6 +138,7 @@ var IndexItem = React.createClass({
     }
     var track = this.props.track;
     var user = this.props.track.user || this.props.user;
+    var trackButtons = "";
     if (SessionStore.currentUser() && user.id === SessionStore.currentUser().id) {
       trackButtons = (
         <section>
@@ -155,8 +156,8 @@ var IndexItem = React.createClass({
         ></div>
         </section>
       );
-    } else {
-      trackButtons = (
+    } else if (SessionStore.currentUser()) {
+    trackButtons = (
         <section>
           <div
             className='track-button track-like'
@@ -189,16 +190,26 @@ var IndexItem = React.createClass({
       if (this.props.track.comments.length !== 1) {
         commentsCount += "s";
       }
-      commentsDisplay = (
-        <a href={'#/track/'+track.id}>
-          {this.props.track.comments.slice(
-            this.props.track.comments.length-4,
-            this.props.track.comments.length
-          ).map(function (comment) {
-            return <img className='commenter-avatar' src={comment.image}></img>;
-            })}
-        </a>
-      );
+      if (this.props.track.comments.length < 5) {
+        commentsDisplay = (
+          <a href={'#/track/'+track.id}>
+            {this.props.track.comments.map(function (comment) {
+              return <img className='commenter-avatar' src={comment.image}></img>;
+              })}
+          </a>
+        )
+      } else {
+        commentsDisplay = (
+          <a href={'#/track/'+track.id}>
+            {this.props.track.comments.slice(
+              this.props.track.comments.length-4,
+              this.props.track.comments.length
+            ).map(function (comment) {
+              return <img className='commenter-avatar' src={comment.image}></img>;
+              })}
+          </a>
+        );
+      }
     }
     var likesDisplay = (<li></li>);
     if (this.props.track.likes) {
@@ -264,7 +275,7 @@ var IndexItem = React.createClass({
           {trackButtons}
           {likesDisplay}
           <ul className='commenter-avatars'>
-              {commentsDisplay}
+            {commentsDisplay}
           </ul>
           <a href={'#/track/'+track.id}><li className = "comments-count">{commentsCount}</li></a>
         </ul>
