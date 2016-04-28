@@ -82,7 +82,6 @@ var TrackForm = React.createClass({
   render: function () {
     return(
         <div className='modal-wrapper'>
-        <TrackIndex />
         <div className='modal-dimmer' onClick={this.backToIndex}/>
         <main className='track-form-main group'>
           <h2 className='track-form-header'>Upload Audio to Cloudcast</h2>
