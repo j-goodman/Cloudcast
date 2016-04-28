@@ -129,7 +129,7 @@ var TrackDetail = React.createClass({
 
 		this.state.track.likes.forEach(function(like){
 			if (like.user_id === SessionStore.currentUser().id) {
-				alreadyLiked = false;
+				alreadyLiked = true;
 			}
 		}.bind(this));
 
