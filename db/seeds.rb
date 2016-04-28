@@ -225,11 +225,6 @@ Like.create!(
 )
 
 Like.create!(
-  track: jeffersoninaugural,
-  user: lovecraft
-)
-
-Like.create!(
   track: ichbineinberliner,
   user: jefferson
 )
@@ -267,11 +262,6 @@ Like.create!(
 Like.create!(
   track: blueandgreen,
   user: jefferson
-)
-
-Like.create!(
-  track: blueandgreen,
-  user: lovecraft
 )
 
 erichzannseries = Series.create!(

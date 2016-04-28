@@ -129,7 +129,7 @@ var TrackDetail = React.createClass({
 
 		this.state.track.likes.forEach(function(like){
 			if (like.user_id === SessionStore.currentUser().id) {
-				alreadyLiked = true;
+				alreadyLiked = false;
 			}
 		}.bind(this));
 
@@ -225,31 +225,33 @@ var TrackDetail = React.createClass({
 					</section>
 
 					<section className='track-detail-main'>
-            <div className = 'interact-bar'></div>
-            <ul className = 'track-info-box group'>
-            <section className='track-detail-sidebar'></section>
-              <a href={'/#/user/'+track.user.id+'/tracks'}>
-                <img className='track-info-user-avatar' src={this.state.track.user.image}></img>
-                <li className = 'track-info-username'>{track.user.username}</li>
-              </a>
-              <li className = 'track-info-description'>{track.description}</li>
-            </ul>
-						<section className = "comments-main-wrapper">
-							{track.comments.map(function (comment) {
-								var commentTime = Math.floor(comment.seconds/60)+":"+(comment.seconds%60);
-								if (comment.seconds%60 < 10) {
-									commentTime = Math.floor(comment.seconds/60)+":0"+(comment.seconds%60);
-								}
-								return (
-									<ul className="comment-main" key={comment.id}>
-										<a href={'/#/user/'+comment.user_id+'/tracks'}><img className="comment-main-avatar" src={comment.image}></img></a>
-										<li className="comment-main-userinfo"><a href={'/#/user/'+comment.user_id+'/tracks'}><b className="blue">{comment.username}</b></a>
-										{"  says at  "}
-										<b className="orange-button" onClick={this.seekByTime.bind(this, comment.seconds)}>{commentTime}</b></li>
-										<li className="comment-main-body">{comment.body}</li>
-									</ul>
-								)
-							}.bind(this))}
+						<section className='track-detail-leftbar'>
+	            <div className = 'interact-bar'></div>
+	            <ul className = 'track-info-box group'>
+	            <section className='track-detail-mainbox'></section>
+	              <a href={'/#/user/'+track.user.id+'/tracks'}>
+	                <img className='track-info-user-avatar' src={this.state.track.user.image}></img>
+	                <li className = 'track-info-username'>{track.user.username}</li>
+	              </a>
+	              <li className = 'track-info-description'>{track.description}</li>
+	            </ul>
+							<section className = "comments-main-wrapper">
+								{track.comments.map(function (comment) {
+									var commentTime = Math.floor(comment.seconds/60)+":"+(comment.seconds%60);
+									if (comment.seconds%60 < 10) {
+										commentTime = Math.floor(comment.seconds/60)+":0"+(comment.seconds%60);
+									}
+									return (
+										<ul className="comment-main" key={comment.id}>
+											<a href={'/#/user/'+comment.user_id+'/tracks'}><img className="comment-main-avatar" src={comment.image}></img></a>
+											<li className="comment-main-userinfo"><a href={'/#/user/'+comment.user_id+'/tracks'}><b className="blue">{comment.username}</b></a>
+											{"  says at  "}
+											<b className="orange-button" onClick={this.seekByTime.bind(this, comment.seconds)}>{commentTime}</b></li>
+											<li className="comment-main-body">{comment.body}</li>
+										</ul>
+									)
+								}.bind(this))}
+							</section>
 						</section>
 						<section className='track-detail-sidebar'>
 							<ul className="likes-box">

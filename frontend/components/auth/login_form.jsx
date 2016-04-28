@@ -20,6 +20,19 @@ var LoginForm = React.createClass({
     this.context.router.push('/');
   },
 
+  signInGuest: function (e) {
+    e.preventDefault();
+
+    var router = this.context.router;
+
+    ApiUtil.login({
+      username: 'H. P. Lovecraft',
+      password: 'password'
+    }, function() {
+      router.push('/#');
+    });
+  },
+
   render: function () {
     return (
 			<div className='modal-wrapper'>
@@ -77,6 +90,7 @@ var LoginForm = React.createClass({
 	            </label>
 
 	            <input className="submit-button" type="submit" value="Sign in" />
+              <p className='demo-signin orange-link' onClick={this.signInGuest}>Sign in using a demo account</p>
 	          </form>
 	        </div>
 	      </main>

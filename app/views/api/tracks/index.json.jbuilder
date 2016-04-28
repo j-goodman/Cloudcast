@@ -17,8 +17,8 @@ json.array!(@tracks) do |track|
 
   json.likes do
     json.array!(track.likes) do |comment|
-      json.extract!(comment, :id)
-      json.extract!(comment.user, :username, :image)
+      json.extract!(comment, :user_id)
+      json.extract!(comment.user, :username, :id, :image)
     end
   end
 end

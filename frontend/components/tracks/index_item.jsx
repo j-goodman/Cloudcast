@@ -111,7 +111,7 @@ var IndexItem = React.createClass({
 
 		var alreadyLiked = false;
 
-		this.props.track.likes.forEach(function(like){
+		this.props.track.likes.forEach(function(like) {
 			if (like.user_id === SessionStore.currentUser().id) {
 				alreadyLiked = true;
 			}
@@ -141,7 +141,7 @@ var IndexItem = React.createClass({
     var trackButtons = "";
     if (SessionStore.currentUser() && user.id === SessionStore.currentUser().id) {
       trackButtons = (
-        <section>
+        <section className='track-buttons-wrapper'>
           <div
             className='track-button track-edit'
             onClick={this.editTrack}
@@ -158,7 +158,7 @@ var IndexItem = React.createClass({
       );
     } else if (SessionStore.currentUser()) {
     trackButtons = (
-        <section>
+        <section className='track-buttons-wrapper'>
           <div
             className='track-button track-like'
             onClick={this.handleLike}
@@ -211,20 +211,38 @@ var IndexItem = React.createClass({
         );
       }
     }
+    var likeNamesSample = [];
     var likesDisplay = (<li></li>);
     if (this.props.track.likes) {
+      if (this.props.track.likes.length <= 8) {
+        this.props.track.likes.forEach(function(like){
+          likeNamesSample.push({username: like.username, user_id: like.user_id});
+        })
+      } else {
+        this.props.track.likes.reverse().slice(0,7).forEach(function(like){
+          likeNamesSample.push({username: like.username, user_id: like.user_id});
+        })
+        likeNamesSample.push("and "+this.props.track.likes.length-7+" more");
+      }
       var likesCountS = "";
       if (this.props.track.likes.length !== 1) {
         likesCountS = "s";
       }
       likesDisplay = (
-        <li className = "likes-count"><b className = "orange-circle">{this.props.track.likes.length}</b> like{likesCountS}</li>
+        <li className = "likes-count"><b className = "orange-circle">{this.props.track.likes.length}</b> like{likesCountS}
+          <ul className="likes-dropdown">
+            {this.props.track.likes.map(function (user) {
+              if (user) {
+                return <li className="likes-dropdown-item" key={user.user_id}>{user.username}</li>;
+              }
+            })}
+          </ul>
+        </li>
       )
       if (this.props.track.likes.length === 0) {
         likesDisplay = (<li></li>)
       }
     }
-
     return(
       <li className='track-index-item group'>
         <div className='track-header'>

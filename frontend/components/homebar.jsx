@@ -45,6 +45,8 @@ var Homebar = React.createClass({
 
     var headerUserTab;
     var profileTab;
+    var demoSignin;
+
 
     if (loggedIn) {
       headerUserTab = (
@@ -56,6 +58,7 @@ var Homebar = React.createClass({
       uploadTab = (
         <Link to={'/newtrack'} className='link-tab upload-tab'>Upload</Link>
       );
+      demoSignin = <a href={'/#/user/'+SessionStore.currentUser().id+'/tracks'} className='link-tab home-tab'>Profile</a>
     } else {
       headerUserTab = (
         <div className='link-tab user-or-signin-tab'>
@@ -63,9 +66,10 @@ var Homebar = React.createClass({
         </div>
       );
       profileTab = (
-        <a href='#' className='link-tab collection-tab'></a>
+        <a href='#' className='link-tab collection-tab non-display'></a>
       );
       uploadTab = (<Link to={'/newuser'} className='link-tab upload-tab'>New User</Link>);
+      demoSignin = <div onClick={this.signInGuest} className='link-tab home-tab'>Demo Signin</div>
     }
 
     return(
@@ -73,8 +77,7 @@ var Homebar = React.createClass({
         <div className='index-navbar-stretch'>
           <ul className='index-navbar group'>
             <a href='#' className='link-tab index-logo-image'></a>
-            <div onClick={this.signInGuest} className='link-tab home-tab'>Demo Signin</div>
-            {profileTab}
+            {demoSignin}
             <div className='search-bar-tab non-display'>
               <input className='search-bar'
 							placeholder='Search'

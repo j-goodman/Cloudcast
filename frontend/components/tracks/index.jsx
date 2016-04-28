@@ -38,7 +38,7 @@ var MainIndex = React.createClass({
 
     if (loggedIn) {
       welcomeMessage = (
-        <h2 className='stream-header'>Welcome, {user.username}. Hear our latest podcasts:</h2>
+        <h2 className='stream-header'>Welcome, <a href={'/#/user/'+SessionStore.currentUser().id+'/tracks'} className="orange-link">{user.username}</a>. Hear our latest podcasts:</h2>
       );
     } else {
       welcomeMessage = (

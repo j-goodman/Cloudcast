@@ -197,6 +197,12 @@ ul {
   cursor: pointer;
 }
 
+.demo-signin {
+  cursor: pointer;
+  text-align: center;
+  margin-top: 140px;
+}
+
 /* ~ TRACK INDEX NAVBAR ~ */
 
 .index-navbar-stretch {
@@ -330,7 +336,6 @@ ul {
   width: 620px;
   height: 240px;
   margin: 0 auto;
-  background: #fff;
   position: relative;
 }
 
@@ -470,6 +475,11 @@ ul {
   z-index: 101;
 }
 
+.track-buttons-wrapper {
+  position: absolute;
+  left: 46px;
+}
+
 .track-button {
   float: left;
   width: 26px;
@@ -494,6 +504,27 @@ ul {
 
 .likes-count {
   float: left;
+  position: absolute;
+  top: 0;
+  left: -10px;
+  cursor: pointer;
+}
+
+.likes-count:hover > .likes-dropdown {
+  display: block;
+}
+
+.likes-dropdown {
+  font-size: 10px;
+  padding: 6px;
+  background: #1d79c9;
+  color: #fff;
+  border-bottom-right-radius: 14px;
+  display: none;
+}
+
+.likes-dropdown:hover {
+  display: block;
 }
 
 .comments-count {
@@ -658,9 +689,6 @@ ul {
   width: 300px;
 }
 
-.track-info-box {
-}
-
 .track-form-footer {
   position: absolute;
   bottom: 56px;
@@ -728,10 +756,16 @@ ul {
   list-style: none;
 }
 
+.track-detail-leftbar {
+  float: left;
+  width: 632;
+}
+
 .track-detail-sidebar {
   border-left: 1px solid #eee;
   width: 360px;
-  height: 300px;
+  height: 100%;
+  background: white;
   float: right;
 }
 
@@ -912,6 +946,14 @@ ul {
 
 .orange {
   color: #ff5500;
+}
+
+.orange-link {
+  color: #ff5500;
+}
+
+.orange-link:hover {
+  color: #1d79c9;
 }
 
 .orange-circle {
