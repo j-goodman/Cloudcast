@@ -310,6 +310,12 @@ ul {
   background: #fff;
   border-right: 1px solid #ddd;
   float: left;
+  // display:flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: flex-start;
+  // align-content: stretch;
+  // align-items: stretch;
 }
 
 .stream-header {
@@ -321,6 +327,7 @@ ul {
 
 .index-sidebar {
   width: 340px;
+  flex-grow: 1;
   height: 1989px;
   float: right;
   position: absolute;
@@ -328,6 +335,9 @@ ul {
   top: 0;
   background: #fff;
   z-index: -1;
+  // flex-grow: 1;
+  // flex-shrink: 0;
+  // flex-basis: 200px;
 }
 
 /* ~ TRACK INDEX ITEM ~ */
@@ -402,6 +412,7 @@ ul {
   height: 40px;
   background: asset-url('play_icon.png');
   background-size: contain;
+  cursor: pointer;
 }
 
 .pauseicon {
@@ -409,6 +420,7 @@ ul {
   height: 40px;
   background: asset-url('pause_icon.png');
   background-size: contain;
+  cursor: pointer;
 }
 
 .track-username {

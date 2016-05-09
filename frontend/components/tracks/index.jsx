@@ -48,17 +48,19 @@ var MainIndex = React.createClass({
     return (
       <main className='index-wrapper group'>
         <div className='index-page-main'>
-          <br />
-          {welcomeMessage}
-          <br />
-          <ul className='track-list'>
-            {this.state.tracks.map(function (track) {
-              if (track) {
-                return <TrackIndexItem key={track.id}
-                track={track} user={track.user}/>;
-              }
-            })}
-          </ul>
+          <div>
+            <br />
+            {welcomeMessage}
+            <br />
+            <ul className='track-list'>
+              {this.state.tracks.map(function (track) {
+                if (track) {
+                  return <TrackIndexItem key={track.id}
+                  track={track} user={track.user}/>;
+                }
+              })}
+            </ul>
+          </div>
           <div className='index-sidebar'>
             <IndexSidebar />
           </div>
